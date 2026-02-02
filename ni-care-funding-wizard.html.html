@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northern Ireland Care Funding Decision Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c5f7a;
+            --primary-light: #4a8ba8;
+            --accent: #5a8f7b;
+            --accent-light: #7db89e;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --text-dark: #1a2332;
+            --text-medium: #4a5568;
+            --text-light: #718096;
+            --bg-light: #f8fafb;
+            --bg-white: #ffffff;
+            --border: #e2e8f0;
+            --shadow: rgba(44, 95, 122, 0.08);
+            --green: #10b981;
+            --amber: #f59e0b;
+            --red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: linear-gradient(135deg, #f8fafb 0%, #e8f0f4 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        h1 {
+            font-family: 'Crimson Text', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-medium);
+            font-weight: 300;
+        }
+
+        .disclaimer {
+            background: var(--bg-white);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .disclaimer h3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .disclaimer p {
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        .warning-box {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid var(--danger);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            font-family: 'Crimson Text', serif;
+            color: var(--danger);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box p {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        .info-box {
+            background: rgba(74, 139, 168, 0.08);
+            border-left: 4px solid var(--primary-light);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            font-family: 'Crimson Text', serif;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box p, .info-box ul {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .info-box ul {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-medium);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .decision-question {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 0.75rem;
+        }
+
+        .radio-option:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-light);
+        }
+
+        .radio-option.selected {
+            border-color: var(--primary);
+            background: rgba(44, 95, 122, 0.05);
+        }
+
+        .radio-option input {
+            margin-right: 0.75rem;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            font-family: 'Source Sans 3', sans-serif;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 95, 122, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-medium);
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .outcome-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .outcome-card h3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .outcome-content {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .outcome-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .outcome-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .outcome-content li {
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .outcome-content li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .journey-path {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .journey-path h5 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .choice-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .choice-card {
+            background: var(--bg-white);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .choice-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(44, 95, 122, 0.2);
+            border-color: var(--primary-light);
+        }
+
+        .choice-card h3 {
+            font-family: 'Crimson Text', serif;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .choice-card p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .breadcrumb {
+            background: var(--bg-light);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .breadcrumb span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .context-note {
+            background: rgba(90, 143, 123, 0.08);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .section-title { font-size: 1.5rem; }
+            .choice-cards { grid-template-columns: 1fr; }
+            .decision-question { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Northern Ireland Care Funding Decision Tool</h1>
+            <p class="subtitle">Self-Funder Financial Decision Wizard</p>
+        </header>
+
+        <div class="disclaimer">
+            <h3>Important Notice</h3>
+            <p>This tool provides information and signposting only. It does not constitute financial, legal, or medical advice. Financial decisions should be made with professional advice where appropriate. All content is specific to Northern Ireland funding rules.</p>
+        </div>
+
+        <div id="breadcrumb" class="breadcrumb" style="display: none;">
+            <!-- Breadcrumb will be inserted here -->
+        </div>
+
+        <div id="appContainer">
+            <!-- Content will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Decision tree state
+        const wizardState = {
+            path: [],
+            decisions: {},
+            currentNode: 'start'
+        };
+
+        // Self-funder decision tree (from your flowchart)
+        // Enhanced Self-funder decision tree with fixes for identified issues
+        const decisionTree = {
+            start: {
+                type: 'info',
+                title: 'Self-Funder Decision Wizard',
+                message: 'This wizard will guide you through important financial decisions for self-funding care. You\'ll answer questions step-by-step to identify the most suitable funding approach for your situation.',
+                nextSteps: [
+                    'Answer questions about your situation',
+                    'Consider your priorities (certainty, flexibility, growth)',
+                    'Understand trade-offs between different funding routes',
+                    'Receive tailored outcome with next steps'
+                ],
+                warnings: [
+                    'This is information and signposting only - not financial advice',
+                    'Complex situations may require professional guidance',
+                    'All outcomes should be verified with appropriate advisers'
+                ],
+                next: 'checkCHC'
+            },
+
+            checkCHC: {
+                type: 'question',
+                question: 'Is Continuing Healthcare (CHC) still being checked or appealed?',
+                context: 'CHC would provide free healthcare if you qualify. It\'s worth pursuing even while planning self-funding.',
+                options: [
+                    { text: 'Yes, CHC is being checked or appealed', next: 'chcInProgress', decision: 'chc_active' },
+                    { text: 'No, CHC not applicable or already declined', next: 'careSetting', decision: 'chc_not_active' }
+                ]
+            },
+
+            chcInProgress: {
+                type: 'info',
+                title: 'Continue CHC Process',
+                message: 'Important: Continue pursuing the CHC assessment or appeal process while making self-funding plans. If successful, CHC would eliminate care charges entirely.',
+                nextSteps: [
+                    'Proceed with self-funding planning below',
+                    'Keep CHC assessment/appeal active in parallel',
+                    'Document all medical evidence',
+                    'Understand appeals timelines'
+                ],
+                next: 'careSetting'
+            },
+
+            careSetting: {
+                type: 'question',
+                question: 'What is the care setting?',
+                options: [
+                    { text: 'Care at home', next: 'homeCareAge', decision: 'care_at_home' },
+                    { text: 'Residential or nursing home', next: 'checkProperty', decision: 'care_home' }
+                ]
+            },
+
+            homeCareAge: {
+                type: 'question',
+                question: 'Is the person aged 55 or over and living in their own home?',
+                context: 'Age and home ownership affect which funding options are available (e.g., equity release requires 55+ and home ownership).',
+                options: [
+                    { text: 'Yes, 55+ and living in own home', next: 'homeCareOptions', decision: 'eligible_equity_release' },
+                    { text: 'No', next: 'homeCareStandard', decision: 'not_eligible_equity_release' }
+                ]
+            },
+
+            homeCareOptions: {
+                type: 'info',
+                title: 'Home Care Funding Options Available',
+                message: 'Multiple funding sources can be used for care at home:',
+                nextSteps: [
+                    'Income from pensions, investments, rental property',
+                    'Savings and liquid capital',
+                    'Investments with planned withdrawals',
+                    'Equity release (lifetime mortgage) - releases property value while staying at home',
+                    'Family contributions'
+                ],
+                warnings: [
+                    'Equity release involves compound interest and reduces inheritance significantly',
+                    'Independent financial advice required for equity release',
+                    'Consider all other options before equity release'
+                ],
+                next: 'mainPriority'
+            },
+
+            homeCareStandard: {
+                type: 'info',
+                title: 'Home Care Funding Options',
+                message: 'Available funding sources for your situation:',
+                nextSteps: [
+                    'Income from pensions and investments',
+                    'Savings and liquid capital',
+                    'Investment portfolios with withdrawals',
+                    'Family support and contributions'
+                ],
+                next: 'mainPriority'
+            },
+
+            checkProperty: {
+                type: 'question',
+                question: 'Is there a property that may fund care?',
+                context: 'Property is often the largest asset. Understanding your options around the property is critical.',
+                options: [
+                    { text: 'Yes, there is a property', next: 'propertyPlan', decision: 'has_property' },
+                    { text: 'No property available', next: 'noPropertyRoute', decision: 'no_property' }
+                ]
+            },
+
+            propertyPlan: {
+                type: 'question',
+                question: 'What is the plan for the property?',
+                context: 'This is a major decision with long-term implications. Consider all factors carefully.',
+                options: [
+                    { text: 'Sell the property soon', next: 'propertySaleRoute', decision: 'property_sell' },
+                    { text: 'Rent out the property', next: 'propertyRentRoute', decision: 'property_rent' },
+                    { text: 'Retain property without renting (for now)', next: 'propertyRetainRoute', decision: 'property_retain' }
+                ]
+            },
+
+            propertySaleRoute: {
+                type: 'info',
+                title: 'Property Sale Strategy',
+                message: 'Selling the property will release capital to fund care. After the sale, you\'ll need to decide how to use the proceeds.',
+                nextSteps: [
+                    'Allow time for proper sale (don\'t rush - market timing matters)',
+                    'Consider 12-week property disregard period in NI',
+                    'Seek legal advice on conveyancing and any tax implications',
+                    'Property sale typically takes 8-16 weeks from listing to completion'
+                ],
+                warnings: [
+                    'Irreversible decision - cannot get property back once sold',
+                    'Family may have emotional attachment - discuss beforehand',
+                    'Market conditions significantly affect sale price',
+                    'Consider capital gains tax (though main residence relief usually applies)'
+                ],
+                next: 'afterPropertySaleOptions'
+            },
+
+            afterPropertySaleOptions: {
+                type: 'info',
+                title: 'Using Your Property Sale Proceeds - All Options',
+                message: 'Once your property is sold, you\'ll have a lump sum of capital. There are several ways to use this to fund care, each with different trade-offs:',
+                nextSteps: [
+                    'OPTION 1 - Keep in Cash: Simple and accessible. Good for: short-term certainty, don\'t want investment risk. Drawback: No growth, inflation erodes value, longevity risk',
+                    'OPTION 2 - Invest and Draw Down: Potential growth to offset inflation. Good for: longer-term need, can tolerate volatility. Drawback: Market risk, requires management, sequencing risk',
+                    'OPTION 3 - Buy Guaranteed Income (ICP): Lifetime income certainty. Good for: longevity risk concern, want peace of mind. Drawback: Irreversible, lose flexibility, early death risk',
+                    'OPTION 4 - Mixed Approach: Combine methods (e.g., ICP for base fees + cash for extras). Good for: balance certainty and flexibility. Drawback: More complex to manage'
+                ],
+                warnings: [
+                    'You don\'t have to decide immediately - can keep in cash while you consider options',
+                    'Each approach has different tax implications',
+                    'Professional financial advice recommended for large sums',
+                    'Be wary of commission-based salespeople pushing specific products'
+                ],
+                next: 'mainPriority'
+            },
+
+            propertyRentRoute: {
+                type: 'info',
+                title: 'Rental Income Strategy',
+                message: 'Renting the property can provide ongoing income for care fees while preserving the asset.',
+                nextSteps: [
+                    'Rental income can contribute to care fees',
+                    'Use professional letting agent (typically 10-15% fees)',
+                    'Property remains in estate for inheritance'
+                ],
+                warnings: [
+                    'Landlord responsibilities: maintenance, safety certificates, repairs',
+                    'Void periods with no rental income',
+                    'Tenant issues and potential property damage',
+                    'Rental income is taxable',
+                    'May need to sell later if rental income insufficient'
+                ],
+                next: 'mainPriority'
+            },
+
+            propertyRetainRoute: {
+                type: 'info',
+                title: 'Property Retained (No Rental)',
+                message: 'Property is kept but not generating income. Care fees must be met from other assets.',
+                nextSteps: [
+                    'Use income and capital from other sources',
+                    'Property decision can be revisited later',
+                    'Monitor fee costs against available capital'
+                ],
+                warnings: [
+                    'Property costs continue (insurance, maintenance)',
+                    'No income generated from property',
+                    'May need to sell or rent if capital depletes'
+                ],
+                next: 'mainPriority'
+            },
+
+            noPropertyRoute: {
+                type: 'info',
+                title: 'No Property - Income and Capital Route',
+                message: 'Care fees will be met from income and available capital (savings, investments, pensions).',
+                nextSteps: [
+                    'Use combination of pension income, investment income, and capital withdrawals',
+                    'Monitor drawdown rate carefully',
+                    'Consider longevity risk - funds may need to last many years'
+                ],
+                next: 'mainPriority'
+            },
+
+            mainPriority: {
+                type: 'question',
+                question: 'What is the main priority for funding care?',
+                context: 'Different priorities lead to different funding strategies. Choose what matters most.',
+                options: [
+                    { text: 'Certainty and peace of mind - know costs are covered for life', next: 'certaintyPath', decision: 'priority_certainty' },
+                    { text: 'Flexibility and simplicity - keep things straightforward', next: 'flexibilityPath', decision: 'priority_flexibility' },
+                    { text: 'Potential growth and estate preservation - protect inheritance', next: 'growthPath', decision: 'priority_growth' }
+                ]
+            },
+
+            certaintyPath: {
+                type: 'question',
+                question: 'After using regular income (pensions, etc.), is there still a shortfall in care fees?',
+                context: 'Understanding if you have a fee shortfall helps determine if products like Immediate Care Plans might be suitable.',
+                options: [
+                    { text: 'Yes, there is a fee shortfall', next: 'explainICP', decision: 'fee_shortfall' },
+                    { text: 'No, income covers most fees', next: 'incomeCoversRoute', decision: 'income_sufficient' }
+                ]
+            },
+
+            explainICP: {
+                type: 'info',
+                title: 'Understanding Immediate Care Plans (ICPs)',
+                message: 'Before deciding on options, let\'s first understand what an Immediate Care Plan actually is and how it works.',
+                nextSteps: [
+                    'What it is: An insurance product that converts a lump sum into guaranteed lifetime income',
+                    'How it works: You pay a one-off premium (typically £100,000-£300,000 depending on age, health, care costs)',
+                    'What you get: The insurer pays guaranteed income directly to your care provider for as long as you live',
+                    'Main benefit: Eliminates longevity risk - you won\'t run out of money even if you live 20+ years',
+                    'Escalation: Income typically increases each year (3% fixed, 5% fixed, or RPI-linked)',
+                    'Underwriting: Premium based on your age, health condition (worse health = lower premium), and care costs',
+                    'Irreversible: Once set up, you cannot cancel or get your money back'
+                ],
+                warnings: [
+                    'If you die soon after purchase (within first 2-3 years), most of the premium is lost (unless you add capital protection)',
+                    'Not everyone qualifies - very poor health or terminal conditions may not be accepted',
+                    'Income may not keep pace with actual fee increases if you choose low escalation',
+                    'Ties up capital - you cannot access it for other needs once purchased',
+                    'Shop around essential - quotes vary significantly between providers (can differ by £30k+ on same situation)'
+                ],
+                next: 'icpVsAlternatives'
+            },
+
+            icpVsAlternatives: {
+                type: 'info',
+                title: 'ICP vs Keeping Capital - Key Comparison',
+                message: 'ICPs provide certainty but remove flexibility. Here\'s how they compare to keeping capital and drawing down:',
+                nextSteps: [
+                    'ICP APPROACH: Pay lump sum → Get guaranteed income for life → Peace of mind but irreversible',
+                    'CAPITAL DRAWDOWN: Keep money invested/in cash → Withdraw as needed → Flexible but longevity risk',
+                    'HYBRID APPROACH: Use ICP for base fees only → Keep rest liquid → Balance of certainty and flexibility'
+                ],
+                warnings: [
+                    'ICP suits you if: Longevity risk is main concern, want certainty, don\'t need capital for other purposes, comfortable locking in decision',
+                    'Capital drawdown suits you if: Want flexibility, may need capital for spouse/emergencies, comfortable with uncertainty, expect shorter care duration',
+                    'Hybrid suits you if: Want certainty for essentials but keep some flexibility for extras, unsure of future needs',
+                    'There is NO universally "best" option - depends entirely on your priorities and circumstances',
+                    'Financial advice is strongly recommended before committing to ICP'
+                ],
+                next: 'chooseICPorNot'
+            },
+
+            chooseICPorNot: {
+                type: 'question',
+                question: 'Based on this comparison, which approach best matches your priorities?',
+                context: 'Be honest about what matters most - there\'s no wrong answer, just different trade-offs.',
+                options: [
+                    { text: 'ICP route - certainty is my priority', next: 'icpOption', decision: 'choose_icp' },
+                    { text: 'Keep capital and draw down - I prefer flexibility', next: 'flexibilityPath', decision: 'prefer_drawdown' },
+                    { text: 'Hybrid approach - mix of both', next: 'hybridOutcome', decision: 'choose_hybrid' }
+                ]
+            },
+
+            hybridOutcome: {
+                type: 'outcome',
+                title: 'Hybrid Funding Strategy',
+                summary: 'Combination of guaranteed income (ICP) and flexible capital',
+                details: [
+                    'Use ICP to cover BASE care home fees with escalation (e.g., £800/week escalating at 3%)',
+                    'Keep remaining capital in cash/investments for fee increases above ICP, extras, contingencies',
+                    'Provides guaranteed coverage of essentials while maintaining access to capital',
+                    'Reduces total ICP premium needed (only covering base, not full potential costs)',
+                    'Capital remains available for spouse, emergencies, or eventual inheritance'
+                ],
+                considerations: [
+                    'Decide proportion: e.g., ICP for £800/week, keep £100k liquid for extras',
+                    'ICP should have escalation to keep pace with fee inflation',
+                    'Monitor liquid capital drawdown rate - may eventually need full ICP or property sale',
+                    'More complex to set up than single approach',
+                    'Requires ongoing management and annual review',
+                    'Financial advice essential for structuring this correctly'
+                ],
+                warnings: [
+                    'ICP portion is still irreversible once purchased',
+                    'Need clear plan for liquid capital longevity',
+                    'If liquid capital depletes, you may face difficult decisions later'
+                ]
+            },
+
+            icpOption: {
+                type: 'question',
+                question: 'Do you want capital protection on the Immediate Care Plan?',
+                context: 'Capital protection returns some of the premium to your estate if you die early, but this significantly reduces the income you receive each month.',
+                options: [
+                    { text: 'Yes, include capital protection', next: 'icpWithProtection', decision: 'icp_with_protection' },
+                    { text: 'No capital protection - maximize income', next: 'icpWithoutProtection', decision: 'icp_no_protection' }
+                ]
+            },
+
+            icpWithProtection: {
+                type: 'outcome',
+                title: 'Immediate Care Plan with Capital Protection',
+                summary: 'Guaranteed lifetime income route with inheritance protection',
+                details: [
+                    'ICP provides guaranteed income to care provider for life',
+                    'Capital protection returns funds to estate if early death',
+                    'Income level will be lower due to capital protection',
+                    'Eliminates longevity risk',
+                    'Remaining assets managed for flexibility and contingencies'
+                ],
+                considerations: [
+                    'Get quotes from multiple ICP providers',
+                    'Understand escalation options (typically 3% or 5% annual increase)',
+                    'Medical underwriting required',
+                    'Independent financial advice essential',
+                    'Compare against keeping capital invested'
+                ],
+                warnings: [
+                    'Irreversible decision once set up',
+                    'Income may not keep pace with fee increases',
+                    'Capital protection significantly reduces income'
+                ]
+            },
+
+            icpWithoutProtection: {
+                type: 'outcome',
+                title: 'Immediate Care Plan without Capital Protection',
+                summary: 'Maximum guaranteed lifetime income - higher income, higher early death risk',
+                details: [
+                    'ICP provides maximum guaranteed income for life',
+                    'No capital returned if early death',
+                    'Eliminates longevity risk completely',
+                    'Peace of mind that fees are covered',
+                    'Remaining assets available for extras and flexibility'
+                ],
+                considerations: [
+                    'Compare quotes from multiple providers',
+                    'Choose escalation carefully (fixed % vs RPI)',
+                    'Medical underwriting affects premium',
+                    'Financial advice required',
+                    'Emotional value of certainty vs cost'
+                ],
+                warnings: [
+                    'If die within first few years, most premium lost',
+                    'Irreversible decision',
+                    'Escalation may not match actual fee increases'
+                ]
+            },
+
+            incomeCoversRoute: {
+                type: 'outcome',
+                title: 'Income-Led Funding Route',
+                summary: 'Regular income covers most care costs',
+                details: [
+                    'Pension income, investment income, or rental income covers fees',
+                    'Capital preserved for contingencies',
+                    'Simple automatic payment structure',
+                    'Capital available for fee increases or higher needs'
+                ],
+                considerations: [
+                    'Monitor income vs fees annually',
+                    'Keep contingency fund for shortfalls',
+                    'Fee inflation may outpace income growth',
+                    'Review if income reduces (e.g., spouse death affects pension)'
+                ],
+                warnings: [
+                    'Care needs may increase requiring higher fees',
+                    'Income may reduce over time',
+                    'Keep reserve capital for emergencies'
+                ]
+            },
+
+            flexibilityPath: {
+                type: 'question',
+                question: 'Is there sufficient liquid cash (or easily accessible savings) to cover fees for 12-24 months?',
+                context: 'Cash provides simplicity and immediate access, ideal for shorter-term or uncertain timeframes.',
+                options: [
+                    { text: 'Yes, 12-24 months cash available', next: 'cashRoute', decision: 'cash_available' },
+                    { text: 'No, need to create liquidity', next: 'liquidityRoute', decision: 'need_liquidity' }
+                ]
+            },
+
+            cashRoute: {
+                type: 'outcome',
+                title: 'Cash-Led Funding Route',
+                summary: 'Use cash initially with ongoing monitoring',
+                details: [
+                    'Pay fees from liquid cash reserves',
+                    'Simple, straightforward approach',
+                    'No investment risk or market volatility',
+                    'Review drawdown rate regularly'
+                ],
+                considerations: [
+                    'Monitor how long cash will last at current fee levels',
+                    'Keep 12-24 months fees accessible at all times',
+                    'Plan transition to other funding when cash depletes',
+                    'Consider fee inflation in projections'
+                ],
+                warnings: [
+                    'Longevity risk - may outlive cash reserves',
+                    'No growth on cash - inflation erodes value',
+                    'Need backup plan when cash runs low'
+                ]
+            },
+
+            liquidityRoute: {
+                type: 'outcome',
+                title: 'Creating Liquidity - Your Options Explained',
+                summary: 'Several practical ways to increase accessible capital for care fees',
+                details: [
+                    'Review property decision: Could renting out the property generate regular income to meet fees?',
+                    'Sell illiquid investments: Convert stocks, bonds, or investment properties to cash',
+                    'Pension drawdown: Access pension pot if age permits (but understand notional income rules)',
+                    'Family support: Temporary family loans or gifts (document clearly to avoid deprivation issues)',
+                    'Restructure portfolios: Move from illiquid to liquid investments'
+                ],
+                considerations: [
+                    'Property rental: Generates ongoing income but involves landlord duties, void periods, maintenance, and tax',
+                    'Selling investments: Consider market timing - selling in downturn crystallizes losses',
+                    'Pension access: Usually available from age 55, but deliberate non-withdrawal may trigger notional income',
+                    'Tax implications: Each option has different tax treatment - capital gains, income tax, etc.',
+                    'Timeframes: Some options (property sale/rental) take months; others (selling shares) days/weeks',
+                    'Document everything: Keep clear records of reasons for transactions to defend against deprivation challenges'
+                ],
+                warnings: [
+                    'Deliberate Deprivation Risk: Transferring or giving away assets to reduce capital may be challenged by the Trust',
+                    'Pension withdrawals: UK guidance suggests deliberate failure to take income may result in notional income attribution',
+                    'Some restructuring has costs: Selling investments may involve fees, early withdrawal penalties, or tax',
+                    'Don\'t rush: Make informed decisions rather than panic selling at poor prices'
+                ]
+            },
+
+            growthPath: {
+                type: 'question',
+                question: 'Can the family tolerate market ups and downs?',
+                context: 'Keeping funds invested offers growth potential but involves volatility and timing risk.',
+                options: [
+                    { text: 'Yes, can tolerate market volatility', next: 'investmentRoute', decision: 'tolerate_volatility' },
+                    { text: 'No, prefer stability', next: 'stableRoute', decision: 'prefer_stability' }
+                ]
+            },
+
+            investmentRoute: {
+                type: 'outcome',
+                title: 'Investment-Led Funding Route',
+                summary: 'Diversified investments with planned withdrawals',
+                details: [
+                    'Keep assets invested while taking regular withdrawals',
+                    'Potential for growth to offset fee inflation',
+                    'Can help preserve capital for longer',
+                    'Requires ongoing management and review'
+                ],
+                considerations: [
+                    'Set up systematic withdrawal plan',
+                    'Keep 12 months fees in cash buffer',
+                    'Review asset allocation for appropriate risk',
+                    'Monitor "sequencing risk" (selling in downturn)',
+                    'Professional investment advice recommended'
+                ],
+                warnings: [
+                    'Market downturns create "pound cost ravaging"',
+                    'May need to sell at bad times',
+                    'Requires active management',
+                    'Volatility creates uncertainty'
+                ]
+            },
+
+            stableRoute: {
+                type: 'outcome',
+                title: 'Stability-Focused Route',
+                summary: 'Cash or guaranteed income approach for peace of mind',
+                details: [
+                    'Prefer certainty over growth potential',
+                    'Use cash reserves or guaranteed income products',
+                    'Minimize market exposure and volatility',
+                    'Accept lower growth in exchange for stability'
+                ],
+                considerations: [
+                    'Consider Immediate Care Plan for guaranteed income',
+                    'Use cash for fees with minimal investment risk',
+                    'Accept inflation will erode purchasing power',
+                    'May need to adjust if fees rise significantly'
+                ],
+                warnings: [
+                    'Low/no growth means capital depletes faster',
+                    'Fee inflation reduces real value over time',
+                    'May run out sooner than investment approach'
+                ]
+            }
+        };
+
+        // Additional critical checks (from flowchart)
+        const criticalChecks = {
+            deliberateDeprivation: {
+                question: 'Have there been any gifts, transfers, or restructuring of assets to reduce capital?',
+                warning: 'Deliberate deprivation is a serious issue. Any transactions specifically intended to reduce assets and qualify for Trust support may be challenged. The Trust can treat you as still having those assets (notional capital).',
+                advice: 'Document all transactions with clear reasons and timing. Seek legal advice before proceeding.'
+            },
+            nursingPayment: {
+                question: 'For nursing home self-funders in Northern Ireland: Have you checked eligibility for HPSS nursing care payment?',
+                info: 'If you are self-funding in a NURSING home (not residential) and assessed as needing nursing care, you may receive HPSS nursing care payment paid directly to the home.',
+                action: 'Request nursing care needs assessment from the Trust'
+            },
+            pensionDrawdown: {
+                question: 'Does the person have a pension in drawdown?',
+                warning: 'UK statutory guidance suggests deliberate failure to take pension income may result in "notional income" being attributed. While this guidance is primarily for England, verify your local Trust\'s approach.',
+                advice: 'Seek financial and legal advice before making pension withdrawal decisions'
+            }
+        };
+
+        // Render functions
+        function renderBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            if (wizardState.path.length === 0) {
+                breadcrumb.style.display = 'none';
+                return;
+            }
+
+            breadcrumb.style.display = 'block';
+            const pathText = wizardState.path.map(p => {
+                const node = decisionTree[p];
+                return node.question || node.title;
+            }).join(' → ');
+            
+            breadcrumb.innerHTML = `<span>Your journey:</span> ${pathText}`;
+        }
+
+        function renderNode(nodeId) {
+            wizardState.currentNode = nodeId;
+            wizardState.path.push(nodeId);
+            renderBreadcrumb();
+
+            const node = decisionTree[nodeId];
+            const container = document.getElementById('appContainer');
+
+            if (node.type === 'choice') {
+                renderChoiceNode(node, container);
+            } else if (node.type === 'question') {
+                renderQuestionNode(node, container);
+            } else if (node.type === 'info') {
+                renderInfoNode(node, container);
+            } else if (node.type === 'outcome') {
+                renderOutcomeNode(node, container);
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderChoiceNode(node, container) {
+            let html = '<div class="card">';
+            html += `<h2 class="section-title">${node.title}</h2>`;
+            html += `<p class="section-subtitle">${node.subtitle}</p>`;
+
+            html += '<div class="choice-cards">';
+            node.choices.forEach((choice, index) => {
+                html += `<div class="choice-card" onclick="handleChoice(${index})">`;
+                html += `<h3>${choice.label}</h3>`;
+                html += `<p>${choice.description}</p>`;
+                html += '</div>';
+            });
+            html += '</div>';
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function renderQuestionNode(node, container) {
+            let html = '<div class="card">';
+            html += `<h2 class="decision-question">${node.question}</h2>`;
+            
+            if (node.context) {
+                html += `<div class="context-note">${node.context}</div>`;
+            }
+
+            html += '<div style="margin-top: 1.5rem;">';
+            node.options.forEach((option, index) => {
+                html += `<div class="radio-option" onclick="selectOption(${index})">`;
+                html += `<input type="radio" name="decision">`;
+                html += `<span>${option.text}</span>`;
+                html += '</div>';
+            });
+            html += '</div>';
+
+            if (wizardState.path.length > 1) {
+                html += '<div class="button-group">';
+                html += '<button class="btn btn-secondary" onclick="goBack()">← Back</button>';
+                html += '</div>';
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function renderInfoNode(node, container) {
+            let html = '<div class="card">';
+            html += `<h2 class="section-title">${node.title}</h2>`;
+            html += `<p class="section-subtitle">${node.message}</p>`;
+
+            if (node.nextSteps) {
+                html += '<div class="info-box">';
+                html += '<h4>Key Points</h4>';
+                html += '<ul>';
+                node.nextSteps.forEach(step => {
+                    html += `<li>${step}</li>`;
+                });
+                html += '</ul>';
+                html += '</div>';
+            }
+
+            if (node.warnings) {
+                html += '<div class="warning-box">';
+                html += '<h4>Important Warnings</h4>';
+                node.warnings.forEach(warning => {
+                    html += `<p style="margin-bottom: 0.5rem;">• ${warning}</p>`;
+                });
+                html += '</div>';
+            }
+
+            html += '<div class="button-group">';
+            if (wizardState.path.length > 1) {
+                html += '<button class="btn btn-secondary" onclick="goBack()">← Back</button>';
+            }
+            html += `<button class="btn btn-primary" onclick="continueJourney()">Continue →</button>`;
+            html += '</div>';
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function renderOutcomeNode(node, container) {
+            let html = '<div class="outcome-card">';
+            html += `<h3>${node.title}</h3>`;
+            html += `<p style="font-size: 1.1rem; margin-bottom: 1rem;">${node.summary}</p>`;
+
+            html += '<div class="outcome-content">';
+            
+            html += '<h4>Your Funding Strategy</h4>';
+            html += '<ul>';
+            node.details.forEach(detail => {
+                html += `<li>${detail}</li>`;
+            });
+            html += '</ul>';
+
+            html += '<h4 style="margin-top: 1.5rem;">Important Considerations</h4>';
+            html += '<ul>';
+            node.considerations.forEach(consideration => {
+                html += `<li>${consideration}</li>`;
+            });
+            html += '</ul>';
+
+            if (node.warnings) {
+                html += '<h4 style="margin-top: 1.5rem;">Key Warnings</h4>';
+                html += '<ul>';
+                node.warnings.forEach(warning => {
+                    html += `<li>${warning}</li>`;
+                });
+                html += '</ul>';
+            }
+
+            html += '</div>';
+
+            // Show journey path
+            html += '<div class="journey-path">';
+            html += '<h5>Your Decision Path:</h5>';
+            html += '<p>' + wizardState.path.map(p => decisionTree[p].question || decisionTree[p].title).join(' → ') + '</p>';
+            html += '</div>';
+
+            html += '</div>';
+
+            // Add critical checks
+            html += renderCriticalChecks();
+
+            // Add buttons
+            html += '<div class="card">';
+            html += '<div class="button-group">';
+            html += '<button class="btn btn-secondary" onclick="goBack()">← Adjust Decisions</button>';
+            html += '<button class="btn btn-primary" onclick="restart()">Start New Assessment</button>';
+            html += '</div>';
+            html += '</div>';
+
+            container.innerHTML = html;
+        }
+
+        function renderCriticalChecks() {
+            let html = '<div class="card">';
+            html += '<h2 class="section-title">Critical Additional Checks</h2>';
+            
+            // Deliberate deprivation
+            html += '<div class="warning-box">';
+            html += `<h4>${criticalChecks.deliberateDeprivation.question}</h4>`;
+            html += `<p>${criticalChecks.deliberateDeprivation.warning}</p>`;
+            html += `<p style="margin-top: 0.5rem; font-weight: 600;">${criticalChecks.deliberateDeprivation.advice}</p>`;
+            html += '</div>';
+
+            // Nursing payment (if applicable)
+            if (wizardState.decisions.care_home) {
+                html += '<div class="info-box">';
+                html += `<h4>${criticalChecks.nursingPayment.question}</h4>`;
+                html += `<p>${criticalChecks.nursingPayment.info}</p>`;
+                html += `<p style="margin-top: 0.5rem; font-weight: 600;">Action: ${criticalChecks.nursingPayment.action}</p>`;
+                html += '</div>';
+            }
+
+            // Pension drawdown
+            html += '<div class="info-box">';
+            html += `<h4>${criticalChecks.pensionDrawdown.question}</h4>`;
+            html += `<p>${criticalChecks.pensionDrawdown.warning}</p>`;
+            html += `<p style="margin-top: 0.5rem; font-weight: 600;">${criticalChecks.pensionDrawdown.advice}</p>`;
+            html += '</div>';
+
+            // NI note on Deferred Payment
+            html += '<div class="info-box">';
+            html += '<h4>Northern Ireland Note: Deferred Payment Agreements</h4>';
+            html += '<p>Deferred Payment Agreements are described in other UK nations but are NOT available as a standard scheme in Northern Ireland. Some Trusts may have local arrangements - ask your specific Trust about interim funding options while property is being dealt with.</p>';
+            html += '</div>';
+
+            html += '</div>';
+            return html;
+        }
+
+        // Event handlers
+        function handleChoice(index) {
+            const node = decisionTree[wizardState.currentNode];
+            const choice = node.choices[index];
+
+            if (choice.action === 'showAllOptions') {
+                window.location.href = '/mnt/user-data/outputs/ni-care-funding-complete.html';
+                return;
+            }
+
+            if (choice.next) {
+                renderNode(choice.next);
+            }
+        }
+
+        function selectOption(index) {
+            const node = decisionTree[wizardState.currentNode];
+            const option = node.options[index];
+
+            // Store decision
+            if (option.decision) {
+                wizardState.decisions[option.decision] = true;
+            }
+
+            // Navigate
+            if (option.next) {
+                renderNode(option.next);
+            }
+        }
+
+        function continueJourney() {
+            const node = decisionTree[wizardState.currentNode];
+            if (node.next) {
+                renderNode(node.next);
+            }
+        }
+
+        function goBack() {
+            if (wizardState.path.length > 1) {
+                wizardState.path.pop(); // Remove current
+                const previousNode = wizardState.path.pop(); // Get previous
+                renderNode(previousNode);
+            }
+        }
+
+        function restart() {
+            wizardState.path = [];
+            wizardState.decisions = {};
+            wizardState.currentNode = 'start';
+            renderNode('start');
+        }
+
+        // Initialize
+        renderNode('start');
+    </script>
+</body>
+</html>

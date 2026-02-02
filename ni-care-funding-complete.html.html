@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northern Ireland Care Funding Complete Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c5f7a;
+            --primary-light: #4a8ba8;
+            --accent: #5a8f7b;
+            --accent-light: #7db89e;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --text-dark: #1a2332;
+            --text-medium: #4a5568;
+            --text-light: #718096;
+            --bg-light: #f8fafb;
+            --bg-white: #ffffff;
+            --border: #e2e8f0;
+            --shadow: rgba(44, 95, 122, 0.08);
+            --green: #10b981;
+            --amber: #f59e0b;
+            --red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: linear-gradient(135deg, #f8fafb 0%, #e8f0f4 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        h1 {
+            font-family: 'Crimson Text', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-medium);
+            font-weight: 300;
+        }
+
+        .disclaimer {
+            background: var(--bg-white);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        .disclaimer h3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .disclaimer p {
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        .warning-box {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 4px solid var(--danger);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            font-family: 'Crimson Text', serif;
+            color: var(--danger);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box p {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .info-box {
+            background: rgba(74, 139, 168, 0.08);
+            border-left: 4px solid var(--primary-light);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            font-family: 'Crimson Text', serif;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box p, .info-box ul {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .info-box ul {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .stage {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .stage.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-medium);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-light);
+        }
+
+        .radio-option.selected, .checkbox-option.selected {
+            border-color: var(--primary);
+            background: rgba(44, 95, 122, 0.05);
+        }
+
+        .radio-option input, .checkbox-option input {
+            margin-right: 0.75rem;
+            cursor: pointer;
+        }
+
+        .priority-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .priority-card:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .priority-card.selected {
+            border-color: var(--accent);
+            background: rgba(90, 143, 123, 0.1);
+        }
+
+        .priority-card h4 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .priority-card p {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .option-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .option-card.strong-fit {
+            border-color: var(--green);
+            background: rgba(16, 185, 129, 0.03);
+        }
+
+        .option-card.possible-fit {
+            border-color: var(--amber);
+            background: rgba(245, 158, 11, 0.03);
+        }
+
+        .option-card.poor-fit {
+            border-color: var(--border);
+            opacity: 0.6;
+        }
+
+        .option-card.self-funder {
+            border-color: var(--primary);
+            background: rgba(44, 95, 122, 0.03);
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .option-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .fit-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .fit-badge.strong {
+            background: var(--green);
+            color: white;
+        }
+
+        .fit-badge.possible {
+            background: var(--amber);
+            color: white;
+        }
+
+        .fit-badge.poor {
+            background: var(--text-light);
+            color: white;
+        }
+
+        .fit-badge.explore {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-description {
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .trade-offs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .trade-off-col h5 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .trade-off-col.pros h5 {
+            color: var(--green);
+        }
+
+        .trade-off-col.cons h5 {
+            color: var(--red);
+        }
+
+        .trade-off-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .trade-off-col li {
+            padding: 0.25rem 0;
+            font-size: 0.85rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .pros li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        .cons li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-weight: bold;
+        }
+
+        .next-steps {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .next-steps h5 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next-steps li {
+            padding: 0.25rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: 0.85rem;
+        }
+
+        .next-steps li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .explore-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .explore-button:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 95, 122, 0.3);
+        }
+
+        .btn {
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            font-family: 'Source Sans 3', sans-serif;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 95, 122, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-medium);
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: -50%;
+            right: 50%;
+            height: 2px;
+            background: var(--border);
+            z-index: -1;
+        }
+
+        .step:first-child::before {
+            display: none;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--border);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step.completed .step-circle {
+            background: var(--accent);
+        }
+
+        .step.active .step-circle {
+            background: var(--primary);
+            box-shadow: 0 0 0 4px rgba(44, 95, 122, 0.2);
+        }
+
+        .step-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .filter-summary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-summary h3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-weight: 600;
+        }
+
+        .self-funder-section {
+            background: linear-gradient(135deg, rgba(44, 95, 122, 0.05) 0%, rgba(74, 139, 168, 0.05) 100%);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .self-funder-section h3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .funding-route-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .funding-route-card h4 {
+            font-family: 'Crimson Text', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .funding-route-card p {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        .when-suitable {
+            background: rgba(16, 185, 129, 0.08);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .when-suitable h5 {
+            color: var(--green);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .when-suitable ul {
+            list-style: none;
+            padding: 0;
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+
+        .when-suitable li {
+            padding: 0.25rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .when-suitable li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+        }
+
+        .key-risks {
+            background: rgba(239, 68, 68, 0.08);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .key-risks h5 {
+            color: var(--red);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .key-risks ul {
+            list-style: none;
+            padding: 0;
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+
+        .key-risks li {
+            padding: 0.25rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .key-risks li::before {
+            content: "!";
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-weight: bold;
+        }
+
+        .sources {
+            background: var(--bg-white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .sources h4 {
+            font-family: 'Crimson Text', serif;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .sources a {
+            color: var(--primary-light);
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .sources a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .section-title { font-size: 1.5rem; }
+            .trade-offs { grid-template-columns: 1fr; }
+            .progress-steps { flex-wrap: wrap; }
+            .step { flex: 1 1 50%; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Northern Ireland Care Funding Complete Guide</h1>
+            <p class="subtitle">Comprehensive decision support for care funding options</p>
+        </header>
+
+        <div class="disclaimer">
+            <h3>Important Notice</h3>
+            <p>This tool provides information and signposting only. It does not constitute financial, legal, or medical advice. The outcomes generated are for guidance purposes and should be verified with the relevant Health and Social Care Trust, professional advisers, or legal representatives as appropriate. All content is specific to Northern Ireland.</p>
+        </div>
+
+        <div class="progress-steps">
+            <div class="step active" id="step1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Situation</div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Priorities</div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Options</div>
+            </div>
+        </div>
+
+        <!-- Stage 1: Gather Situation -->
+        <div id="stage1" class="stage active">
+            <div class="card">
+                <h2 class="section-title">Step 1: Individual Situation</h2>
+                <p class="section-subtitle">This information helps identify which funding routes are available</p>
+
+                <div class="form-group">
+                    <label class="form-label">Current location</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectRadio('location', 'hospital')">
+                            <input type="radio" name="location" value="hospital">
+                            <span>Currently in hospital</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('location', 'community')">
+                            <input type="radio" name="location" value="community">
+                            <span>Living in the community / at home</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Care setting needed</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectRadio('careSetting', 'home')">
+                            <input type="radio" name="careSetting" value="home">
+                            <span>Care at home</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('careSetting', 'residential')">
+                            <input type="radio" name="careSetting" value="residential">
+                            <span>Residential care home (no nursing)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('careSetting', 'nursing')">
+                            <input type="radio" name="careSetting" value="nursing">
+                            <span>Nursing home (with nursing care)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="stayTypeGroup" style="display: none;">
+                    <label class="form-label">Expected length of stay</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectRadio('stayType', 'temporary')">
+                            <input type="radio" name="stayType" value="temporary">
+                            <span>Temporary (respite or short-term)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('stayType', 'permanent')">
+                            <input type="radio" name="stayType" value="permanent">
+                            <span>Permanent residence</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Property ownership</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectRadio('property', 'owner')">
+                            <input type="radio" name="property" value="owner">
+                            <span>Owns or part-owns a property</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('property', 'notOwner')">
+                            <input type="radio" name="property" value="notOwner">
+                            <span>Does not own property</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="occupierGroup" style="display: none;">
+                    <label class="form-label">Who lives in the property?</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option" onclick="toggleCheckbox('spouse')">
+                            <input type="checkbox" id="spouse" value="spouse">
+                            <span>Spouse or partner</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox('relativeOver60')">
+                            <input type="checkbox" id="relativeOver60" value="relativeOver60">
+                            <span>Close relative aged 60 or over</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox('incapacitatedRelative')">
+                            <input type="checkbox" id="incapacitatedRelative" value="incapacitatedRelative">
+                            <span>Close relative who is incapacitated</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox('childUnder16')">
+                            <input type="checkbox" id="childUnder16" value="childUnder16">
+                            <span>Child under 16 the person is responsible for</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox('noneAbove')">
+                            <input type="checkbox" id="noneAbove" value="noneAbove">
+                            <span>None of the above</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Total capital (savings, investments, property if counted)</label>
+                    <div class="info-box">
+                        <h4>Capital Limits (2025/26)</h4>
+                        <p>Lower threshold: £14,250 | Upper threshold: £23,250</p>
+                    </div>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectRadio('capital', 'low')">
+                            <input type="radio" name="capital" value="low">
+                            <span>Under £14,250</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('capital', 'medium')">
+                            <input type="radio" name="capital" value="medium">
+                            <span>£14,250 to £23,250</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('capital', 'high')">
+                            <input type="radio" name="capital" value="high">
+                            <span>Over £23,250</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Age of person needing care</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectRadio('age', 'under55')">
+                            <input type="radio" name="age" value="under55">
+                            <span>Under 55</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('age', 'over55')">
+                            <input type="radio" name="age" value="over55">
+                            <span>55 or over</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Health condition complexity</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectRadio('healthComplexity', 'standard')">
+                            <input type="radio" name="healthComplexity" value="standard">
+                            <span>Standard care needs</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('healthComplexity', 'complex')">
+                            <input type="radio" name="healthComplexity" value="complex">
+                            <span>Complex health needs (may qualify for Continuing Healthcare)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="goToStage2()">Next: Set Priorities →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stage 2: Set Priorities -->
+        <div id="stage2" class="stage">
+            <div class="card">
+                <h2 class="section-title">Step 2: What Matters Most?</h2>
+                <p class="section-subtitle">Select your priorities - this helps filter options to what's most suitable</p>
+
+                <div id="prioritiesList">
+                    <div class="priority-card" onclick="togglePriority('stayHome')">
+                        <h4>Stay at home as long as possible</h4>
+                        <p>Preference for care in familiar surroundings rather than residential placement</p>
+                    </div>
+                    <div class="priority-card" onclick="togglePriority('protectSpouse')">
+                        <h4>Protect spouse/partner's security</h4>
+                        <p>Ensure the person still living at home is financially secure and can remain there</p>
+                    </div>
+                    <div class="priority-card" onclick="togglePriority('protectHome')">
+                        <h4>Protect the family home (where possible)</h4>
+                        <p>Minimize the chance of the property being counted in financial assessment</p>
+                    </div>
+                    <div class="priority-card" onclick="togglePriority('inheritance')">
+                        <h4>Preserve inheritance for family</h4>
+                        <p>Leave as much as possible for children or other beneficiaries</p>
+                    </div>
+                    <div class="priority-card" onclick="togglePriority('costCertainty')">
+                        <h4>Certainty over monthly costs</h4>
+                        <p>Know exactly what will be paid each month, avoid unexpected bills and longevity risk</p>
+                    </div>
+                    <div class="priority-card" onclick="togglePriority('speedSimplicity')">
+                        <h4>Speed and simplicity</h4>
+                        <p>Quick decisions, minimal paperwork, fewer assessments and processes</p>
+                    </div>
+                    <div class="priority-card" onclick="togglePriority('choice')">
+                        <h4>Choice of care provider and location</h4>
+                        <p>Freedom to select specific care homes or providers</p>
+                    </div>
+                    <div class="priority-card" onclick="togglePriority('flexibility')">
+                        <h4>Flexibility and control</h4>
+                        <p>Ability to change arrangements as circumstances evolve</p>
+                    </div>
+                    <div class="priority-card" onclick="togglePriority('minimizeConflict')">
+                        <h4>Reduce family conflict</h4>
+                        <p>Clear roles and transparent decision-making to avoid disputes</p>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="goToStage1()">← Back</button>
+                    <button class="btn btn-primary" onclick="goToStage3()">Show My Options →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stage 3: Filtered Options -->
+        <div id="stage3" class="stage">
+            <div class="filter-summary" id="filterSummary">
+                <!-- Dynamic summary will be inserted here -->
+            </div>
+
+            <div class="card">
+                <h2 class="section-title">Your Funding Options</h2>
+                <p class="section-subtitle">Ranked by fit with your situation and priorities</p>
+                
+                <div id="optionsContainer">
+                    <!-- Options will be dynamically inserted here -->
+                </div>
+
+                <!-- Self-Funder Deep Dive Section -->
+                <div id="selfFunderDeepDive" style="display: none;">
+                    <!-- Will be shown when appropriate -->
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="goToStage2()">← Adjust Priorities</button>
+                    <button class="btn btn-secondary" onclick="goToStage1()">← Change Situation</button>
+                    <button class="btn btn-primary" onclick="restart()">Start New Assessment</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sources">
+            <h4>Key References</h4>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 0.5rem;">• NI Direct - Paying for care: <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank">nidirect.gov.uk</a></li>
+                <li style="margin-bottom: 0.5rem;">• NI Direct - Property and care fees: <a href="https://www.nidirect.gov.uk/articles/your-home-assets-and-residential-care-or-nursing-home-fees" target="_blank">nidirect.gov.uk</a></li>
+                <li style="margin-bottom: 0.5rem;">• DoH CRAG Circular 2025/26: <a href="https://www.health-ni.gov.uk/sites/default/files/2025-03/doh-crag-2025-26-circular.PDF" target="_blank">health-ni.gov.uk</a></li>
+                <li style="margin-bottom: 0.5rem;">• DoH Continuing Healthcare: <a href="https://www.health-ni.gov.uk/sites/default/files/publications/health/doh-guide-healthcare-ni-18-may-2022.pdf" target="_blank">health-ni.gov.uk</a></li>
+                <li>• DoH Nursing care payments: <a href="https://www.health-ni.gov.uk/sites/default/files/publications/dhssps/payments-for-nursing-care-information-leaflet.pdf" target="_blank">health-ni.gov.uk</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        const state = {
+            location: null,
+            careSetting: null,
+            stayType: null,
+            property: null,
+            occupiers: [],
+            capital: null,
+            age: null,
+            healthComplexity: null,
+            priorities: []
+        };
+
+        // Enhanced funding options database with self-funder detail
+        const fundingOptions = [
+            {
+                id: 'continuingHealthcare',
+                name: 'Continuing Healthcare (CHC)',
+                description: 'Fully funded by health services for those with complex healthcare needs that cannot be met outside hospital settings',
+                eligibility: {
+                    healthComplexity: ['complex'],
+                    location: ['hospital']
+                },
+                pros: [
+                    'No charges for care - completely free',
+                    'Comprehensive healthcare provision',
+                    'Protects all assets including property',
+                    'No means testing'
+                ],
+                cons: [
+                    'Very strict eligibility criteria',
+                    'Assessment process can be lengthy',
+                    'May require appeals if initially refused',
+                    'Subject to ongoing review - can be withdrawn',
+                    'Only applies where needs cannot be met in community'
+                ],
+                priorityScores: {
+                    protectHome: 10,
+                    inheritance: 10,
+                    costCertainty: 9,
+                    protectSpouse: 10,
+                    speedSimplicity: 3,
+                    choice: 5
+                },
+                nextSteps: [
+                    'Request CHC assessment from hospital discharge team',
+                    'Gather all medical evidence of healthcare needs',
+                    'Understand the appeals process',
+                    'Document current care arrangements',
+                    'Continue even if first assessment is negative'
+                ]
+            },
+            {
+                id: 'trustSupportedResidential',
+                name: 'Trust-Supported Residential Care',
+                description: 'Trust pays most costs, you contribute what you can afford from income',
+                eligibility: {
+                    capital: ['low'],
+                    careSetting: ['residential', 'nursing']
+                },
+                pros: [
+                    'Trust covers the majority of care costs',
+                    'Personal Expenses Allowance protected (£34.10/week from April 2025)',
+                    'Clear assessment process with safeguards',
+                    'Reviewed regularly as circumstances change'
+                ],
+                cons: [
+                    'Must go through financial assessment',
+                    'Limited choice of care home (must be within Trust funding rates)',
+                    'Income contributions required',
+                    'Annual reviews and paperwork'
+                ],
+                priorityScores: {
+                    costCertainty: 8,
+                    protectHome: 7,
+                    inheritance: 6,
+                    choice: 3,
+                    speedSimplicity: 5,
+                    protectSpouse: 8
+                },
+                nextSteps: [
+                    'Contact Trust for needs and financial assessment',
+                    'Prepare income and capital documentation',
+                    'Discuss care home options with social worker',
+                    'Understand review and appeals process'
+                ]
+            },
+            {
+                id: 'partiallySupportedResidential',
+                name: 'Partially Supported Residential Care',
+                description: 'Shared funding - Trust contributes, you pay from income and capital using tariff income rules',
+                eligibility: {
+                    capital: ['medium'],
+                    careSetting: ['residential', 'nursing']
+                },
+                pros: [
+                    'Trust provides partial support',
+                    'Personal Expenses Allowance still protected',
+                    'May transition to full Trust support as capital reduces below £14,250'
+                ],
+                cons: [
+                    'Complex tariff income calculation (£1 per week for every £250 over £14,250)',
+                    'Capital depletes over time',
+                    'Limited care home choice',
+                    'Ongoing financial assessments'
+                ],
+                priorityScores: {
+                    costCertainty: 6,
+                    protectHome: 5,
+                    inheritance: 4,
+                    choice: 4,
+                    speedSimplicity: 4
+                },
+                nextSteps: [
+                    'Detailed financial assessment with Trust',
+                    'Understand tariff income rules clearly',
+                    'Plan for reducing capital trajectory',
+                    'Review care options within Trust funding levels'
+                ]
+            },
+            {
+                id: 'selfFundedOptions',
+                name: 'Self-Funded Care Options',
+                description: 'Multiple funding strategies available for those with capital over £23,250 - explore detailed options below',
+                eligibility: {
+                    capital: ['high']
+                },
+                isSelfFunder: true,
+                pros: [
+                    'Complete choice of care provider and location',
+                    'No Trust assessment delays',
+                    'Multiple funding strategies to consider',
+                    'Can be tailored to individual priorities'
+                ],
+                cons: [
+                    'Pay full care costs (typically £800-1,200+ per week for residential)',
+                    'Capital can deplete quickly',
+                    'Complex decisions around funding order',
+                    'Risk of running out of funds (longevity risk)'
+                ],
+                priorityScores: {
+                    choice: 10,
+                    speedSimplicity: 7,
+                    costCertainty: 4,
+                    inheritance: 5,
+                    protectHome: 4,
+                    flexibility: 9
+                },
+                nextSteps: [
+                    'Explore the detailed self-funder options below',
+                    'Consider which funding sources to use and in what order',
+                    'Understand the trade-offs between certainty, choice, and cost',
+                    'Seek financial advice for complex situations'
+                ]
+            },
+            {
+                id: 'homeCarePrivate',
+                name: 'Private Home Care',
+                description: 'Arrange and pay for care at home without Trust involvement',
+                eligibility: {
+                    careSetting: ['home'],
+                    capital: ['medium', 'high']
+                },
+                pros: [
+                    'Stay in own home and familiar environment',
+                    'Complete choice of care provider',
+                    'Flexible arrangements that can adapt',
+                    'No Trust assessment needed'
+                ],
+                cons: [
+                    'Can be expensive (£15-25+ per hour)',
+                    'Need to manage care arrangements yourself',
+                    'Costs can escalate rapidly with increasing needs',
+                    'No financial protection from Trust'
+                ],
+                priorityScores: {
+                    stayHome: 10,
+                    choice: 9,
+                    speedSimplicity: 7,
+                    protectHome: 8,
+                    costCertainty: 3,
+                    flexibility: 8
+                },
+                nextSteps: [
+                    'Research home care agencies in your area',
+                    'Get quotes and compare services',
+                    'Consider live-in care as alternative',
+                    'Plan for increasing care needs over time'
+                ]
+            },
+            {
+                id: 'homeCareSupported',
+                name: 'Trust-Supported Home Care',
+                description: 'Trust assesses needs and contributes to home care costs',
+                eligibility: {
+                    careSetting: ['home'],
+                    capital: ['low', 'medium']
+                },
+                pros: [
+                    'Stay at home in familiar environment',
+                    'Trust contributes to costs',
+                    'Professional needs assessment and review',
+                    'Safeguarding and ongoing support'
+                ],
+                cons: [
+                    'Assessment process required',
+                    'Contribution based on your finances',
+                    'Limited provider choice',
+                    'Care package may be capped by Trust'
+                ],
+                priorityScores: {
+                    stayHome: 10,
+                    costCertainty: 7,
+                    protectHome: 9,
+                    choice: 5,
+                    speedSimplicity: 4,
+                    protectSpouse: 9
+                },
+                nextSteps: [
+                    'Request needs assessment from Trust',
+                    'Prepare care needs documentation',
+                    'Complete financial assessment for contributions',
+                    'Agree care plan and providers'
+                ]
+            },
+            {
+                id: 'familyFunded',
+                name: 'Family-Funded Care',
+                description: 'Family members contribute to care costs together',
+                eligibility: {
+                    capital: ['low', 'medium', 'high'],
+                    careSetting: ['home', 'residential', 'nursing']
+                },
+                pros: [
+                    'Preserves person\'s own capital for longer',
+                    'Can enable better care choices',
+                    'Family stays involved in decisions',
+                    'Flexible arrangements'
+                ],
+                cons: [
+                    'Requires family financial capacity',
+                    'High potential for family disagreements',
+                    'Not sustainable long-term for many families',
+                    'Tax implications to consider (inheritance tax, gifts)'
+                ],
+                priorityScores: {
+                    inheritance: 9,
+                    protectHome: 9,
+                    choice: 8,
+                    minimizeConflict: 2,
+                    speedSimplicity: 6,
+                    flexibility: 7
+                },
+                nextSteps: [
+                    'Family meeting to discuss capacity and commitment',
+                    'Document all agreements clearly in writing',
+                    'Consider tax advice on gifts and inheritance',
+                    'Plan for changing circumstances',
+                    'Consider mediation if disagreements arise'
+                ]
+            },
+            {
+                id: 'propertyProtected',
+                name: 'Property-Protected Funding (Qualifying Occupier)',
+                description: 'Trust support with property disregarded because spouse/relative lives there',
+                eligibility: {
+                    property: ['owner'],
+                    occupiers: ['spouse', 'relativeOver60', 'incapacitatedRelative', 'childUnder16'],
+                    careSetting: ['residential', 'nursing']
+                },
+                pros: [
+                    'Property completely disregarded from assessment',
+                    'Protects spouse or relative at home',
+                    'Trust funding based only on other capital and income',
+                    'Home preserved for occupier'
+                ],
+                cons: [
+                    'Must meet strict qualifying occupier criteria',
+                    'Income still assessed for contribution',
+                    'May create complexity if occupier moves or dies',
+                    'Requires clear documentation'
+                ],
+                priorityScores: {
+                    protectSpouse: 10,
+                    protectHome: 10,
+                    inheritance: 8,
+                    costCertainty: 7,
+                    minimizeConflict: 8
+                },
+                nextSteps: [
+                    'Document who lives in property and their relationship',
+                    'Provide evidence to Trust of qualifying occupier status',
+                    'Complete financial assessment',
+                    'Understand what happens if circumstances change'
+                ]
+            }
+        ];
+
+        // Self-funder specific routes (from your article)
+        const selfFunderRoutes = [
+            {
+                id: 'incomeFirst',
+                name: 'Income-First Funding',
+                description: 'Use reliable ongoing income (pensions, rental income, dividends) to meet care fees while preserving capital',
+                whenSuitable: [
+                    'Income sufficient or near-sufficient to cover fees',
+                    'Want to preserve capital for spouse or inheritance',
+                    'Prefer simplicity and automatic payments',
+                    'Property generates rental income'
+                ],
+                keyRisks: [
+                    'Fee inflation may outpace income growth',
+                    'Care needs may increase requiring higher fees',
+                    'Income may reduce (e.g., death of spouse reduces pension)',
+                    'Rental income has void periods, maintenance costs, tax'
+                ],
+                considerations: [
+                    'Review income sources annually against fee increases',
+                    'Keep contingency fund for shortfalls',
+                    'Understand tax treatment of different income sources',
+                    'Consider what happens if income reduces'
+                ]
+            },
+            {
+                id: 'cashDrawdown',
+                name: 'Cash / Savings Drawdown',
+                description: 'Use liquid cash and savings to pay fees, providing flexibility and simplicity',
+                whenSuitable: [
+                    'Want immediate access and no investment risk',
+                    'Prefer simplicity in payments',
+                    'Expect care need to be relatively short-term (1-3 years)',
+                    'Capital exceeds likely care costs'
+                ],
+                keyRisks: [
+                    'Longevity risk - may live longer than cash lasts',
+                    'Fee inflation reduces purchasing power',
+                    'No growth potential on cash',
+                    'May run out if care lasts many years'
+                ],
+                considerations: [
+                    'Monitor drawdown rate against typical life expectancy',
+                    'Keep 12-24 months of fees readily accessible',
+                    'Consider when to move to other funding sources',
+                    'Review annually as fees increase'
+                ]
+            },
+            {
+                id: 'investmentDrawdown',
+                name: 'Investment-Based Funding',
+                description: 'Keep funds invested while taking regular withdrawals, potentially benefiting from growth',
+                whenSuitable: [
+                    'Have diversified investment portfolio',
+                    'Can tolerate market ups and downs',
+                    'Want potential for growth to offset fee inflation',
+                    'Expect longer-term care need (5+ years)',
+                    'Want to preserve some capital for estate'
+                ],
+                keyRisks: [
+                    'Sequencing risk (selling in market downturn)',
+                    'Market volatility creates uncertainty',
+                    'May need to sell at bad times',
+                    'Requires ongoing management and review'
+                ],
+                considerations: [
+                    'Set up systematic withdrawal plan',
+                    'Keep 12 months fees in cash as buffer',
+                    'Review asset allocation for lower volatility',
+                    'Understand "pound cost ravaging" risk',
+                    'Consider professional investment advice'
+                ]
+            },
+            {
+                id: 'propertySale',
+                name: 'Property Sale Funding',
+                description: 'Sell the property to release capital for care fees',
+                whenSuitable: [
+                    'Property is empty or no qualifying occupier',
+                    'No wish to keep property in family',
+                    'Want certainty and to simplify estate',
+                    'Need immediate large capital sum',
+                    '12-week property disregard period has passed'
+                ],
+                keyRisks: [
+                    'Irreversible decision',
+                    'May take time to sell at good price',
+                    'Market conditions affect sale price',
+                    'Capital gains tax may apply (main residence relief usually available)',
+                    'Emotional attachment and family expectations'
+                ],
+                considerations: [
+                    'Time sale carefully - not rushed',
+                    'Understand 12-week disregard period',
+                    'Consider market conditions',
+                    'Then choose how to invest/use proceeds',
+                    'Update will if needed'
+                ]
+            },
+            {
+                id: 'propertyRent',
+                name: 'Retain and Rent Property',
+                description: 'Keep ownership of property but rent it out to generate income for fees',
+                whenSuitable: [
+                    'Want to keep property in family long-term',
+                    'Property can generate rental income',
+                    'Can manage landlord responsibilities',
+                    'May want family member to eventually occupy it'
+                ],
+                keyRisks: [
+                    'Landlord duties (maintenance, safety certificates, repairs)',
+                    'Void periods with no rental income',
+                    'Tenant issues and potential damage',
+                    'Rental income is taxable',
+                    'Letting agent fees (typically 10-15%)',
+                    'Property value at risk if market falls'
+                ],
+                considerations: [
+                    'Use professional letting agent',
+                    'Budget for void periods and maintenance',
+                    'Understand tax on rental income',
+                    'Keep contingency fund for repairs',
+                    'Property counted in estate for inheritance tax',
+                    'May need to sell if rental income insufficient'
+                ]
+            },
+            {
+                id: 'equityRelease',
+                name: 'Equity Release (Lifetime Mortgage)',
+                description: 'Release equity from property while retaining ownership - only available for care at HOME and person must be age 55+',
+                whenSuitable: [
+                    'Care is at HOME (not residential/nursing)',
+                    'Person is aged 55 or over',
+                    'Want to stay in own home',
+                    'Need funds for home adaptations or care costs',
+                    'No other liquid capital available'
+                ],
+                keyRisks: [
+                    'Only suitable for care AT HOME',
+                    'Interest compounds - debt grows significantly',
+                    'Reduces inheritance substantially',
+                    'Irreversible decision',
+                    'May affect means-tested benefits',
+                    'Expensive product with high setup costs'
+                ],
+                considerations: [
+                    'ONLY consider if care is at home, not residential care',
+                    'Understand compound interest impact',
+                    'Must take independent financial advice',
+                    'Discuss with family about inheritance impact',
+                    'Consider alternatives first',
+                    'Ensure Equity Release Council standards'
+                ]
+            },
+            {
+                id: 'immediateCare',
+                name: 'Immediate Care Plan (ICP)',
+                description: 'Insurance product that pays a guaranteed income to care provider for life in exchange for lump sum',
+                whenSuitable: [
+                    'Want certainty - cap lifetime care costs',
+                    'Concerned about longevity risk',
+                    'Want peace of mind for family',
+                    'Have capital to pay premium (typically £100k-£300k)',
+                    'In nursing or residential care (not usually for home care)'
+                ],
+                keyRisks: [
+                    'If die early, most of premium is lost (unless capital protection added)',
+                    'Capital protection reduces the income significantly',
+                    'Payments may not keep pace with fee increases (escalation caps)',
+                    'Irreversible once set up',
+                    'Underwriting process - health assessment',
+                    'Not available from all providers'
+                ],
+                considerations: [
+                    'Get quotes from multiple providers',
+                    'Decide whether to add capital protection',
+                    'Understand escalation options (fixed % vs RPI)',
+                    'Consider partial ICP (cover base fee, pay extras separately)',
+                    'Must take financial advice',
+                    'Compare against keeping capital invested',
+                    'Emotional value of "certainty" vs financial cost'
+                ]
+            },
+            {
+                id: 'mixedApproach',
+                name: 'Mixed Funding Strategy',
+                description: 'Combine multiple funding sources strategically - e.g., income for base fees, capital for extras, ICP for nursing element',
+                whenSuitable: [
+                    'Have diverse assets (property, investments, pensions)',
+                    'Want to balance multiple priorities',
+                    'Prefer phased approach rather than all-or-nothing',
+                    'Want to preserve some assets while funding care'
+                ],
+                keyRisks: [
+                    'More complex to manage and coordinate',
+                    'Requires ongoing review and adjustment',
+                    'May miss opportunities for simplification',
+                    'Family may find it harder to understand'
+                ],
+                considerations: [
+                    'Document the strategy clearly',
+                    'Review annually as circumstances change',
+                    'Consider tax efficiency of different sources',
+                    'Keep clear records for family/executors',
+                    'May need financial advice to optimize'
+                ]
+            }
+        ];
+
+        // Critical warnings from your article
+        const selfFunderWarnings = [
+            {
+                title: 'Deliberate Deprivation',
+                content: 'Any gifts, transfers, or restructuring of assets specifically to reduce capital and qualify for Trust support may be challenged. The Trust can treat you as still possessing those assets (notional capital). Document all transactions and ensure genuine purposes. This is a serious risk area requiring legal advice.',
+                severity: 'high'
+            },
+            {
+                title: 'Deferred Payment Agreements NOT Standard in NI',
+                content: 'Unlike England, Northern Ireland does not have a standard Deferred Payment Agreement scheme. Some Trusts may have local arrangements, but do not assume availability. Ask your specific Trust about interim funding while property is being dealt with.',
+                severity: 'medium'
+            },
+            {
+                title: 'Pension Drawdown and Notional Income',
+                content: 'UK statutory guidance suggests that deliberate failure to take pension income (to avoid it being assessed) may result in "notional income" being attributed. While this guidance is primarily for England, verify your local Trust\'s approach before making pension withdrawal decisions.',
+                severity: 'medium'
+            },
+            {
+                title: 'Equity Release NOT for Residential Care',
+                content: 'Equity release products are designed for people living in their OWN HOME. They cannot be used to fund residential or nursing home care. Only consider equity release if care is definitively at home.',
+                severity: 'high'
+            },
+            {
+                title: 'HPSS Nursing Care Payment (NI Self-Funders)',
+                content: 'If you are self-funding in a NURSING home and assessed as needing nursing care, you may be eligible for HPSS nursing care payment (paid directly to the home). This is NOT available for residential care or if Trust is contributing. Always ask about this - it is often overlooked.',
+                severity: 'medium'
+            }
+        ];
+
+        // UI Helper Functions
+        function selectRadio(name, value) {
+            const options = document.querySelectorAll(`input[name="${name}"]`);
+            options.forEach(opt => {
+                opt.closest('.radio-option').classList.remove('selected');
+            });
+            
+            const selected = document.querySelector(`input[name="${name}"][value="${value}"]`);
+            if (selected) {
+                selected.checked = true;
+                selected.closest('.radio-option').classList.add('selected');
+            }
+
+            state[name] = value;
+
+            // Show/hide conditional fields
+            if (name === 'careSetting') {
+                const stayTypeGroup = document.getElementById('stayTypeGroup');
+                stayTypeGroup.style.display = (value === 'residential' || value === 'nursing') ? 'block' : 'none';
+            }
+
+            if (name === 'property') {
+                const occupierGroup = document.getElementById('occupierGroup');
+                occupierGroup.style.display = value === 'owner' ? 'block' : 'none';
+            }
+        }
+
+        function toggleCheckbox(id) {
+            const checkbox = document.getElementById(id);
+            const option = checkbox.closest('.checkbox-option');
+            
+            // Handle "None of the above" logic
+            if (id === 'noneAbove' && checkbox.checked) {
+                document.querySelectorAll('.checkbox-option input[type="checkbox"]').forEach(cb => {
+                    if (cb.id !== 'noneAbove') {
+                        cb.checked = false;
+                        cb.closest('.checkbox-option').classList.remove('selected');
+                    }
+                });
+            } else if (checkbox.checked) {
+                const noneCheckbox = document.getElementById('noneAbove');
+                noneCheckbox.checked = false;
+                noneCheckbox.closest('.checkbox-option').classList.remove('selected');
+            }
+
+            option.classList.toggle('selected', checkbox.checked);
+
+            state.occupiers = Array.from(document.querySelectorAll('.checkbox-option input:checked'))
+                .map(cb => cb.value);
+        }
+
+        function togglePriority(priority) {
+            const index = state.priorities.indexOf(priority);
+            const card = event.currentTarget;
+
+            if (index === -1) {
+                state.priorities.push(priority);
+                card.classList.add('selected');
+            } else {
+                state.priorities.splice(index, 1);
+                card.classList.remove('selected');
+            }
+        }
+
+        // Navigation
+        function goToStage1() {
+            updateStageDisplay(1);
+        }
+
+        function goToStage2() {
+            if (!state.location || !state.careSetting || !state.capital || !state.age || !state.healthComplexity) {
+                alert('Please answer all required questions before proceeding.');
+                return;
+            }
+
+            if ((state.careSetting === 'residential' || state.careSetting === 'nursing') && !state.stayType) {
+                alert('Please specify if the stay is temporary or permanent.');
+                return;
+            }
+
+            if (state.property === 'owner' && state.occupiers.length === 0) {
+                alert('Please indicate who lives in the property.');
+                return;
+            }
+
+            updateStageDisplay(2);
+        }
+
+        function goToStage3() {
+            displayFilteredOptions();
+            updateStageDisplay(3);
+        }
+
+        function updateStageDisplay(stageNum) {
+            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+            document.getElementById(`stage${stageNum}`).classList.add('active');
+
+            for (let i = 1; i <= 3; i++) {
+                const step = document.getElementById(`step${i}`);
+                step.classList.remove('active', 'completed');
+                
+                if (i < stageNum) {
+                    step.classList.add('completed');
+                } else if (i === stageNum) {
+                    step.classList.add('active');
+                }
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restart() {
+            state.location = null;
+            state.careSetting = null;
+            state.stayType = null;
+            state.property = null;
+            state.occupiers = [];
+            state.capital = null;
+            state.age = null;
+            state.healthComplexity = null;
+            state.priorities = [];
+
+            document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.checkbox-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.priority-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            document.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
+
+            document.getElementById('stayTypeGroup').style.display = 'none';
+            document.getElementById('occupierGroup').style.display = 'none';
+
+            goToStage1();
+        }
+
+        // Core Logic
+        function displayFilteredOptions() {
+            const eligibleOptions = filterEligibleOptions();
+            const scoredOptions = scoreOptionsByPriorities(eligibleOptions);
+            
+            displaySummary();
+            displayOptions(scoredOptions);
+        }
+
+        function filterEligibleOptions() {
+            return fundingOptions.filter(option => {
+                for (const [key, allowedValues] of Object.entries(option.eligibility)) {
+                    if (key === 'occupiers') {
+                        const hasQualifyingOccupier = state.occupiers.some(occ => 
+                            allowedValues.includes(occ)
+                        );
+                        if (!hasQualifyingOccupier && allowedValues.length > 0) {
+                            return false;
+                        }
+                    } else {
+                        const stateValue = state[key];
+                        if (stateValue && !allowedValues.includes(stateValue)) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            });
+        }
+
+        function scoreOptionsByPriorities(options) {
+            return options.map(option => {
+                let totalScore = 0;
+                let matchCount = 0;
+
+                state.priorities.forEach(priority => {
+                    if (option.priorityScores[priority]) {
+                        totalScore += option.priorityScores[priority];
+                        matchCount++;
+                    }
+                });
+
+                const averageScore = matchCount > 0 ? totalScore / matchCount : 0;
+
+                let fit = 'poor-fit';
+                if (averageScore >= 8) fit = 'strong-fit';
+                else if (averageScore >= 5) fit = 'possible-fit';
+
+                return {
+                    ...option,
+                    score: averageScore,
+                    fit: fit
+                };
+            }).sort((a, b) => b.score - a.score);
+        }
+
+        function displaySummary() {
+            const summary = document.getElementById('filterSummary');
+            
+            const priorityLabels = {
+                stayHome: 'Stay at home',
+                protectSpouse: 'Protect spouse',
+                protectHome: 'Protect home',
+                inheritance: 'Preserve inheritance',
+                costCertainty: 'Cost certainty',
+                speedSimplicity: 'Speed & simplicity',
+                choice: 'Provider choice',
+                flexibility: 'Flexibility',
+                minimizeConflict: 'Minimize conflict'
+            };
+
+            let html = '<h3>Your Situation Summary</h3>';
+            
+            html += `<div class="summary-item">
+                <span class="summary-label">Care Setting:</span>
+                <span>${state.careSetting}</span>
+            </div>`;
+
+            html += `<div class="summary-item">
+                <span class="summary-label">Capital Level:</span>
+                <span>${state.capital === 'low' ? 'Under £14,250' : state.capital === 'medium' ? '£14,250-£23,250' : 'Over £23,250'}</span>
+            </div>`;
+
+            if (state.property === 'owner' && state.occupiers.length > 0) {
+                const hasQualifying = state.occupiers.some(o => ['spouse', 'relativeOver60', 'incapacitatedRelative', 'childUnder16'].includes(o));
+                html += `<div class="summary-item">
+                    <span class="summary-label">Property:</span>
+                    <span>${hasQualifying ? 'May be disregarded' : 'Counted after 12 weeks'}</span>
+                </div>`;
+            }
+
+            if (state.priorities.length > 0) {
+                html += `<div class="summary-item">
+                    <span class="summary-label">Priorities:</span>
+                    <span>${state.priorities.map(p => priorityLabels[p]).join(', ')}</span>
+                </div>`;
+            }
+
+            summary.innerHTML = html;
+        }
+
+        function displayOptions(scoredOptions) {
+            const container = document.getElementById('optionsContainer');
+            const selfFunderDiv = document.getElementById('selfFunderDeepDive');
+            
+            if (scoredOptions.length === 0) {
+                container.innerHTML = '<p>No funding options match your current situation. Please review your answers or contact your local Trust for guidance.</p>';
+                return;
+            }
+
+            let html = '';
+            let hasSelfFunderOption = false;
+
+            scoredOptions.forEach(option => {
+                if (option.isSelfFunder) {
+                    hasSelfFunderOption = true;
+                }
+
+                const fitLabel = option.fit === 'strong-fit' ? 'Strong Match' : 
+                               option.fit === 'possible-fit' ? 'Possible Match' : 'Limited Match';
+                const fitClass = option.fit === 'strong-fit' ? 'strong' :
+                               option.fit === 'possible-fit' ? 'possible' : 'poor';
+
+                const cardClass = option.isSelfFunder ? 'option-card self-funder' : `option-card ${option.fit}`;
+
+                html += `
+                <div class="${cardClass}">
+                    <div class="option-header">
+                        <div>
+                            <h3 class="option-title">${option.name}</h3>
+                        </div>
+                        <span class="fit-badge ${option.isSelfFunder ? 'explore' : fitClass}">
+                            ${option.isSelfFunder ? 'Explore Options' : fitLabel}
+                        </span>
+                    </div>
+                    
+                    <p class="option-description">${option.description}</p>
+
+                    <div class="trade-offs">
+                        <div class="trade-off-col pros">
+                            <h5>Advantages</h5>
+                            <ul>
+                                ${option.pros.map(pro => `<li>${pro}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="trade-off-col cons">
+                            <h5>Considerations</h5>
+                            <ul>
+                                ${option.cons.map(con => `<li>${con}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="next-steps">
+                        <h5>Next Steps</h5>
+                        <ul>
+                            ${option.nextSteps.map(step => `<li>${step}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    ${option.isSelfFunder ? '<button class="explore-button" onclick="scrollToSelfFunder()">Explore Self-Funder Options Below ↓</button>' : ''}
+                </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            // Display self-funder deep dive if applicable
+            if (hasSelfFunderOption) {
+                displaySelfFunderDeepDive(selfFunderDiv);
+            } else {
+                selfFunderDiv.style.display = 'none';
+            }
+        }
+
+        function displaySelfFunderDeepDive(container) {
+            container.style.display = 'block';
+
+            let html = '<div class="self-funder-section" id="selfFunderSection">';
+            html += '<h3>Self-Funder Options: Detailed Guide</h3>';
+            html += '<p class="section-subtitle">Multiple funding strategies are available. Each has different trade-offs around certainty, flexibility, cost, and inheritance. Consider which aligns best with your priorities.</p>';
+
+            // Critical warnings first
+            html += '<div class="warning-box">';
+            html += '<h4>⚠️ Critical Considerations Before Proceeding</h4>';
+            selfFunderWarnings.forEach(warning => {
+                html += `<p style="margin-bottom: 1rem;"><strong>${warning.title}:</strong> ${warning.content}</p>`;
+            });
+            html += '</div>';
+
+            // Display each funding route
+            selfFunderRoutes.forEach(route => {
+                // Filter routes based on situation
+                if (route.id === 'equityRelease' && (state.careSetting !== 'home' || state.age !== 'over55')) {
+                    return; // Skip equity release if not at home or under 55
+                }
+
+                html += '<div class="funding-route-card">';
+                html += `<h4>${route.name}</h4>`;
+                html += `<p>${route.description}</p>`;
+
+                html += '<div class="when-suitable">';
+                html += '<h5>When This Works Well</h5>';
+                html += '<ul>';
+                route.whenSuitable.forEach(point => {
+                    html += `<li>${point}</li>`;
+                });
+                html += '</ul>';
+                html += '</div>';
+
+                html += '<div class="key-risks">';
+                html += '<h5>Key Risks & Cautions</h5>';
+                html += '<ul>';
+                route.keyRisks.forEach(risk => {
+                    html += `<li>${risk}</li>`;
+                });
+                html += '</ul>';
+                html += '</div>';
+
+                html += '<div class="info-box">';
+                html += '<h4>Important Considerations</h4>';
+                html += '<ul>';
+                route.considerations.forEach(consideration => {
+                    html += `<li>${consideration}</li>`;
+                });
+                html += '</ul>';
+                html += '</div>';
+
+                html += '</div>';
+            });
+
+            html += '</div>';
+
+            container.innerHTML = html;
+        }
+
+        function scrollToSelfFunder() {
+            const element = document.getElementById('selfFunderSection');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
+</body>
+</html>
