@@ -738,18 +738,26 @@
         <div id="stage1" class="stage active">
             <div class="card">
                 <h2 class="section-title">Step 1: Individual Situation</h2>
-                <p class="section-subtitle">This information helps identify which funding routes are available</p>
+                <p class="section-subtitle">This information helps identify which funding options may be available for your situation</p>
 
                 <div class="form-group">
-                    <label class="form-label">Current location</label>
+                    <label class="form-label">What best describes your situation?</label>
                     <div class="radio-group">
-                        <label class="radio-option" onclick="selectRadio('location', 'hospital')">
-                            <input type="radio" name="location" value="hospital">
-                            <span>Currently in hospital</span>
+                        <label class="radio-option" onclick="selectRadio('situation', 'hospitalUrgent')">
+                            <input type="radio" name="situation" value="hospitalUrgent">
+                            <span>Hospital discharge or urgent decision needed</span>
                         </label>
-                        <label class="radio-option" onclick="selectRadio('location', 'community')">
-                            <input type="radio" name="location" value="community">
-                            <span>Living in the community / at home</span>
+                        <label class="radio-option" onclick="selectRadio('situation', 'homeStruggling')">
+                            <input type="radio" name="situation" value="homeStruggling">
+                            <span>At home and struggling to cope</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('situation', 'alreadyInCare')">
+                            <input type="radio" name="situation" value="alreadyInCare">
+                            <span>Already receiving care</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('situation', 'planningAhead')">
+                            <input type="radio" name="situation" value="planningAhead">
+                            <span>Planning ahead</span>
                         </label>
                     </div>
                 </div>
@@ -772,6 +780,20 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-label">Current location</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectRadio('location', 'hospital')">
+                            <input type="radio" name="location" value="hospital">
+                            <span>Currently in hospital</span>
+                        </label>
+                        <label class="radio-option" onclick="selectRadio('location', 'community')">
+                            <input type="radio" name="location" value="community">
+                            <span>Living in the community / at home</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="form-group" id="stayTypeGroup" style="display: none;">
                     <label class="form-label">Expected length of stay</label>
                     <div class="radio-group">
@@ -784,6 +806,11 @@
                             <span>Permanent residence</span>
                         </label>
                     </div>
+                </div>
+
+                <div class="info-box" id="temporaryStayNote" style="display: none;">
+                    <h4>Temporary stays are treated differently</h4>
+                    <p>Your home is usually ignored for a temporary stay, and the Trust may use a different charging approach at first. The rules can change if a temporary stay becomes permanent.</p>
                 </div>
 
                 <div class="form-group">
@@ -826,10 +853,15 @@
                     </div>
                 </div>
 
+                <div class="info-box" id="extraDisregardNote" style="display: none;">
+                    <h4>Other disregard situations</h4>
+                    <p>The categories above are the main reasons a property may be disregarded. In some cases, other situations may also apply — for example, where a carer has been living in the property or certain former partner situations. If you think this might be relevant, raise it with the Trust or seek advice.</p>
+                </div>
+
                 <div class="form-group">
-                    <label class="form-label">Total capital (savings, investments, property if counted)</label>
+                    <label class="form-label">Total savings, investments and property that may count</label>
                     <div class="info-box">
-                        <h4>Capital Limits (2025/26)</h4>
+                        <h4>Financial thresholds (2025/26)</h4>
                         <p>Lower threshold: £14,250 | Upper threshold: £23,250</p>
                     </div>
                     <div class="radio-group">
@@ -846,6 +878,11 @@
                             <span>Over £23,250</span>
                         </label>
                     </div>
+                </div>
+
+                <div class="warning-box" id="selfFunderWarning" style="display: none;">
+                    <h4>Self-funding does not mean any fee is sustainable</h4>
+                    <p>Having savings above the upper threshold means you pay your own care fees for now, but this does not guarantee you can afford any care home long-term. Consider whether the fee level is sustainable as your savings reduce. If you choose a home that charges more than the Trust's usual rate, you or your family may face third-party top-up pressure later if Trust support is needed. Think carefully about future affordability, not just what you can pay today.</p>
                 </div>
 
                 <div class="form-group">
@@ -871,7 +908,7 @@
                         </label>
                         <label class="radio-option" onclick="selectRadio('healthComplexity', 'complex')">
                             <input type="radio" name="healthComplexity" value="complex">
-                            <span>Complex health needs (may qualify for Continuing Healthcare)</span>
+                            <span>Highly complex health needs — Continuing Healthcare should be checked, but eligibility is narrow</span>
                         </label>
                     </div>
                 </div>
@@ -899,7 +936,7 @@
                     </div>
                     <div class="priority-card" onclick="togglePriority('protectHome')">
                         <h4>Protect the family home (where possible)</h4>
-                        <p>Minimize the chance of the property being counted in financial assessment</p>
+                        <p>Understand whether the property should be disregarded and how the rules apply. Important: giving away assets to avoid care fees can create serious problems, including the Trust treating those assets as still belonging to you.</p>
                     </div>
                     <div class="priority-card" onclick="togglePriority('inheritance')">
                         <h4>Preserve inheritance for family</h4>
@@ -915,7 +952,7 @@
                     </div>
                     <div class="priority-card" onclick="togglePriority('choice')">
                         <h4>Choice of care provider and location</h4>
-                        <p>Freedom to select specific care homes or providers</p>
+                        <p>Freedom to select specific care homes or providers. Be aware that more choice may mean higher private cost now, or third-party top-up pressure later if Trust support is needed.</p>
                     </div>
                     <div class="priority-card" onclick="togglePriority('flexibility')">
                         <h4>Flexibility and control</h4>
@@ -976,6 +1013,7 @@
     <script>
         // State management
         const state = {
+            situation: null,
             location: null,
             careSetting: null,
             stayType: null,
@@ -992,7 +1030,7 @@
             {
                 id: 'continuingHealthcare',
                 name: 'Continuing Healthcare (CHC)',
-                description: 'Fully funded by health services for those with complex healthcare needs that cannot be met outside hospital settings',
+                description: 'Continuing Healthcare should be checked where needs are highly complex, but under the current Northern Ireland policy eligibility is narrow and many people with serious needs do not qualify. If eligible, all care costs are covered.',
                 eligibility: {
                     healthComplexity: ['complex'],
                     location: ['hospital']
@@ -1004,7 +1042,7 @@
                     'No means testing'
                 ],
                 cons: [
-                    'Very strict eligibility criteria',
+                    'Eligibility is very narrow under current NI policy — many people with serious needs do not qualify',
                     'Assessment process can be lengthy',
                     'May require appeals if initially refused',
                     'Subject to ongoing review - can be withdrawn',
@@ -1531,9 +1569,21 @@
                 stayTypeGroup.style.display = (value === 'residential' || value === 'nursing') ? 'block' : 'none';
             }
 
+            if (name === 'stayType') {
+                const tempNote = document.getElementById('temporaryStayNote');
+                tempNote.style.display = value === 'temporary' ? 'block' : 'none';
+            }
+
             if (name === 'property') {
                 const occupierGroup = document.getElementById('occupierGroup');
                 occupierGroup.style.display = value === 'owner' ? 'block' : 'none';
+                const extraNote = document.getElementById('extraDisregardNote');
+                extraNote.style.display = value === 'owner' ? 'block' : 'none';
+            }
+
+            if (name === 'capital') {
+                const sfWarning = document.getElementById('selfFunderWarning');
+                sfWarning.style.display = value === 'high' ? 'block' : 'none';
             }
         }
 
@@ -1622,6 +1672,7 @@
         }
 
         function restart() {
+            state.situation = null;
             state.location = null;
             state.careSetting = null;
             state.stayType = null;
@@ -1640,6 +1691,9 @@
 
             document.getElementById('stayTypeGroup').style.display = 'none';
             document.getElementById('occupierGroup').style.display = 'none';
+            document.getElementById('temporaryStayNote').style.display = 'none';
+            document.getElementById('selfFunderWarning').style.display = 'none';
+            document.getElementById('extraDisregardNote').style.display = 'none';
 
             goToStage1();
         }
@@ -1723,7 +1777,7 @@
             </div>`;
 
             html += `<div class="summary-item">
-                <span class="summary-label">Capital Level:</span>
+                <span class="summary-label">Savings & assets:</span>
                 <span>${state.capital === 'low' ? 'Under £14,250' : state.capital === 'medium' ? '£14,250-£23,250' : 'Over £23,250'}</span>
             </div>`;
 

@@ -425,7 +425,7 @@
             checkCHC: {
                 type: 'question',
                 question: 'Is Continuing Healthcare (CHC) still being checked or appealed?',
-                context: 'CHC would provide free healthcare if you qualify. It\'s worth pursuing even while planning self-funding.',
+                context: 'Continuing Healthcare should be checked where needs are highly complex, but under current NI policy eligibility is narrow. It\'s still worth pursuing while planning self-funding.',
                 options: [
                     { text: 'Yes, CHC is being checked or appealed', next: 'chcInProgress', decision: 'chc_active' },
                     { text: 'No, CHC not applicable or already declined', next: 'careSetting', decision: 'chc_not_active' }
@@ -470,7 +470,7 @@
                 message: 'Multiple funding sources can be used for care at home:',
                 nextSteps: [
                     'Income from pensions, investments, rental property',
-                    'Savings and liquid capital',
+                    'Savings and accessible funds',
                     'Investments with planned withdrawals',
                     'Equity release (lifetime mortgage) - releases property value while staying at home',
                     'Family contributions'
@@ -489,7 +489,7 @@
                 message: 'Available funding sources for your situation:',
                 nextSteps: [
                     'Income from pensions and investments',
-                    'Savings and liquid capital',
+                    'Savings and accessible funds',
                     'Investment portfolios with withdrawals',
                     'Family support and contributions'
                 ],
@@ -520,7 +520,7 @@
             propertySaleRoute: {
                 type: 'info',
                 title: 'Property Sale Strategy',
-                message: 'Selling the property will release capital to fund care. After the sale, you\'ll need to decide how to use the proceeds.',
+                message: 'Selling the property will release funds to pay for care. After the sale, you\'ll need to decide how to use the proceeds.',
                 nextSteps: [
                     'Allow time for proper sale (don\'t rush - market timing matters)',
                     'Consider 12-week property disregard period in NI',
@@ -539,7 +539,7 @@
             afterPropertySaleOptions: {
                 type: 'info',
                 title: 'Using Your Property Sale Proceeds - All Options',
-                message: 'Once your property is sold, you\'ll have a lump sum of capital. There are several ways to use this to fund care, each with different trade-offs:',
+                message: 'Once your property is sold, you\'ll have a lump sum. There are several ways to use this to fund care, each with different trade-offs:',
                 nextSteps: [
                     'OPTION 1 - Keep in Cash: Simple and accessible. Good for: short-term certainty, don\'t want investment risk. Drawback: No growth, inflation erodes value, longevity risk',
                     'OPTION 2 - Invest and Draw Down: Potential growth to offset inflation. Good for: longer-term need, can tolerate volatility. Drawback: Market risk, requires management, sequencing risk',
@@ -581,7 +581,7 @@
                 nextSteps: [
                     'Use income and capital from other sources',
                     'Property decision can be revisited later',
-                    'Monitor fee costs against available capital'
+                    'Monitor fee costs against available funds'
                 ],
                 warnings: [
                     'Property costs continue (insurance, maintenance)',
@@ -593,10 +593,10 @@
 
             noPropertyRoute: {
                 type: 'info',
-                title: 'No Property - Income and Capital Route',
-                message: 'Care fees will be met from income and available capital (savings, investments, pensions).',
+                title: 'No Property - Income and Savings Route',
+                message: 'Care fees will be met from income and available funds (savings, investments, pensions).',
                 nextSteps: [
-                    'Use combination of pension income, investment income, and capital withdrawals',
+                    'Use combination of pension income, investment income, and savings withdrawals',
                     'Monitor drawdown rate carefully',
                     'Consider longevity risk - funds may need to last many years'
                 ],
@@ -649,8 +649,8 @@
 
             icpVsAlternatives: {
                 type: 'info',
-                title: 'ICP vs Keeping Capital - Key Comparison',
-                message: 'ICPs provide certainty but remove flexibility. Here\'s how they compare to keeping capital and drawing down:',
+                title: 'ICP vs Keeping Your Savings - Key Comparison',
+                message: 'ICPs provide certainty but remove flexibility. Here\'s how they compare to keeping your savings and drawing down:',
                 nextSteps: [
                     'ICP APPROACH: Pay lump sum → Get guaranteed income for life → Peace of mind but irreversible',
                     'CAPITAL DRAWDOWN: Keep money invested/in cash → Withdraw as needed → Flexible but longevity risk',
@@ -691,15 +691,15 @@
                 considerations: [
                     'Decide proportion: e.g., ICP for £800/week, keep £100k liquid for extras',
                     'ICP should have escalation to keep pace with fee inflation',
-                    'Monitor liquid capital drawdown rate - may eventually need full ICP or property sale',
+                    'Monitor savings drawdown rate - may eventually need full ICP or property sale',
                     'More complex to set up than single approach',
                     'Requires ongoing management and annual review',
                     'Financial advice essential for structuring this correctly'
                 ],
                 warnings: [
                     'ICP portion is still irreversible once purchased',
-                    'Need clear plan for liquid capital longevity',
-                    'If liquid capital depletes, you may face difficult decisions later'
+                    'Need clear plan for savings longevity',
+                    'If savings run out, you may face difficult decisions later'
                 ]
             },
 
@@ -729,7 +729,7 @@
                     'Understand escalation options (typically 3% or 5% annual increase)',
                     'Medical underwriting required',
                     'Independent financial advice essential',
-                    'Compare against keeping capital invested'
+                    'Compare against keeping savings invested'
                 ],
                 warnings: [
                     'Irreversible decision once set up',
