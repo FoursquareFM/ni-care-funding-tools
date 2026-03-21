@@ -1172,8 +1172,9 @@
                 return 'poor';
             }
             if (optionId === 'continuingHealthcare') {
-                if (state.healthComplexity === 'complex') return 'strong';
-                return 'possible';
+                // CHC only relevant when health needs are complex — extremely rare in NI
+                if (state.healthComplexity === 'complex') return 'possible';
+                return 'poor';
             }
             if (optionId === 'selfFunded') {
                 if (state.capital === 'high') return 'selfFunder';
@@ -1182,9 +1183,7 @@
                 return 'poor';
             }
             if (optionId === 'deferred') {
-                // Deferred payments not relevant for temporary stays
-                if (isTemporary) return 'poor';
-                if (state.property === 'owner') return 'possible';
+                // DPAs do not happen in practice in NI — always exclude
                 return 'poor';
             }
             if (optionId === 'temp') {
