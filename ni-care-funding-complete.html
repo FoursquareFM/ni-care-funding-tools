@@ -1132,19 +1132,65 @@
                 }
             });
 
-            // Render Trust-funded options
-            if (results.strongFit.length > 0 || results.possibleFit.length > 0) {
-                trustFundedSection.innerHTML = '<h2 class="section-title" style="margin-top: 2rem;">Funded by the Trust</h2>';
-                results.strongFit.forEach(option => trustFundedSection.appendChild(createOptionCard(option, 'strong-fit', 'Strong fit')));
-                results.possibleFit.forEach(option => trustFundedSection.appendChild(createOptionCard(option, 'possible-fit', 'Possible fit')));
-            }
+            const isOwner = state.property === 'owner';
+            const disregard = hasDisregard();
+            const hasSelfFunder = results.selfFunder.length > 0;
+            const hasTrustFunded = results.strongFit.length > 0 || results.possibleFit.length > 0;
 
-            // Render self-funder section
-            if (results.selfFunder.length > 0) {
+            // When property owned + no disregard: self-funded leads
+            // When disregard applies: Trust-funded leads (property excluded from assessment)
+            const selfFunderFirst = isOwner && !disregard && hasSelfFunder;
+
+            // --- Render self-funder section ---
+            if (hasSelfFunder) {
                 selfFunderSection.innerHTML = '<div class="self-funder-section"><h3>Self-funded care</h3><p>Based on your situation, you may want to consider self-funded options where you have complete choice:</p></div>';
                 results.selfFunder.forEach(option => {
                     selfFunderSection.querySelector('.self-funder-section').appendChild(createOptionCard(option, 'self-funder', 'Explore'));
                 });
+
+                // Add tariff band / review guidance when both self-funded and trust-funded apply
+                if (hasTrustFunded && state.capital === 'high') {
+                    const tariffNote = document.createElement('div');
+                    tariffNote.className = 'info-callout';
+                    tariffNote.style.cssText = 'background: #f0f7ff; border-left: 4px solid #2c5f8a; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;';
+                    tariffNote.innerHTML = `
+                        <h4 style="color: #2c5f8a; margin: 0 0 0.5rem 0; font-size: 1rem;">When to review your position</h4>
+                        <p style="margin: 0 0 0.8rem 0; line-height: 1.6;">As you pay for care, your capital will reduce over time. Northern Ireland uses two capital thresholds:</p>
+                        <p style="margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>£14,250 – £23,250 (tariff band):</strong> Once your total assets fall below £23,250, you enter the tariff band. In this range you contribute on a sliding scale — the Trust charges £1 per week for every £250 (or part of £250) of capital above £14,250. You should contact the Trust for a financial assessment at this point.</p>
+                        <p style="margin: 0; line-height: 1.6;"><strong>Below £14,250:</strong> The Trust takes full responsibility for funding your care. You should request a financial reassessment well before reaching this level to ensure a smooth transition and avoid any gap in care funding.</p>
+                    `;
+                    selfFunderSection.querySelector('.self-funder-section').appendChild(tariffNote);
+                }
+            }
+
+            // --- Render Trust-funded options ---
+            if (hasTrustFunded) {
+                trustFundedSection.innerHTML = '<h2 class="section-title" style="margin-top: 2rem;">Funded by the Trust</h2>';
+
+                // Add disregard callout when property may be excluded
+                if (disregard && state.capital === 'high') {
+                    const disregardNote = document.createElement('div');
+                    disregardNote.className = 'info-callout';
+                    disregardNote.style.cssText = 'background: #f0fff4; border-left: 4px solid #2d8a4e; padding: 1.2rem 1.5rem; margin: 0.5rem 0 1.5rem 0; border-radius: 0 8px 8px 0;';
+                    disregardNote.innerHTML = `
+                        <h4 style="color: #2d8a4e; margin: 0 0 0.5rem 0; font-size: 1rem;">Your property may be disregarded</h4>
+                        <p style="margin: 0 0 0.8rem 0; line-height: 1.6;">Because a qualifying person lives in your home (such as a spouse, dependent child, or relative aged 60+ or who is disabled), the value of your property may not be counted in the financial assessment. This could significantly reduce your assessable capital.</p>
+                        <p style="margin: 0; line-height: 1.6;"><strong>Important:</strong> Request a financial assessment from your Health and Social Care Trust to confirm your true capital position. If your non-property assets (savings, investments) are below £23,250, you may qualify for Trust-funded care rather than needing to self-fund.</p>
+                    `;
+                    trustFundedSection.appendChild(disregardNote);
+                }
+
+                results.strongFit.forEach(option => trustFundedSection.appendChild(createOptionCard(option, 'strong-fit', 'Strong fit')));
+                results.possibleFit.forEach(option => trustFundedSection.appendChild(createOptionCard(option, 'possible-fit', 'Possible fit')));
+            }
+
+            // --- Reorder sections: self-funded first when property owned + no disregard ---
+            if (selfFunderFirst) {
+                // Move self-funder section above trust-funded in the DOM
+                selfFunderSection.parentNode.insertBefore(selfFunderSection, trustFundedSection);
+            } else {
+                // Default: trust-funded first, then self-funded
+                selfFunderSection.parentNode.insertBefore(trustFundedSection, selfFunderSection);
             }
 
             // Render poor fit
@@ -1154,18 +1200,32 @@
             }
         }
 
+        function hasDisregard() {
+            // Property disregard applies when someone qualifying lives in the home
+            // (spouse/partner, dependent child, or 60+/disabled relative)
+            if (state.property !== 'owner') return false;
+            return state.occupier.some(o => ['spouse', 'child', 'relative'].includes(o));
+        }
+
         function assessFit(optionId) {
             const isTemporary = state.stayType === 'temporary';
+            const disregard = hasDisregard();
+            const isOwner = state.property === 'owner';
 
             if (optionId === 'trustFunded') {
                 if (state.capital === 'low') return 'strong';
                 if (state.capital === 'medium') return 'possible';
+                // High capital: Trust-funded is still relevant — show alongside self-funded
+                // with tariff explanation and review guidance
+                if (state.capital === 'high' && disregard) return 'possible';
+                if (state.capital === 'high') return 'possible';
                 return 'poor';
             }
             if (optionId === 'topUp') {
                 // Top-ups less relevant for temporary stays
                 if (isTemporary) return 'poor';
-                // High capital = self-funder, not eligible for Trust funding so top-up is irrelevant
+                // With disregard, property excluded — top-up may be relevant
+                if (state.capital === 'high' && disregard) return 'possible';
                 if (state.capital === 'high') return 'poor';
                 if (state.capital === 'medium') return 'strong';
                 if (state.capital === 'low') return 'possible';
@@ -1178,7 +1238,6 @@
             }
             if (optionId === 'selfFunded') {
                 if (state.capital === 'high') return 'selfFunder';
-                // Fix 1: Don't show self-funded as possible for low capital
                 if (state.capital === 'medium') return 'possible';
                 return 'poor';
             }
@@ -1187,12 +1246,10 @@
                 return 'poor';
             }
             if (optionId === 'temp') {
-                // Only show temporary care option when stay is temporary
                 if (isTemporary) {
                     if (state.location === 'hospital') return 'strong';
                     return 'strong';
                 }
-                // For permanent stays, temporary care is only relevant if in hospital
                 if (state.location === 'hospital') return 'possible';
                 return 'poor';
             }
