@@ -1165,8 +1165,10 @@
             if (optionId === 'topUp') {
                 // Top-ups less relevant for temporary stays
                 if (isTemporary) return 'poor';
+                // High capital = self-funder, not eligible for Trust funding so top-up is irrelevant
+                if (state.capital === 'high') return 'poor';
                 if (state.capital === 'medium') return 'strong';
-                if (state.capital === 'low' || state.capital === 'high') return 'possible';
+                if (state.capital === 'low') return 'possible';
                 return 'poor';
             }
             if (optionId === 'continuingHealthcare') {
