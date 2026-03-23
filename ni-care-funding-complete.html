@@ -163,8 +163,8 @@
         .trade-off-col.cons h5 { color: var(--red); }
         .trade-off-col ul { list-style: none; padding: 0; }
         .trade-off-col li { padding: 0.25rem 0; font-size: 0.85rem; padding-left: 1.2rem; position: relative; }
-        .pros li::before { content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: bold; }
-        .cons li::before { content: "✗"; position: absolute; left: 0; color: var(--red); font-weight: bold; }
+        .pros li::before { content: "\2713"; position: absolute; left: 0; color: var(--green); font-weight: bold; }
+        .cons li::before { content: "\2717"; position: absolute; left: 0; color: var(--red); font-weight: bold; }
 
         .next-steps {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -176,7 +176,7 @@
         .next-steps h5 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
         .next-steps ul { list-style: none; padding: 0; }
         .next-steps li { padding: 0.25rem 0; padding-left: 1.2rem; position: relative; font-size: 0.85rem; }
-        .next-steps li::before { content: "→"; position: absolute; left: 0; font-weight: bold; }
+        .next-steps li::before { content: "\2192"; position: absolute; left: 0; font-weight: bold; }
 
         .explore-button {
             background: var(--primary);
@@ -231,6 +231,16 @@
         .summary-item:last-child { border-bottom: none; }
         .summary-label { font-weight: 600; }
 
+        .situation-label {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.25);
+        }
+
         .self-funder-section {
             background: linear-gradient(135deg, rgba(44, 95, 122, 0.05) 0%, rgba(74, 139, 168, 0.05) 100%);
             border: 2px solid var(--primary);
@@ -254,7 +264,7 @@
         .when-suitable h5 { color: var(--green); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
         .when-suitable ul { list-style: none; padding: 0; font-size: 0.85rem; color: var(--text-medium); }
         .when-suitable li { padding: 0.25rem 0; padding-left: 1rem; position: relative; }
-        .when-suitable li::before { content: "→"; position: absolute; left: 0; color: var(--green); }
+        .when-suitable li::before { content: "\2192"; position: absolute; left: 0; color: var(--green); }
 
         .key-risks { background: rgba(239, 68, 68, 0.08); border-radius: 6px; padding: 0.75rem; margin: 0.75rem 0; }
         .key-risks h5 { color: var(--red); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
@@ -319,7 +329,6 @@
                 <h2 class="section-title">About your situation</h2>
                 <p class="section-subtitle">This information helps identify which funding options may be available for your situation</p>
 
-                <!-- CHANGE 2: NEW TRIAGE QUESTION FIRST -->
                 <div class="form-group">
                     <label class="form-label">What best describes your situation?</label>
                     <div class="radio-group">
@@ -342,7 +351,6 @@
                     </div>
                 </div>
 
-                <!-- CHANGE 1: CARE SETTING NOW COMES BEFORE LOCATION -->
                 <div class="form-group">
                     <label class="form-label">Where would care be provided?</label>
                     <div class="radio-group">
@@ -376,7 +384,6 @@
                     </div>
                 </div>
 
-                <!-- CHANGE 4: ADD TEMPORARY STAY NOTE -->
                 <div class="info-box" id="temporaryStayNote" style="display: none;">
                     <h4>Temporary stays are treated differently</h4>
                     <p>Your home is usually ignored for a temporary stay, and the Trust may use a different charging approach at first. The rules can change if a temporary stay becomes permanent.</p>
@@ -433,47 +440,38 @@
                     </div>
                 </div>
 
-                <!-- CHANGE 5: ADD PROPERTY DISREGARD NOTE -->
                 <div class="info-box" id="extraDisregardNote" style="display: none;">
                     <h4>Other disregard situations</h4>
-                    <p>The categories above are the main reasons a property may be disregarded. In some cases, other situations may also apply — for example, where a carer has been living in the property or certain former partner situations. If you think this might be relevant, raise it with the Trust or seek advice.</p>
+                    <p>The categories above are the main reasons a property may be disregarded. In some cases, other situations may also apply &mdash; for example, where a carer has been living in the property or certain former partner situations. If you think this might be relevant, raise it with the Trust or seek advice.</p>
                 </div>
 
-                <!-- CHANGE 9a: UPDATED LABEL -->
                 <div class="form-group">
-                    <label class="form-label">Total savings, investments and property that may count</label>
+                    <label class="form-label" id="capitalLabel">Total savings and investments</label>
+                    <div id="capitalContextNote" class="info-box" style="display: none; margin-bottom: 1rem;"></div>
                     <div class="radio-group">
                         <label class="radio-option">
                             <input type="radio" name="capital" value="low">
-                            <span>Under £14,250</span>
+                            <span>Under &pound;14,250</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="capital" value="medium">
-                            <span>£14,250 to £23,250</span>
+                            <span>&pound;14,250 to &pound;23,250</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="capital" value="high">
-                            <span>Over £23,250</span>
+                            <span>Over &pound;23,250</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- CHANGE 9b: UPDATED HEADING -->
                 <div class="info-box">
                     <h4>Financial thresholds (2025/26)</h4>
-                    <p>These are the key boundaries used in Northern Ireland's financial assessment for care. If your total assets (capital) are under £14,250, the Trust usually covers your care. Between £14,250 and £23,250, you contribute on a sliding scale. Above £23,250, you're expected to fund your own care unless Continuing Healthcare applies.</p>
+                    <p>These are the key boundaries used in Northern Ireland's financial assessment for care. If your assessable capital is under &pound;14,250, the Trust usually covers your care. Between &pound;14,250 and &pound;23,250, you contribute on a sliding scale. Above &pound;23,250, you would need to fund your care privately unless Continuing Healthcare applies.</p>
                 </div>
 
-                <!-- CHANGE 6: ADD SELF-FUNDER WARNING -->
-                <div class="warning-box" id="selfFunderWarning" style="display: none;">
-                    <h4>Self-funding does not mean any fee is sustainable</h4>
-                    <p>Having savings above the upper threshold means you pay your own care fees for now, but this does not guarantee you can afford any care home long-term. Consider whether the fee level is sustainable as your savings reduce. If you choose a home that charges more than the Trust's usual rate, you or your family may face third-party top-up pressure later if Trust support is needed. Think carefully about future affordability, not just what you can pay today.</p>
-                </div>
-
-                <!-- Fix 5: Property + low capital cross-validation -->
-                <div class="warning-box" id="propertyCapitalWarning" style="display: none;">
-                    <h4>Property may affect your capital assessment</h4>
-                    <p>You've indicated you own property but have low savings. Be aware that if you move into permanent residential or nursing care, your property may be counted as capital after the first 12 weeks — unless a qualifying person (spouse, child under 16, disabled or elderly relative) still lives there. This could move you above the £23,250 threshold and make you a self-funder. The Trust will assess this as part of the financial assessment.</p>
+                <div class="info-box" id="selfFunderWarning" style="display: none;">
+                    <h4>What this means for you</h4>
+                    <p>Having savings above the upper threshold means you would fund your own care fees at this stage. This does not mean any fee is sustainable long-term. Consider whether the fee level will remain affordable as your savings reduce. If you choose a home that charges more than the Trust's usual rate, you or your family may face third-party top-up costs later if Trust support is needed. Think carefully about future affordability, not just what you can pay today.</p>
                 </div>
 
                 <div class="form-group">
@@ -490,7 +488,6 @@
                     </div>
                 </div>
 
-                <!-- CHANGE 3a: UPDATED RADIO OPTION TEXT -->
                 <div class="form-group">
                     <label class="form-label">Health complexity</label>
                     <div class="radio-group">
@@ -500,7 +497,7 @@
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="healthComplexity" value="complex">
-                            <span>Highly complex health needs — Continuing Healthcare should be checked, but eligibility is narrow</span>
+                            <span>Highly complex health needs &mdash; Continuing Healthcare should be checked, but eligibility is narrow</span>
                         </label>
                     </div>
                 </div>
@@ -514,8 +511,8 @@
         <!-- STAGE 2: PRIORITIES -->
         <div class="stage" id="stage2">
             <div class="card">
-                <h2 class="section-title">What matters most to you?</h2>
-                <p class="section-subtitle">Select up to <strong>2 priorities</strong> in order of importance. Your first choice carries more weight in the results.</p>
+                <h2 class="section-title" id="stage2Title">What matters most to you?</h2>
+                <p class="section-subtitle" id="stage2Subtitle">Select up to <strong>2 priorities</strong> in order of importance. Your first choice carries more weight in the results.</p>
 
                 <div class="form-group">
                     <label class="form-label">Choose what matters most</label>
@@ -533,18 +530,22 @@
         <div class="stage" id="stage3">
             <div class="filter-summary" id="filterSummary"></div>
 
+            <div id="situationContextSection"></div>
             <div id="trustFundedSection"></div>
             <div id="selfFunderSection"></div>
+            <div id="additionalSupportSection"></div>
             <div id="noFitSection"></div>
 
             <div class="sources">
-                <h4>Sources & further information</h4>
+                <h4>Sources &amp; further information</h4>
                 <p>This guide draws on:</p>
                 <ul style="list-style: none; padding: 0; margin-top: 0.75rem;">
-                    <li><a href="https://www.nidirect.gov.uk/" target="_blank">NI Direct guidance on care funding</a></li>
+                    <li><a href="https://www.nidirect.gov.uk/articles/your-home-assets-and-residential-care-or-nursing-home-fees" target="_blank">NI Direct &mdash; Your home, assets and residential care fees</a></li>
                     <li><a href="https://www.hscni.net/" target="_blank">Health and Social Care NI official site</a></li>
-                    <li><a href="https://www.ageuk.org.uk/" target="_blank">Age UK guidance on care and support</a></li>
+                    <li><a href="https://www.ageuk.org.uk/northern-ireland/" target="_blank">Age NI &mdash; guidance on care and support</a></li>
                     <li><a href="https://www.citizensadvice.org.uk/" target="_blank">Citizens Advice on adult social care</a></li>
+                    <li><a href="https://www.alzheimers.org.uk/get-support/legal-financial/paying-care-northern-ireland" target="_blank">Alzheimer's Society &mdash; paying for care in NI</a></li>
+                    <li><a href="https://beaconchc.co.uk/" target="_blank">Beacon CHC &mdash; Continuing Healthcare advocacy</a></li>
                 </ul>
             </div>
 
@@ -569,46 +570,131 @@
             priorities: []
         };
 
-        // Priority definitions
-        const priorities = [
-            {
-                id: 'minCost',
-                label: 'Minimize cost to me',
-                description: 'Pay as little as possible for care'
-            },
-            {
-                id: 'protectHome',
-                label: 'Protect the family home (where possible)',
-                description: 'Understand whether the property should be disregarded and how the rules apply. Important: giving away assets to avoid care fees can create serious problems, including the Trust treating those assets as still belonging to you.'
-            },
-            {
-                id: 'flexibility',
-                label: 'Flexibility and control',
-                description: 'Adapt care arrangements as circumstances change'
-            },
-            {
-                id: 'choice',
-                label: 'Choice of care provider and location',
-                description: 'Freedom to select specific care homes or providers. Be aware that more choice may mean higher private cost now, or third-party top-up pressure later if Trust support is needed.'
-            },
-            {
-                id: 'speed',
-                label: 'Quick decision and access',
-                description: 'Get care in place as soon as possible'
-            },
-            {
-                id: 'familyControl',
-                label: 'Family involvement and control',
-                description: 'Keep decisions within the family rather than relying on social services'
+        // Situation tier helper
+        function getSituationTier() {
+            if (state.situation === 'planningAhead') return 'planning';
+            if (state.situation === 'homeStruggling') return 'emerging';
+            return 'pointOfNeed'; // hospitalUrgent or alreadyInCare
+        }
+
+        // Situation-aware priority definitions
+        function getPrioritiesForSituation() {
+            const tier = getSituationTier();
+            const isOwner = state.property === 'owner';
+
+            const allPriorities = {
+                choice: {
+                    id: 'choice',
+                    planning: {
+                        label: 'Choice of care provider and location',
+                        description: 'Research options without time pressure. Understand what is available, what it costs, and what matters to you and your family.'
+                    },
+                    emerging: {
+                        label: 'Choice of care provider and location',
+                        description: 'You may still have time to research options, but the window is narrowing. Understand what is available near you and start visiting if possible.'
+                    },
+                    pointOfNeed: {
+                        label: 'Choice of care provider and location',
+                        description: 'Even under time pressure, you have some choice. Understand what is available within Trust-contracted options and what choosing a more expensive home means for costs.'
+                    }
+                },
+                protectHome: {
+                    id: 'protectHome',
+                    planning: {
+                        label: 'Protect the family home',
+                        description: 'With proper legal advice, there may be legitimate steps you can take now to protect the property. This could include trusts, restructuring ownership, or other arrangements. The rules are complex and getting it wrong can be costly, so professional advice is essential.'
+                    },
+                    emerging: {
+                        label: 'Protect the family home',
+                        description: 'Some planning may still be possible depending on your circumstances. However, the closer you are to needing formal care, the more scrutiny any asset changes attract. The Trust can treat recent transfers as deprivation of assets if they believe the purpose was to avoid care fees. Get legal advice before acting.'
+                    },
+                    pointOfNeed: null // Not shown for point of need
+                },
+                minCost: {
+                    id: 'minCost',
+                    planning: {
+                        label: 'Minimise future care costs',
+                        description: 'Explore steps that could reduce the financial impact of care when the time comes. This includes claiming benefits like Attendance Allowance, understanding the financial thresholds, and legitimate financial planning with professional advice.'
+                    },
+                    emerging: {
+                        label: 'Minimise costs where possible',
+                        description: 'Claim everything you are entitled to, including Attendance Allowance and carer benefits. Understand the financial assessment rules so you are not paying more than you need to.'
+                    },
+                    pointOfNeed: {
+                        label: 'Pay as efficiently as possible',
+                        description: 'Your financial position is what it is. The goal now is to make sure you are using the most efficient funding route: ensure all disregards are applied correctly, check whether Continuing Healthcare applies, and know when to request a reassessment as your savings change.'
+                    }
+                },
+                flexibility: {
+                    id: 'flexibility',
+                    planning: {
+                        label: 'Flexibility and control',
+                        description: 'Build in options so care arrangements can adapt as circumstances change over time.'
+                    },
+                    emerging: {
+                        label: 'Flexibility and control',
+                        description: 'Find care arrangements that can adapt. Care at home now, with the option to step up to residential care later if needed.'
+                    },
+                    pointOfNeed: {
+                        label: 'Flexibility and control',
+                        description: 'Build in review points so you can adjust as circumstances change, especially as savings reduce and you may cross funding thresholds.'
+                    }
+                },
+                familyControl: {
+                    id: 'familyControl',
+                    planning: {
+                        label: 'Family involvement and oversight',
+                        description: 'Set up the right legal and practical frameworks now. An Enduring Power of Attorney and open family discussions mean the family can act decisively when the time comes.'
+                    },
+                    emerging: {
+                        label: 'Family involvement and oversight',
+                        description: 'If an Enduring Power of Attorney is not already in place, this is urgent. It can only be set up while the person still has mental capacity. Once capacity is lost, the more complex and expensive controllership process applies.'
+                    },
+                    pointOfNeed: {
+                        label: 'Family involvement and oversight',
+                        description: 'Understand what decisions the family can and cannot make, especially if the person lacks capacity. If no Enduring Power of Attorney is in place, you may need to explore controllership through the courts.'
+                    }
+                },
+                speed: {
+                    id: 'speed',
+                    planning: null, // Not shown for planners
+                    emerging: null, // Not prominent for emerging
+                    pointOfNeed: {
+                        label: 'Quick decision and access',
+                        description: 'Get care in place promptly. Especially important for hospital discharge, where delayed discharge affects the person and the hospital.'
+                    }
+                }
+            };
+
+            // Build the priority list based on tier
+            let priorityOrder;
+            if (tier === 'planning') {
+                priorityOrder = ['choice', 'protectHome', 'minCost', 'flexibility', 'familyControl'];
+            } else if (tier === 'emerging') {
+                priorityOrder = ['choice', 'protectHome', 'flexibility', 'minCost', 'familyControl'];
+            } else {
+                priorityOrder = ['choice', 'speed', 'minCost', 'flexibility', 'familyControl'];
             }
-        ];
+
+            const result = [];
+            priorityOrder.forEach(key => {
+                const p = allPriorities[key];
+                const tierData = p[tier];
+                if (!tierData) return; // Skip if not applicable to this tier
+                // Additional filter: protectHome only if property owner
+                if (key === 'protectHome' && !isOwner) return;
+                result.push({ id: p.id, label: tierData.label, description: tierData.description });
+            });
+
+            return result;
+        }
 
         // Funding options
         const fundingOptions = [
             {
                 id: 'trustFunded',
                 name: 'Trust-funded care (full or partial)',
-                description: 'The Health and Social Care Trust assesses you as needing care and funds it directly, or contributes to the cost. NI\'s capital thresholds have been frozen at £23,250 since 2010 — compared to £50,000 in Wales and £35,000 in Scotland. The nursing care contribution in NI is only £100/week, less than 40% of England\'s £254/week.',
+                description: 'The Health and Social Care Trust assesses you as needing care and funds it directly, or contributes to the cost. Northern Ireland\'s capital thresholds have been frozen at \u00a323,250 since 2010, compared to \u00a350,000 in Wales and \u00a335,500 in Scotland. The nursing care contribution in NI is only \u00a3100 per week, compared to \u00a3254 per week in England.',
                 pros: [
                     'Significantly lower or no personal cost',
                     'Trust covers the full registered fee',
@@ -624,9 +710,9 @@
                     'Waiting times for assessment and placement'
                 ],
                 whenSuitable: [
-                    'Capital is low (under £14,250)',
+                    'Capital is low (under \u00a314,250)',
                     'You need residential or nursing care',
-                    'You want to minimize personal cost'
+                    'You want to minimise personal cost'
                 ],
                 nextSteps: [
                     'Contact your local Health and Social Care Trust',
@@ -648,42 +734,42 @@
                     'Care plan and review provided by Trust'
                 ],
                 cons: [
-                    'You must pay the "top-up" amount every month',
-                    'Top-up cost falls on you alone (family members usually cannot legally pay it)',
-                    'If your money runs out, you may have to move home',
-                    'Top-up amount is fixed by the care home, not negotiated',
-                    'Risk of disputes if care home increases fees'
+                    'You must pay the top-up amount every month',
+                    'A third party (usually a family member) can agree to pay the top-up, but this is voluntary and no one is legally obliged to pay',
+                    'If top-up payments stop, the placement may be at risk and you may need to move',
+                    'Top-up amount is set by the care home, not negotiated',
+                    'Risk of disputes if the care home increases fees'
                 ],
                 whenSuitable: [
                     'Capital is low-to-medium',
-                    'You have some savings to cover top-ups',
+                    'You have some savings or family willing to cover top-ups',
                     'You want a specific care home that costs more than the Trust rate'
                 ],
                 nextSteps: [
                     'Identify the care home you prefer',
                     'Check the Trust\'s standard fee for that type of care',
                     'Calculate the top-up cost per month',
-                    'Ensure you can afford it long-term',
+                    'Ensure you or a third party can afford it long-term',
                     'Get confirmation in writing about the top-up arrangement'
                 ]
             },
             {
                 id: 'continuingHealthcare',
                 name: 'Continuing Healthcare (fully funded)',
-                description: 'Continuing Healthcare (CHC) is NHS-funded care for people with a "primary health need" — meaning the main reason for care is health rather than social care. The legal test is whether the person\'s needs, taken as a whole, are beyond what a local authority (Trust) would be expected to provide. If eligible, all care costs are covered. However, in Northern Ireland only 43 people were receiving CHC in 2023/24 — roughly 1.1 per 50,000 population, compared to approximately 46 per 50,000 in England. That makes a person in NI roughly 40 times less likely to receive CHC than someone in England. The 2021 single-question screening policy was quashed by the High Court in the McMinnis case (2023), and the Department of Health must develop a new lawful policy. The 2010 policy has been reinstated in the interim.',
+                description: 'Continuing Healthcare (CHC) is NHS-funded care for people with a "primary health need", meaning the main reason for care is health rather than social care. If eligible, all care costs are covered with no means testing.',
                 pros: [
-                    'If eligible, completely free care — no charges at all',
+                    'If eligible, completely free care with no charges at all',
                     'No means testing or financial assessment',
                     'All assets including property fully protected',
                     'Covers all aspects of care provision',
                     'Can access any care home (not just Trust-contracted ones)'
                 ],
                 cons: [
-                    'Extremely narrow eligibility in NI — only 43 people receiving it across all of NI',
-                    'You are roughly 40× less likely to qualify in NI than in England',
-                    'NI nursing care contribution is only £100/week vs £254/week in England',
+                    'Extremely narrow eligibility in NI compared to the rest of the UK',
+                    'NI nursing care contribution is only \u00a3100 per week vs \u00a3254 per week in England',
+                    'The 2021 single-question screening policy was quashed by the High Court in the McMinnis case (2023). A new policy is being developed, with a direct referral pilot launched in April 2025',
                     'Assessment process can be lengthy and complex',
-                    'Often requires legal challenge or specialist advice to access',
+                    'Often requires specialist advice or advocacy to access',
                     'Subject to ongoing review and can be withdrawn'
                 ],
                 whenSuitable: [
@@ -692,17 +778,17 @@
                     'You want to explore whether full NHS funding applies'
                 ],
                 nextSteps: [
-                    'Ask the Trust to screen you for Continuing Healthcare — they must use the 2010 policy (not the quashed 2021 single-question test)',
+                    'Ask the Trust to screen you for Continuing Healthcare',
                     'Request a full multidisciplinary CHC assessment if screening suggests eligibility',
                     'Gather all medical evidence documenting complexity of needs',
-                    'If refused, seek specialist advice — the McMinnis ruling may support your case',
-                    'Be aware that appeals take time but the legal landscape has shifted in favour of applicants'
+                    'If refused, seek specialist advice or advocacy. The McMinnis ruling may support your case',
+                    'Be aware that the legal landscape is in transition and new guidance is being developed'
                 ]
             },
             {
                 id: 'selfFunded',
                 name: 'Self-funded (private care)',
-                description: 'You pay the full cost of care from your own money. You have full choice, but care in Northern Ireland typically costs £800–£1,500+ per week for residential care. Very few people can sustain this indefinitely. Consider how long your capital will last and what happens when it runs down.',
+                description: 'You pay the full cost of care from your own money. You have full choice, but care in Northern Ireland typically costs \u00a3800 to \u00a31,500 or more per week for residential care. Very few people can sustain this indefinitely. Consider how long your capital will last and what happens when it runs down.',
                 pros: [
                     'Complete freedom of choice of provider',
                     'Can access any home, anywhere',
@@ -711,15 +797,15 @@
                     'Control over care arrangements'
                 ],
                 cons: [
-                    'Full cost falls on you: typically £800–£1,500+ per week for residential care',
-                    'Savings can run down quickly — even £250,000 may last only 3–5 years',
+                    'Full cost falls on you: typically \u00a3800 to \u00a31,500 or more per week for residential care',
+                    'Savings can run down quickly. Even \u00a3250,000 may last only 3 to 5 years',
                     'No guarantee of long-term affordability',
                     'If funds run out, you may need to move to a Trust-contracted home',
                     'Choosing an expensive home creates top-up risk if Trust support is later needed',
                     'Higher risk of family disagreement over money'
                 ],
                 whenSuitable: [
-                    'Capital is high (over £23,250)',
+                    'Capital is high (over \u00a323,250)',
                     'You want complete choice of care home',
                     'You prefer to avoid means testing',
                     'You want immediate access to care'
@@ -728,40 +814,8 @@
                     'Research care homes in your preferred area',
                     'Visit homes and compare fees',
                     'Calculate how long your savings will last at the chosen fee level',
-                    'Plan for what happens when funds reduce',
-                    'Consider keeping some savings as a buffer'
-                ]
-            },
-            {
-                id: 'deferred',
-                name: 'Deferred payment agreement (DPA)',
-                description: 'You move into a care home now and pay later, with the Trust securing your obligation against your property.',
-                pros: [
-                    'Immediate access to care',
-                    'Delay payment until property is sold (often after death)',
-                    'Protects spouse\'s right to live in the family home',
-                    'Reduces immediate pressure on finances',
-                    'Trust manages the debt arrangement'
-                ],
-                cons: [
-                    'Debt accumulates with interest',
-                    'Interest rate set by Trust (currently reflects their borrowing costs)',
-                    'Property must eventually be sold to repay',
-                    'Limits flexibility if you want to move care homes',
-                    'Only available if you own a property'
-                ],
-                whenSuitable: [
-                    'You own a home but lack liquid savings',
-                    'You want care to start now rather than wait',
-                    'You are comfortable with a property charge',
-                    'Property is likely to be sold after your time in care'
-                ],
-                nextSteps: [
-                    'Ask the Trust about their deferred payment scheme',
-                    'Confirm your home is eligible (usually worth over £40k–£50k)',
-                    'Understand the interest rate and charges',
-                    'Check impact on your spouse if they live in the home',
-                    'Get the agreement in writing'
+                    'Plan for what happens when funds reduce towards the \u00a323,250 threshold',
+                    'Ask the Trust about deferred payment: NI does not have a formal scheme like England or Wales, but some Trusts may agree informal arrangements on a case-by-case basis'
                 ]
             },
             {
@@ -795,6 +849,70 @@
                     'Ask about funding for permanent care if needed',
                     'Ensure the home and family are clear on timescales'
                 ]
+            },
+            {
+                id: 'attendanceAllowance',
+                name: 'Attendance Allowance',
+                description: 'A non-means-tested, tax-free benefit for people aged 65 or over who need help with personal care or supervision due to physical or mental disability. You can claim regardless of your savings, property, or income. The higher rate is \u00a3110.40 per week (2025/26). It does not affect other benefits and is relatively straightforward to apply for.',
+                pros: [
+                    'Not means-tested: your savings and property do not matter',
+                    'Tax-free and does not reduce other benefits',
+                    'Up to \u00a3110.40 per week (higher rate, 2025/26)',
+                    'Can be used for any purpose including paying for care',
+                    'Can be claimed whether you live at home or are planning to move to a care home'
+                ],
+                cons: [
+                    'Only available to people aged 65 or over',
+                    'Stops if you move into a care home funded by the Trust (but continues if self-funding)',
+                    'Application requires detailed information about care needs',
+                    'Decision can take 6 to 8 weeks',
+                    'Lower rate (\u00a374.10/week) if you need help only during the day or night, not both'
+                ],
+                whenSuitable: [
+                    'Aged 65 or over with care needs',
+                    'Living at home or planning ahead',
+                    'Self-funding in a care home',
+                    'Any savings or capital level'
+                ],
+                nextSteps: [
+                    'Check eligibility: aged 65+ and needing help with personal care',
+                    'Apply through the Department for Communities (DfC) in Northern Ireland',
+                    'Describe care needs in detail on the application. Consider getting help from Age NI or Citizens Advice',
+                    'You do not need to have a formal diagnosis to apply',
+                    'If already claimed but care needs have increased, apply for a review to move from lower to higher rate'
+                ]
+            },
+            {
+                id: 'directPayments',
+                name: 'Direct Payments (self-directed support)',
+                description: 'Instead of the Trust arranging care services for you, you receive a cash payment to arrange your own care. This gives you more control over who provides your care and when. Available for care at home and some other services.',
+                pros: [
+                    'You choose your own carers and set your own schedule',
+                    'Greater flexibility and control over daily care',
+                    'Can employ family members in some circumstances',
+                    'Can combine with other care arrangements',
+                    'Funded by the Trust based on your assessed needs'
+                ],
+                cons: [
+                    'You take on responsibility for managing payments and employment',
+                    'Requires a care needs assessment from the Trust',
+                    'Financial assessment still applies to determine your contribution',
+                    'Can be administratively demanding (though support organisations exist)',
+                    'May not cover all care needs, especially complex nursing'
+                ],
+                whenSuitable: [
+                    'You want control over your care arrangements at home',
+                    'You have someone specific you want to provide care',
+                    'You value flexibility in scheduling',
+                    'You or a family member can manage the administrative side'
+                ],
+                nextSteps: [
+                    'Request a care needs assessment from your local Trust',
+                    'Ask specifically about Direct Payments during the assessment',
+                    'Contact the NI Direct Payments Support Service for practical help',
+                    'Understand your contribution under the financial assessment',
+                    'Consider whether a support organisation can help with payroll and admin'
+                ]
             }
         ];
 
@@ -808,11 +926,32 @@
             });
         });
 
+        function updateCapitalQuestion() {
+            const label = document.getElementById('capitalLabel');
+            const note = document.getElementById('capitalContextNote');
+            const isOwner = state.property === 'owner';
+            const disregard = isOwner && state.occupier.some(o => ['spouse', 'child', 'relative'].includes(o));
+
+            if (isOwner && disregard) {
+                label.textContent = 'Savings and investments (not including your property)';
+                note.style.display = 'block';
+                note.innerHTML = '<h4>Property disregard applies</h4><p>Because a qualifying person lives in your home, your property value will normally be left out of the financial assessment. Answer the question below based on your <strong>non-property assets only</strong> \u2014 savings, investments, and any other capital excluding the property.</p>';
+            } else if (isOwner) {
+                label.textContent = 'Savings and investments (not including your property)';
+                note.style.display = 'block';
+                note.innerHTML = '<h4>Your property will likely be counted</h4><p>If no qualifying person lives in your home, the property value will normally be included in the financial assessment after the first 12 weeks of a permanent placement. This will almost certainly take your assessable capital above \u00a323,250. However, please still answer the question below about your <strong>non-property savings</strong> \u2014 this helps us show when you should review your position as savings reduce over time.</p>';
+            } else {
+                label.textContent = 'Total savings and investments';
+                note.style.display = 'none';
+                note.innerHTML = '';
+            }
+        }
+
         function selectRadio(name, value) {
             state[name] = value;
 
             // Update UI
-            document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+            document.querySelectorAll('input[name="' + name + '"]').forEach(input => {
                 input.parentElement.classList.toggle('selected', input.value === value);
             });
 
@@ -840,6 +979,7 @@
                     state.occupier = [];
                     document.querySelectorAll('input[name="occupier"]').forEach(input => input.checked = false);
                 }
+                updateCapitalQuestion();
             }
 
             if (name === 'capital') {
@@ -855,12 +995,17 @@
                 } else {
                     state.occupier = state.occupier.filter(item => item !== value);
                 }
+                updateCapitalQuestion();
             }
-            document.querySelector(`input[name="${name}"][value="${value}"]`).parentElement.classList.toggle('selected', checked);
+            document.querySelector('input[name="' + name + '"][value="' + value + '"]').parentElement.classList.toggle('selected', checked);
         }
 
         function goToStage2() {
-            // Validation: require careSetting at minimum
+            // Validation
+            if (!state.situation) {
+                alert('Please select what best describes your situation.');
+                return;
+            }
             if (!state.careSetting) {
                 alert('Please select where care would be provided.');
                 return;
@@ -890,16 +1035,26 @@
                 return;
             }
 
-            // Fix 5: Cross-field validation — property owner + low capital
-            if (state.property === 'owner' && state.capital === 'low') {
-                const propertyNote = document.getElementById('propertyCapitalWarning');
-                if (propertyNote) propertyNote.style.display = 'block';
-            }
-
             // Update progress
             document.getElementById('step1').classList.remove('active');
             document.getElementById('step1').classList.add('completed');
             document.getElementById('step2').classList.add('active');
+
+            // Update Stage 2 heading based on situation
+            const tier = getSituationTier();
+            const titleEl = document.getElementById('stage2Title');
+            const subtitleEl = document.getElementById('stage2Subtitle');
+
+            if (tier === 'planning') {
+                titleEl.textContent = 'What matters most as you plan ahead?';
+                subtitleEl.innerHTML = 'You have time to consider your options. Select up to <strong>2 priorities</strong> in order of importance.';
+            } else if (tier === 'emerging') {
+                titleEl.textContent = 'What matters most right now?';
+                subtitleEl.innerHTML = 'Your window for planning is narrowing. Select up to <strong>2 priorities</strong> in order of importance.';
+            } else {
+                titleEl.textContent = 'What matters most in your situation?';
+                subtitleEl.innerHTML = 'Select up to <strong>2 priorities</strong> to help us focus the options. Your first choice carries more weight.';
+            }
 
             // Render priorities
             renderPriorities();
@@ -911,22 +1066,15 @@
         function renderPriorities() {
             const container = document.getElementById('prioritiesContainer');
             container.innerHTML = '';
+            state.priorities = []; // Reset on re-render
 
-            // Filter out irrelevant priorities based on situation
-            const relevantPriorities = priorities.filter(p => {
-                // Fix 6: If no property, protectHome is less relevant
-                if (p.id === 'protectHome' && state.property !== 'owner') return false;
-                return true;
-            });
+            const relevantPriorities = getPrioritiesForSituation();
 
             relevantPriorities.forEach(priority => {
                 const card = document.createElement('div');
                 card.className = 'priority-card';
                 card._priorityId = priority.id;
-                card.innerHTML = `
-                    <h4>${priority.label}</h4>
-                    <p>${priority.description}</p>
-                `;
+                card.innerHTML = '<h4>' + priority.label + '</h4><p>' + priority.description + '</p>';
                 card.onclick = () => togglePriority(priority.id, card);
                 container.appendChild(card);
             });
@@ -937,10 +1085,8 @@
             if (index > -1) {
                 state.priorities.splice(index, 1);
                 card.classList.remove('selected');
-                // Remove rank badge
                 const badge = card.querySelector('.priority-rank');
                 if (badge) badge.remove();
-                // Re-render rank badges
                 updatePriorityRanks();
             } else {
                 if (state.priorities.length < 2) {
@@ -954,13 +1100,10 @@
         }
 
         function updatePriorityRanks() {
-            // Clear all rank badges
             document.querySelectorAll('.priority-rank').forEach(b => b.remove());
-            // Add numbered badges
             state.priorities.forEach((pId, idx) => {
                 const cards = document.querySelectorAll('#prioritiesContainer .priority-card');
                 cards.forEach(c => {
-                    // Match by checking the onclick-bound priority id
                     if (c._priorityId === pId) {
                         const badge = document.createElement('span');
                         badge.className = 'priority-rank';
@@ -973,92 +1116,204 @@
         }
 
         function goToStage3() {
-            // Validation: optional - no specific requirements, but good UX to encourage selection
             if (state.priorities.length === 0) {
                 alert('It helps to select at least one priority.');
                 return;
             }
 
-            // Update progress
             document.getElementById('step2').classList.remove('active');
             document.getElementById('step2').classList.add('completed');
             document.getElementById('step3').classList.add('active');
 
-            // Generate results
             generateResults();
-
-            // Show stage 3
             showStage('stage3');
         }
 
         function generateResults() {
             displaySummary();
+            displaySituationContext();
             displayContextPanels();
             filterOptions();
+            displayAdditionalSupport();
+        }
+
+        function displaySituationContext() {
+            const section = document.getElementById('situationContextSection');
+            section.innerHTML = '';
+            const tier = getSituationTier();
+            const isReview = state.situation === 'alreadyInCare';
+
+            if (tier === 'planning') {
+                section.innerHTML = '<div class="info-box" style="margin-bottom: 2rem;"><h4>Planning steps you can take now</h4>' +
+                    '<p>Because you are planning ahead, you have options that people in an urgent situation do not:</p>' +
+                    '<ul style="margin-top: 0.75rem;">' +
+                    '<li><strong>Enduring Power of Attorney (EPA):</strong> Set this up while the person still has mental capacity. Without it, if capacity is lost, the family must apply through the courts for controllership, which is slower and more expensive.</li>' +
+                    '<li><strong>Attendance Allowance:</strong> If the person is 65 or over and needs help with personal care, they may be eligible for up to \u00a3110.40 per week, regardless of savings. Apply now.</li>' +
+                    '<li><strong>Professional financial and legal advice:</strong> A solicitor experienced in care funding can advise on legitimate ways to structure assets. Do not attempt asset transfers without professional advice, as the Trust can treat them as deprivation of assets.</li>' +
+                    '<li><strong>Voluntary care needs assessment:</strong> You can request one from the Trust at any time, even if care is not needed yet. This helps you understand what support may be available.</li>' +
+                    '<li><strong>Visit care providers:</strong> Research and visit homes or care agencies without the pressure of an urgent decision.</li>' +
+                    '</ul></div>';
+            } else if (tier === 'emerging') {
+                section.innerHTML = '<div class="info-box" style="margin-bottom: 2rem; border-left-color: var(--warning);"><h4>Your window for planning is narrowing</h4>' +
+                    '<p>You may still have some planning options, but the closer you are to needing formal care, the more limited they become:</p>' +
+                    '<ul style="margin-top: 0.75rem;">' +
+                    '<li><strong>Enduring Power of Attorney &mdash; do this now if not done:</strong> An EPA can only be set up while the person has mental capacity. If capacity has already been lost, you will need to apply for controllership through the Office of Care and Protection, which is significantly more complex and costly.</li>' +
+                    '<li><strong>Request a care needs assessment:</strong> Contact your local Trust to get an assessment of what support may be available. This is free and a key step.</li>' +
+                    '<li><strong>Claim Attendance Allowance:</strong> If aged 65+ with care needs, apply now. Up to \u00a3110.40 per week, not means-tested.</li>' +
+                    '<li><strong>Carer\u2019s assessment:</strong> If a family member is providing care, they have the right to their own assessment and may be eligible for Carer\u2019s Allowance (\u00a381.90 per week in 2025/26).</li>' +
+                    '<li><strong>Asset planning &mdash; proceed with caution:</strong> Some planning may still be possible, but the Trust can treat recent asset transfers as deprivation if they believe the purpose was to avoid care fees. Get legal advice before making any changes.</li>' +
+                    '</ul></div>';
+            } else if (isReview) {
+                section.innerHTML = '<div class="info-box" style="margin-bottom: 2rem;"><h4>Reviewing your current arrangement</h4>' +
+                    '<p>You are already receiving care, so the focus is on making sure your current funding route is the right one:</p>' +
+                    '<ul style="margin-top: 0.75rem;">' +
+                    '<li><strong>Threshold transitions:</strong> If you are self-funding and your savings are reducing, plan ahead for when they drop below \u00a323,250 (tariff band) and \u00a314,250 (Trust takes full responsibility). Request a financial reassessment from the Trust well before reaching these levels.</li>' +
+                    '<li><strong>Continuing Healthcare:</strong> If your health needs have changed or increased, you can ask to be screened for CHC at any time. This is worth reviewing, especially given the changing legal landscape following the McMinnis ruling.</li>' +
+                    '<li><strong>Top-up review:</strong> If a family member is paying a top-up, check whether the care home has increased fees and whether the arrangement is still affordable long-term.</li>' +
+                    '<li><strong>Annual review:</strong> The Trust should carry out regular reviews of your care plan and financial assessment. If this has not happened, request one.</li>' +
+                    '</ul></div>';
+            } else {
+                // Hospital discharge
+                section.innerHTML = '<div class="info-box" style="margin-bottom: 2rem; border-left-color: var(--warning);"><h4>Your discharge rights</h4>' +
+                    '<p>If you are being discharged from hospital into care:</p>' +
+                    '<ul style="margin-top: 0.75rem;">' +
+                    '<li><strong>12-week property disregard:</strong> If you own your home, its value is normally not counted for the first 12 weeks of a permanent care placement. This gives time to make decisions about the property.</li>' +
+                    '<li><strong>Right to assessment:</strong> You have the right to a care needs assessment before discharge. Do not feel pressured into making permanent decisions quickly.</li>' +
+                    '<li><strong>Temporary placement:</strong> If decisions need more time, a temporary placement may be available while you plan longer-term arrangements.</li>' +
+                    '<li><strong>Attendance Allowance:</strong> If aged 65+ and self-funding in a care home, apply for Attendance Allowance (up to \u00a3110.40 per week). It stops if the Trust funds your care, but continues for self-funders.</li>' +
+                    '</ul></div>';
+            }
         }
 
         function displayContextPanels() {
-            // Remove any existing context panels
             document.querySelectorAll('.context-panel').forEach(p => p.remove());
 
             const insertPoint = document.getElementById('trustFundedSection');
+            const tier = getSituationTier();
 
-            // Fix 3: Temporary stay info
+            // Temporary stay info
             if (state.stayType === 'temporary') {
                 const tempPanel = document.createElement('div');
                 tempPanel.className = 'context-panel info-box';
                 tempPanel.style.cssText = 'margin-bottom: 2rem;';
-                tempPanel.innerHTML = `
-                    <h4>How temporary care stays are charged</h4>
-                    <p><strong>First 12 weeks:</strong> If you own a property, its value is normally ignored for the first 12 weeks of any permanent placement. For genuinely temporary stays, different rules may apply.</p>
-                    <p style="margin-top: 0.5rem;"><strong>Respite care:</strong> A temporary stay to give a carer a break. The Trust may fund this directly or charge a flat rate — ask your social worker about respite charging in your area.</p>
-                    <p style="margin-top: 0.5rem;"><strong>When does temporary become chargeable?</strong> Temporary stays may be chargeable from day one depending on your financial assessment. If you have capital above £23,250, you may be expected to pay the full cost from the outset.</p>
-                    <p style="margin-top: 0.5rem;"><strong>When does temporary become permanent?</strong> If a temporary placement extends beyond the agreed period or it becomes clear the person cannot return home, it may be reclassified as permanent. Full financial assessment rules then apply including property valuation.</p>
-                    <p style="margin-top: 0.5rem;"><strong>Key point:</strong> Don't assume a temporary stay is free or cheaper — get the charging position from the Trust in writing before the placement begins.</p>
-                `;
+                tempPanel.innerHTML = '<h4>How temporary care stays are charged</h4>' +
+                    '<p><strong>First 12 weeks:</strong> If you own a property, its value is normally ignored for the first 12 weeks of any permanent placement. For genuinely temporary stays, different rules may apply.</p>' +
+                    '<p style="margin-top: 0.5rem;"><strong>Respite care:</strong> A temporary stay to give a carer a break. The Trust may fund this directly or charge a flat rate. Ask your social worker about respite charging in your area.</p>' +
+                    '<p style="margin-top: 0.5rem;"><strong>When does temporary become permanent?</strong> If a temporary placement extends beyond the agreed period or it becomes clear the person cannot return home, it may be reclassified as permanent. Full financial assessment rules then apply including property valuation.</p>' +
+                    '<p style="margin-top: 0.5rem;"><strong>Key point:</strong> Do not assume a temporary stay is free or cheaper. Get the charging position from the Trust in writing before the placement begins.</p>';
                 insertPoint.parentNode.insertBefore(tempPanel, insertPoint);
             }
 
-            // Fix 7: Tariff income explanation for medium capital
+            // Tariff income explanation for medium capital
             if (state.capital === 'medium') {
                 const tariffPanel = document.createElement('div');
                 tariffPanel.className = 'context-panel info-box';
                 tariffPanel.style.cssText = 'margin-bottom: 2rem;';
-                tariffPanel.innerHTML = `
-                    <h4>How your contribution is calculated (tariff income)</h4>
-                    <p>With capital between £14,250 and £23,250, the Trust uses <strong>tariff income</strong> to calculate your weekly contribution. For every £250 (or part of £250) above £14,250, the Trust adds £1 per week to your assessed income.</p>
-                    <p style="margin-top: 0.5rem;"><strong>Example:</strong> If you have £20,000 in savings, the excess above £14,250 is £5,750. Divided by 250 = 23 units. So £23 per week is added to your assessed income on top of your actual pension and other income. Your total assessed income is then compared to the care home fee to determine your contribution.</p>
-                    <p style="margin-top: 0.5rem;"><strong>What happens as capital reduces:</strong> As you pay contributions, your capital falls. When it drops below £14,250, tariff income no longer applies and the Trust covers almost all of the care costs (you keep a Personal Expenses Allowance of £34.10/week from April 2025).</p>
-                    <p style="margin-top: 0.5rem;"><strong>Risk to be aware of:</strong> If you chose a care home that charges above the Trust's standard rate, you or a third party may be asked to pay the difference as a "top-up". If you can no longer afford this, your placement could be at risk.</p>
-                `;
+                tariffPanel.innerHTML = '<h4>How your contribution is calculated (tariff income)</h4>' +
+                    '<p>With capital between \u00a314,250 and \u00a323,250, the Trust uses <strong>tariff income</strong> to calculate your weekly contribution. For every \u00a3250 (or part of \u00a3250) above \u00a314,250, the Trust adds \u00a31 per week to your assessed income.</p>' +
+                    '<p style="margin-top: 0.5rem;"><strong>Example:</strong> If you have \u00a320,000 in savings, the excess above \u00a314,250 is \u00a35,750. Divided by 250 = 23 units. So \u00a323 per week is added to your assessed income on top of your actual pension and other income. Your total assessed income is then compared to the care home fee to determine your contribution.</p>' +
+                    '<p style="margin-top: 0.5rem;"><strong>What happens as capital reduces:</strong> As you pay contributions, your capital falls. When it drops below \u00a314,250, tariff income no longer applies and the Trust covers almost all of the care costs. You keep a Personal Expenses Allowance of \u00a334.10 per week (from April 2025).</p>';
                 insertPoint.parentNode.insertBefore(tariffPanel, insertPoint);
             }
 
-            // Fix 5b: Property owner + low capital results note
-            if (state.property === 'owner' && state.capital === 'low' && state.careSetting !== 'home') {
-                const propPanel = document.createElement('div');
-                propPanel.className = 'context-panel warning-box';
-                propPanel.style.cssText = 'margin-bottom: 2rem;';
-                propPanel.innerHTML = `
-                    <h4>Your property may change your funding position</h4>
-                    <p>You own property but reported low savings. If you move into permanent residential or nursing care, the Trust may count your property as capital after the first 12 weeks — unless a qualifying person still lives there. This could move you above the £23,250 threshold. The results below are based on your current reported capital, but your actual assessed position may differ once property is included.</p>
-                `;
-                insertPoint.parentNode.insertBefore(propPanel, insertPoint);
+            // Couples guidance when spouse is in the home
+            if (state.property === 'owner' && state.occupier.includes('spouse')) {
+                const couplesPanel = document.createElement('div');
+                couplesPanel.className = 'context-panel info-box';
+                couplesPanel.style.cssText = 'margin-bottom: 2rem; border-left-color: var(--accent);';
+                couplesPanel.innerHTML = '<h4>When one partner enters care and the other stays at home</h4>' +
+                    '<p>This is one of the most common situations families face. Here is how it works in Northern Ireland:</p>' +
+                    '<ul style="margin-top: 0.75rem;">' +
+                    '<li><strong>Property disregard:</strong> Because your spouse or partner will continue to live in the home, the property is disregarded (not counted) in the financial assessment. This is confirmed.</li>' +
+                    '<li><strong>Joint savings:</strong> The Trust conventionally treats jointly held savings as split 50/50. Only the care recipient\u2019s share is assessed. Keep records of which accounts are joint and which are sole.</li>' +
+                    '<li><strong>Income:</strong> Only the care recipient\u2019s income is assessed (pension, benefits). The at-home partner\u2019s income is not counted.</li>' +
+                    '<li><strong>At-home partner\u2019s needs:</strong> The financial assessment should take into account the reasonable needs of the partner remaining at home. If the assessment feels unfair, challenge it.</li>' +
+                    '</ul>';
+                insertPoint.parentNode.insertBefore(couplesPanel, insertPoint);
+            }
+
+            // Deprivation of assets panel for planning and emerging tiers when protect home is selected
+            if ((tier === 'planning' || tier === 'emerging') && state.priorities.includes('protectHome')) {
+                const depPanel = document.createElement('div');
+                depPanel.className = 'context-panel info-box';
+                depPanel.style.cssText = 'margin-bottom: 2rem; border-left-color: var(--warning);';
+                let depContent = '<h4>Deprivation of assets: what you need to know</h4>';
+                if (tier === 'planning') {
+                    depContent += '<p>If you are planning ahead, it may be possible to take legitimate steps to restructure assets. However, the Trust has the power to treat assets as still belonging to you if it believes they were transferred to avoid care fees. This is called <strong>deprivation of assets</strong>.</p>';
+                    depContent += '<p style="margin-top: 0.5rem;">Key points:</p>';
+                    depContent += '<ul style="margin-top: 0.5rem;">';
+                    depContent += '<li>The earlier any planning is done, the stronger the position. Planning years before a care need arises is very different from transferring assets when care is foreseeable.</li>';
+                    depContent += '<li>There is no fixed time limit. The Trust looks at intention, not just timing.</li>';
+                    depContent += '<li>Common arrangements that can be challenged include: gifting a property to children, transferring savings, setting up trusts without genuine independent purpose.</li>';
+                    depContent += '<li>If the Trust determines deprivation occurred, it will assess you as though you still own the asset. The person who received the asset could also be pursued for payment.</li>';
+                    depContent += '<li><strong>Professional legal advice is essential.</strong> A solicitor experienced in care funding can advise on what is legitimate in your circumstances.</li>';
+                    depContent += '</ul>';
+                } else {
+                    depContent += '<p>Because a care need is becoming foreseeable, the Trust is more likely to scrutinise any recent asset transfers. The Trust can treat assets as still belonging to you if it believes they were moved to avoid care fees.</p>';
+                    depContent += '<p style="margin-top: 0.5rem;"><strong>At this stage, major asset transfers carry significant risk.</strong> The Trust will look at both the timing and the intention behind any changes. If you are considering any financial restructuring, get legal advice first.</p>';
+                }
+                depPanel.innerHTML = depContent;
+                insertPoint.parentNode.insertBefore(depPanel, insertPoint);
+            }
+        }
+
+        function displayAdditionalSupport() {
+            const section = document.getElementById('additionalSupportSection');
+            section.innerHTML = '';
+            const tier = getSituationTier();
+
+            // Show AA and Direct Payments cards in additional support section
+            const aaOption = fundingOptions.find(o => o.id === 'attendanceAllowance');
+            const dpOption = fundingOptions.find(o => o.id === 'directPayments');
+
+            let showAA = state.age === 'over55'; // AA is for 65+ but our age bracket is 55+, so show it as worth checking
+            let showDP = state.careSetting === 'home';
+
+            if (showAA || showDP) {
+                section.innerHTML = '<h2 class="section-title" style="margin-top: 2rem;">Additional support to explore</h2>';
+
+                if (showAA) {
+                    const aaFit = (tier === 'planning' || tier === 'emerging') ? 'strong' : 'possible';
+                    const aaBadge = aaFit === 'strong' ? 'Worth claiming' : 'Check eligibility';
+                    section.appendChild(createOptionCard(aaOption, aaFit === 'strong' ? 'strong-fit' : 'possible-fit', aaBadge));
+                }
+                if (showDP) {
+                    const dpFit = state.priorities.includes('flexibility') || state.priorities.includes('familyControl') ? 'strong' : 'possible';
+                    const dpBadge = dpFit === 'strong' ? 'Strong fit' : 'Worth exploring';
+                    section.appendChild(createOptionCard(dpOption, dpFit === 'strong' ? 'strong-fit' : 'possible-fit', dpBadge));
+                }
             }
         }
 
         function displaySummary() {
             const summary = document.getElementById('filterSummary');
+            const tier = getSituationTier();
+            const isReview = state.situation === 'alreadyInCare';
+
+            const situationLabels = {
+                planningAhead: 'Planning ahead',
+                homeStruggling: 'At home and managing for now',
+                hospitalUrgent: 'Hospital discharge or urgent',
+                alreadyInCare: 'Reviewing current care'
+            };
+            const tierFraming = {
+                planning: 'You have time to plan. Here are the options to explore.',
+                emerging: 'Some planning may still be possible. Here are the most relevant options.',
+                pointOfNeed: isReview ? 'Here are the options to review for your current arrangement.' : 'Here are the most efficient funding routes for your situation.'
+            };
+
             const careLoc = state.careSetting === 'home' ? 'At home' : 'Residential/Nursing';
-            const stayInfo = (state.careSetting !== 'home' && state.stayType) ? ` (${state.stayType})` : '';
+            const stayInfo = (state.careSetting !== 'home' && state.stayType) ? ' (' + state.stayType + ')' : '';
             const currentLoc = state.location === 'hospital' ? 'Hospital' : 'Community';
             const homeStatus = state.property === 'owner' ? 'Own home' : 'Rent/Other';
-            const capitalLabel = state.capital === 'low' ? 'Under £14,250' : state.capital === 'medium' ? '£14,250–£23,250' : 'Over £23,250';
+            const savingsLabel = state.capital === 'low' ? 'Under \u00a314,250' : state.capital === 'medium' ? '\u00a314,250\u2013\u00a323,250' : 'Over \u00a323,250';
+            const isOwnerSummary = state.property === 'owner';
+            const capitalLabel = isOwnerSummary ? savingsLabel + ' (excl. property)' : savingsLabel;
             const ageLabel = state.age === 'under55' ? 'Under 55' : '55+';
             const healthLabel = state.healthComplexity === 'standard' ? 'Standard needs' : 'Highly complex';
 
             const priorityLabels = {
-                minCost: 'Minimize cost',
+                minCost: tier === 'pointOfNeed' ? 'Pay efficiently' : 'Minimise costs',
                 protectHome: 'Protect family home',
                 flexibility: 'Flexibility & control',
                 choice: 'Provider choice',
@@ -1066,40 +1321,18 @@
                 familyControl: 'Family involvement'
             };
             const priorityText = state.priorities.length > 0
-                ? state.priorities.map((p, i) => `<strong>${i === 0 ? '1st' : '2nd'}:</strong> ${priorityLabels[p] || p}`).join(' &nbsp;|&nbsp; ')
+                ? state.priorities.map((p, i) => '<strong>' + (i === 0 ? '1st' : '2nd') + ':</strong> ' + (priorityLabels[p] || p)).join(' &nbsp;|&nbsp; ')
                 : 'None selected';
 
-            summary.innerHTML = `
-                <h3>Your situation</h3>
-                <div class="summary-item">
-                    <span class="summary-label">Care setting:</span>
-                    <span>${careLoc}${stayInfo}</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Current location:</span>
-                    <span>${currentLoc}</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Housing:</span>
-                    <span>${homeStatus}</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Savings & assets:</span>
-                    <span>${capitalLabel}</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Age:</span>
-                    <span>${ageLabel}</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Health needs:</span>
-                    <span>${healthLabel}</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Priorities:</span>
-                    <span>${priorityText}</span>
-                </div>
-            `;
+            summary.innerHTML = '<span class="situation-label">' + situationLabels[state.situation] + '</span>' +
+                '<h3>' + tierFraming[tier] + '</h3>' +
+                '<div class="summary-item"><span class="summary-label">Care setting:</span><span>' + careLoc + stayInfo + '</span></div>' +
+                '<div class="summary-item"><span class="summary-label">Current location:</span><span>' + currentLoc + '</span></div>' +
+                '<div class="summary-item"><span class="summary-label">Housing:</span><span>' + homeStatus + '</span></div>' +
+                '<div class="summary-item"><span class="summary-label">Savings & assets:</span><span>' + capitalLabel + '</span></div>' +
+                '<div class="summary-item"><span class="summary-label">Age:</span><span>' + ageLabel + '</span></div>' +
+                '<div class="summary-item"><span class="summary-label">Health needs:</span><span>' + healthLabel + '</span></div>' +
+                '<div class="summary-item"><span class="summary-label">Priorities:</span><span>' + priorityText + '</span></div>';
         }
 
         function filterOptions() {
@@ -1111,7 +1344,6 @@
             selfFunderSection.innerHTML = '';
             noFitSection.innerHTML = '';
 
-            // Determine which options are strong fit, possible, poor fit
             const results = {
                 strongFit: [],
                 possibleFit: [],
@@ -1119,7 +1351,10 @@
                 selfFunder: []
             };
 
-            fundingOptions.forEach(option => {
+            // Only assess core funding options (not AA/DP which go in additional support)
+            const coreFundingOptions = fundingOptions.filter(o => !['attendanceAllowance', 'directPayments'].includes(o.id));
+
+            coreFundingOptions.forEach(option => {
                 const fit = assessFit(option.id);
                 if (fit === 'strong') {
                     results.strongFit.push(option);
@@ -1134,12 +1369,16 @@
 
             const isOwner = state.property === 'owner';
             const disregard = hasDisregard();
+            const propertyWillCount = isOwner && !disregard;
+            const savings = state.capital;
             const hasSelfFunder = results.selfFunder.length > 0;
             const hasTrustFunded = results.strongFit.length > 0 || results.possibleFit.length > 0;
 
-            // When property owned + no disregard: self-funded leads
-            // When disregard applies: Trust-funded leads (property excluded from assessment)
-            const selfFunderFirst = isOwner && !disregard && hasSelfFunder;
+            const selfFunderFirst = hasSelfFunder && (
+                propertyWillCount ||
+                (!propertyWillCount && savings === 'high') ||
+                (!isOwner && savings === 'high')
+            );
 
             // --- Render self-funder section ---
             if (hasSelfFunder) {
@@ -1148,17 +1387,36 @@
                     selfFunderSection.querySelector('.self-funder-section').appendChild(createOptionCard(option, 'self-funder', 'Explore'));
                 });
 
-                // Add tariff band / review guidance when both self-funded and trust-funded apply
-                if (hasTrustFunded && state.capital === 'high') {
+                if (propertyWillCount) {
+                    const propertyCountedNote = document.createElement('div');
+                    propertyCountedNote.className = 'info-callout';
+                    propertyCountedNote.style.cssText = 'background: #fff8f0; border-left: 4px solid #c47a20; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;';
+
+                    let savingsContext = '';
+                    if (savings === 'low') {
+                        savingsContext = '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">You indicated your non-property savings are under \u00a314,250. Once the property is sold or no longer counted, if your remaining capital falls below \u00a314,250, the Trust takes full responsibility for your care costs. You should request a financial assessment from the Trust at that point.</p>';
+                    } else if (savings === 'medium') {
+                        savingsContext = '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">You indicated your non-property savings are between \u00a314,250 and \u00a323,250. Once the property is sold or no longer counted, you would enter the <strong>tariff band</strong>, contributing on a sliding scale (\u00a31 per week for every \u00a3250 above \u00a314,250). You should request a financial assessment from the Trust at that point.</p>';
+                    } else {
+                        savingsContext = '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">Your non-property savings alone are above \u00a323,250, so you would remain a self-funder even without the property being counted.</p>';
+                    }
+
+                    propertyCountedNote.innerHTML =
+                        '<h4 style="color: #c47a20; margin: 0 0 0.5rem 0; font-size: 1rem;">Why you are likely a self-funder</h4>' +
+                        '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">No qualifying person lives in your home, so the property value will normally be included in the financial assessment after the first 12 weeks of a permanent placement. This will almost certainly take your total assessable capital above \u00a323,250.</p>' +
+                        savingsContext +
+                        '<p style="margin: 0; line-height: 1.6;"><strong>Review trigger:</strong> As you pay for care, your capital will reduce. Northern Ireland uses two thresholds: the <strong>tariff band (\u00a314,250\u2013\u00a323,250)</strong> where you contribute on a sliding scale, and <strong>below \u00a314,250</strong> where the Trust takes full responsibility. Request a financial reassessment well before reaching these levels.</p>';
+                    selfFunderSection.querySelector('.self-funder-section').appendChild(propertyCountedNote);
+                }
+                else if (savings === 'high' && hasTrustFunded) {
                     const tariffNote = document.createElement('div');
                     tariffNote.className = 'info-callout';
                     tariffNote.style.cssText = 'background: #f0f7ff; border-left: 4px solid #2c5f8a; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;';
-                    tariffNote.innerHTML = `
-                        <h4 style="color: #2c5f8a; margin: 0 0 0.5rem 0; font-size: 1rem;">When to review your position</h4>
-                        <p style="margin: 0 0 0.8rem 0; line-height: 1.6;">As you pay for care, your capital will reduce over time. Northern Ireland uses two capital thresholds:</p>
-                        <p style="margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>£14,250 – £23,250 (tariff band):</strong> Once your total assets fall below £23,250, you enter the tariff band. In this range you contribute on a sliding scale — the Trust charges £1 per week for every £250 (or part of £250) of capital above £14,250. You should contact the Trust for a financial assessment at this point.</p>
-                        <p style="margin: 0; line-height: 1.6;"><strong>Below £14,250:</strong> The Trust takes full responsibility for funding your care. You should request a financial reassessment well before reaching this level to ensure a smooth transition and avoid any gap in care funding.</p>
-                    `;
+                    tariffNote.innerHTML =
+                        '<h4 style="color: #2c5f8a; margin: 0 0 0.5rem 0; font-size: 1rem;">When to review your position</h4>' +
+                        '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">As you pay for care, your capital will reduce over time. Northern Ireland uses two capital thresholds:</p>' +
+                        '<p style="margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>\u00a314,250 \u2013 \u00a323,250 (tariff band):</strong> Once your assets fall below \u00a323,250, you enter the tariff band. In this range you contribute on a sliding scale. You should contact the Trust for a financial assessment at this point.</p>' +
+                        '<p style="margin: 0; line-height: 1.6;"><strong>Below \u00a314,250:</strong> The Trust takes full responsibility for funding your care. Request a financial reassessment well before reaching this level.</p>';
                     selfFunderSection.querySelector('.self-funder-section').appendChild(tariffNote);
                 }
             }
@@ -1167,16 +1425,25 @@
             if (hasTrustFunded) {
                 trustFundedSection.innerHTML = '<h2 class="section-title" style="margin-top: 2rem;">Funded by the Trust</h2>';
 
-                // Add disregard callout when property may be excluded
-                if (disregard && state.capital === 'high') {
+                if (disregard) {
                     const disregardNote = document.createElement('div');
                     disregardNote.className = 'info-callout';
                     disregardNote.style.cssText = 'background: #f0fff4; border-left: 4px solid #2d8a4e; padding: 1.2rem 1.5rem; margin: 0.5rem 0 1.5rem 0; border-radius: 0 8px 8px 0;';
-                    disregardNote.innerHTML = `
-                        <h4 style="color: #2d8a4e; margin: 0 0 0.5rem 0; font-size: 1rem;">Your property may be disregarded</h4>
-                        <p style="margin: 0 0 0.8rem 0; line-height: 1.6;">Because a qualifying person lives in your home (such as a spouse, dependent child, or relative aged 60+ or who is disabled), the value of your property may not be counted in the financial assessment. This could significantly reduce your assessable capital.</p>
-                        <p style="margin: 0; line-height: 1.6;"><strong>Important:</strong> Request a financial assessment from your Health and Social Care Trust to confirm your true capital position. If your non-property assets (savings, investments) are below £23,250, you may qualify for Trust-funded care rather than needing to self-fund.</p>
-                    `;
+
+                    let positionText = '';
+                    if (savings === 'low') {
+                        positionText = 'Your non-property savings are below \u00a314,250, so the Trust should take full responsibility for funding your care, subject to the wider assessment.';
+                    } else if (savings === 'medium') {
+                        positionText = 'Your non-property savings are in the tariff band (\u00a314,250\u2013\u00a323,250), so you would contribute on a sliding scale \u2014 \u00a31 per week for every \u00a3250 above \u00a314,250.';
+                    } else {
+                        positionText = 'Your non-property savings are above \u00a323,250, so you would still be treated as a self-funder even with the property disregarded. However, as your savings reduce you may move into the tariff band or below the lower threshold.';
+                    }
+
+                    disregardNote.innerHTML =
+                        '<h4 style="color: #2d8a4e; margin: 0 0 0.5rem 0; font-size: 1rem;">Your property is likely disregarded</h4>' +
+                        '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">Because a qualifying person lives in your home, the value of your property should not be counted in the financial assessment. Your funding position is based on your non-property savings and investments only.</p>' +
+                        '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;"><strong>' + positionText + '</strong></p>' +
+                        '<p style="margin: 0; line-height: 1.6;">Request a financial assessment from your Health and Social Care Trust to confirm your position.</p>';
                     trustFundedSection.appendChild(disregardNote);
                 }
 
@@ -1184,12 +1451,10 @@
                 results.possibleFit.forEach(option => trustFundedSection.appendChild(createOptionCard(option, 'possible-fit', 'Possible fit')));
             }
 
-            // --- Reorder sections: self-funded first when property owned + no disregard ---
+            // --- Reorder sections ---
             if (selfFunderFirst) {
-                // Move self-funder section above trust-funded in the DOM
                 selfFunderSection.parentNode.insertBefore(selfFunderSection, trustFundedSection);
             } else {
-                // Default: trust-funded first, then self-funded
                 selfFunderSection.parentNode.insertBefore(trustFundedSection, selfFunderSection);
             }
 
@@ -1201,8 +1466,6 @@
         }
 
         function hasDisregard() {
-            // Property disregard applies when someone qualifying lives in the home
-            // (spouse/partner, dependent child, or 60+/disabled relative)
             if (state.property !== 'owner') return false;
             return state.occupier.some(o => ['spouse', 'child', 'relative'].includes(o));
         }
@@ -1211,45 +1474,36 @@
             const isTemporary = state.stayType === 'temporary';
             const disregard = hasDisregard();
             const isOwner = state.property === 'owner';
+            const savings = state.capital;
+            const propertyWillCount = isOwner && !disregard;
 
             if (optionId === 'trustFunded') {
-                if (state.capital === 'low') return 'strong';
-                if (state.capital === 'medium') return 'possible';
-                // High capital: Trust-funded is still relevant — show alongside self-funded
-                // with tariff explanation and review guidance
-                if (state.capital === 'high' && disregard) return 'possible';
-                if (state.capital === 'high') return 'possible';
+                if (propertyWillCount) return 'possible';
+                if (savings === 'low') return 'strong';
+                if (savings === 'medium') return 'possible';
+                if (savings === 'high') return 'possible';
                 return 'poor';
             }
             if (optionId === 'topUp') {
-                // Top-ups less relevant for temporary stays
                 if (isTemporary) return 'poor';
-                // With disregard, property excluded — top-up may be relevant
-                if (state.capital === 'high' && disregard) return 'possible';
-                if (state.capital === 'high') return 'poor';
-                if (state.capital === 'medium') return 'strong';
-                if (state.capital === 'low') return 'possible';
+                if (propertyWillCount) return 'poor';
+                if (savings === 'high') return 'poor';
+                if (savings === 'medium') return 'strong';
+                if (savings === 'low') return 'possible';
                 return 'poor';
             }
             if (optionId === 'continuingHealthcare') {
-                // CHC only relevant when health needs are complex — extremely rare in NI
                 if (state.healthComplexity === 'complex') return 'possible';
                 return 'poor';
             }
             if (optionId === 'selfFunded') {
-                if (state.capital === 'high') return 'selfFunder';
-                if (state.capital === 'medium') return 'possible';
-                return 'poor';
-            }
-            if (optionId === 'deferred') {
-                // DPAs do not happen in practice in NI — always exclude
+                if (propertyWillCount) return 'selfFunder';
+                if (savings === 'high') return 'selfFunder';
+                if (savings === 'medium') return 'possible';
                 return 'poor';
             }
             if (optionId === 'temp') {
-                if (isTemporary) {
-                    if (state.location === 'hospital') return 'strong';
-                    return 'strong';
-                }
+                if (isTemporary) return 'strong';
                 if (state.location === 'hospital') return 'possible';
                 return 'poor';
             }
@@ -1258,40 +1512,26 @@
 
         function createOptionCard(option, fitClass, badgeLabel) {
             const card = document.createElement('div');
-            card.className = `option-card ${fitClass}`;
-            card.innerHTML = `
-                <div class="option-header">
-                    <div>
-                        <div class="option-title">${option.name}</div>
-                    </div>
-                    <span class="fit-badge ${fitClass.split('-')[0]}">${badgeLabel}</span>
-                </div>
-                <p class="option-description">${option.description}</p>
-                <div class="trade-offs">
-                    <div class="trade-off-col pros">
-                        <h5>Pros</h5>
-                        <ul>${option.pros.map(pro => `<li>${pro}</li>`).join('')}</ul>
-                    </div>
-                    <div class="trade-off-col cons">
-                        <h5>Cons</h5>
-                        <ul>${option.cons.map(con => `<li>${con}</li>`).join('')}</ul>
-                    </div>
-                </div>
-                <div class="when-suitable">
-                    <h5>When suitable</h5>
-                    <ul>${option.whenSuitable.map(item => `<li>${item}</li>`).join('')}</ul>
-                </div>
-                <div class="key-risks">
-                    <h5>Key considerations</h5>
-                    <ul>${option.nextSteps.map(step => `<li>${step}</li>`).join('')}</ul>
-                </div>
-            `;
+            card.className = 'option-card ' + fitClass;
+            card.innerHTML =
+                '<div class="option-header">' +
+                    '<div><div class="option-title">' + option.name + '</div></div>' +
+                    '<span class="fit-badge ' + fitClass.split('-')[0] + '">' + badgeLabel + '</span>' +
+                '</div>' +
+                '<p class="option-description">' + option.description + '</p>' +
+                '<div class="trade-offs">' +
+                    '<div class="trade-off-col pros"><h5>Pros</h5><ul>' + option.pros.map(pro => '<li>' + pro + '</li>').join('') + '</ul></div>' +
+                    '<div class="trade-off-col cons"><h5>Cons</h5><ul>' + option.cons.map(con => '<li>' + con + '</li>').join('') + '</ul></div>' +
+                '</div>' +
+                '<div class="when-suitable"><h5>When suitable</h5><ul>' + option.whenSuitable.map(item => '<li>' + item + '</li>').join('') + '</ul></div>' +
+                '<div class="key-risks"><h5>Key considerations</h5><ul>' + option.nextSteps.map(step => '<li>' + step + '</li>').join('') + '</ul></div>';
             return card;
         }
 
         function showStage(stageId) {
             document.querySelectorAll('.stage').forEach(stage => stage.classList.remove('active'));
             document.getElementById(stageId).classList.add('active');
+            window.scrollTo(0, 0);
         }
 
         function goToStage1() {
@@ -1302,7 +1542,6 @@
         }
 
         function restart() {
-            // Reset state
             state.situation = null;
             state.careSetting = null;
             state.stayType = null;
@@ -1314,27 +1553,24 @@
             state.healthComplexity = null;
             state.priorities = [];
 
-            // Reset inputs
             document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
                 input.checked = false;
                 input.parentElement.classList.remove('selected');
             });
 
-            // Reset conditional visibility
             document.getElementById('stayTypeGroup').style.display = 'none';
             document.getElementById('occupierGroup').style.display = 'none';
             document.getElementById('temporaryStayNote').style.display = 'none';
             document.getElementById('selfFunderWarning').style.display = 'none';
             document.getElementById('extraDisregardNote').style.display = 'none';
-            document.getElementById('propertyCapitalWarning').style.display = 'none';
+            document.getElementById('capitalContextNote').style.display = 'none';
+            document.getElementById('capitalLabel').textContent = 'Total savings and investments';
 
-            // Reset progress
             document.getElementById('step1').classList.remove('completed');
             document.getElementById('step1').classList.add('active');
             document.getElementById('step2').classList.remove('completed', 'active');
             document.getElementById('step3').classList.remove('completed', 'active');
 
-            // Show stage 1
             showStage('stage1');
         }
     </script>
