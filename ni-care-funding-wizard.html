@@ -348,6 +348,27 @@
             color: var(--text-medium);
         }
 
+        .progress-bar {
+            background: var(--border);
+            border-radius: 4px;
+            height: 6px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--accent) 0%, var(--primary-light) 100%);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -384,6 +405,11 @@
             <p>This tool provides information and signposting only. It does not constitute financial, legal, or medical advice. Financial decisions should be made with professional advice where appropriate. All content is specific to Northern Ireland funding rules.</p>
         </div>
 
+        <div id="progressBar" style="display: none;">
+            <div class="progress-text" id="progressText"></div>
+            <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+        </div>
+
         <div id="breadcrumb" class="breadcrumb" style="display: none;">
             <!-- Breadcrumb will be inserted here -->
         </div>
@@ -407,7 +433,8 @@
             start: {
                 type: 'info',
                 title: 'Self-Funder Decision Wizard',
-                message: 'This wizard will guide you through important financial decisions for self-funding care. You\'ll answer questions step-by-step to identify the most suitable funding approach for your situation.',
+                message: 'We understand this can feel overwhelming. This tool is designed to help you think through the options at your own pace, so you can make informed decisions with confidence. You\'ll answer questions step-by-step to identify the most suitable funding approach for your situation.',
+                niNote: 'In Northern Ireland, if your capital (savings, investments, and in some cases property) is above £23,250, you are expected to fund your own care. Below £14,250, your Health and Social Care Trust will fund care in full. Between these amounts, you may receive a partial Trust contribution.',
                 nextSteps: [
                     'Answer questions about your situation',
                     'Consider your priorities (certainty, flexibility, growth)',
@@ -425,7 +452,7 @@
             checkCHC: {
                 type: 'question',
                 question: 'Is Continuing Healthcare (CHC) still being checked or appealed?',
-                context: 'Continuing Healthcare should be checked where needs are highly complex, but under current NI policy eligibility is narrow. It\'s still worth pursuing while planning self-funding.',
+                context: 'In Northern Ireland, Continuing Healthcare eligibility is determined by your HSC Trust using a single question: "Can your care needs be properly met in any other setting than a hospital?" If the answer is no, your care may be fully funded by the health service. Eligibility is narrow, but it is still worth pursuing while planning self-funding.',
                 options: [
                     { text: 'Yes, CHC is being checked or appealed', next: 'chcInProgress', decision: 'chc_active' },
                     { text: 'No, CHC not applicable or already declined', next: 'careSetting', decision: 'chc_not_active' }
@@ -469,13 +496,16 @@
                 title: 'Home Care Funding Options Available',
                 message: 'Multiple funding sources can be used for care at home:',
                 nextSteps: [
+                    'Attendance Allowance (£73.90 or £110.40 per week, not means-tested) — claim this first as it applies to most people receiving care',
                     'Income from pensions, investments, rental property',
                     'Savings and accessible funds',
                     'Investments with planned withdrawals',
                     'Equity release (lifetime mortgage) - releases property value while staying at home',
-                    'Family contributions'
+                    'Family contributions',
+                    'Direct Payments — if assessed by your Trust, you can receive payments to arrange your own care'
                 ],
                 warnings: [
+                    'Your HSC Trust charges for domiciliary care based on a financial assessment (means test) of your income and capital',
                     'Equity release involves compound interest and reduces inheritance significantly',
                     'Independent financial advice required for equity release',
                     'Consider all other options before equity release'
@@ -488,10 +518,15 @@
                 title: 'Home Care Funding Options',
                 message: 'Available funding sources for your situation:',
                 nextSteps: [
+                    'Attendance Allowance (£73.90 or £110.40 per week, not means-tested) — claim this first',
                     'Income from pensions and investments',
                     'Savings and accessible funds',
                     'Investment portfolios with withdrawals',
-                    'Family support and contributions'
+                    'Family support and contributions',
+                    'Direct Payments — if assessed by your Trust, you can receive payments to arrange your own care'
+                ],
+                warnings: [
+                    'Your HSC Trust charges for domiciliary care based on a financial assessment of your income and capital'
                 ],
                 next: 'mainPriority'
             },
@@ -501,9 +536,32 @@
                 question: 'Is there a property that may fund care?',
                 context: 'Property is often the largest asset. Understanding your options around the property is critical.',
                 options: [
-                    { text: 'Yes, there is a property', next: 'propertyPlan', decision: 'has_property' },
+                    { text: 'Yes, there is a property', next: 'spouseCheck', decision: 'has_property' },
                     { text: 'No property available', next: 'noPropertyRoute', decision: 'no_property' }
                 ]
+            },
+
+            spouseCheck: {
+                type: 'question',
+                question: 'Does a spouse, partner, or dependent relative still live in the property?',
+                context: 'If a spouse, partner, or dependent relative (such as someone over 60 or who is incapacitated) still lives in the property, it is fully disregarded in the means test — the Trust cannot include its value when assessing your finances.',
+                options: [
+                    { text: 'Yes — someone still lives there', next: 'spouseInProperty', decision: 'spouse_in_property' },
+                    { text: 'No — the property is empty', next: 'propertyPlan', decision: 'property_empty' }
+                ]
+            },
+
+            spouseInProperty: {
+                type: 'info',
+                title: 'Property Disregarded — Spouse/Partner/Dependent in Residence',
+                message: 'Because a spouse, partner, or dependent relative still lives in the property, its value is fully disregarded in the financial assessment. The Trust cannot count it as capital.',
+                nextSteps: [
+                    'The property value will NOT be included in the means test',
+                    'Care fees will be assessed based on other capital and income only',
+                    'This disregard applies for as long as the qualifying person remains in the property',
+                    'If circumstances change (e.g. the spouse also moves to care), the property may then be considered'
+                ],
+                next: 'noPropertyRoute'
             },
 
             propertyPlan: {
@@ -523,12 +581,12 @@
                 message: 'Selling the property will release funds to pay for care. After the sale, you\'ll need to decide how to use the proceeds.',
                 nextSteps: [
                     'Allow time for proper sale (don\'t rush - market timing matters)',
-                    'Consider 12-week property disregard period in NI',
+                    'Request the 12-week property disregard from your Trust IN WRITING — during this period, the property value is ignored and the Trust should contribute to fees, giving you time to sell without pressure',
                     'Seek legal advice on conveyancing and any tax implications',
                     'Property sale typically takes 8-16 weeks from listing to completion'
                 ],
                 warnings: [
-                    'Irreversible decision - cannot get property back once sold',
+                    'This is a permanent decision, so it\'s worth taking time to be sure it\'s the right one',
                     'Family may have emotional attachment - discuss beforehand',
                     'Market conditions significantly affect sale price',
                     'Consider capital gains tax (though main residence relief usually applies)'
@@ -550,7 +608,7 @@
                     'You don\'t have to decide immediately - can keep in cash while you consider options',
                     'Each approach has different tax implications',
                     'Professional financial advice recommended for large sums',
-                    'Be wary of commission-based salespeople pushing specific products'
+                    'Ensure any adviser you use is regulated by the FCA and transparent about how they are paid'
                 ],
                 next: 'mainPriority'
             },
@@ -596,6 +654,7 @@
                 title: 'No Property - Income and Savings Route',
                 message: 'Care fees will be met from income and available funds (savings, investments, pensions).',
                 nextSteps: [
+                    'Attendance Allowance (£73.90 or £110.40 per week, not means-tested) — available to self-funders and should be claimed',
                     'Use combination of pension income, investment income, and savings withdrawals',
                     'Monitor drawdown rate carefully',
                     'Consider longevity risk - funds may need to last many years'
@@ -638,7 +697,7 @@
                     'Irreversible: Once set up, you cannot cancel or get your money back'
                 ],
                 warnings: [
-                    'If you die soon after purchase (within first 2-3 years), most of the premium is lost (unless you add capital protection)',
+                    'The plan is designed for long-term care — if the person passes away within the first 2-3 years, much of the premium will not have been recovered (unless capital protection is added)',
                     'Not everyone qualifies - very poor health or terminal conditions may not be accepted',
                     'Income may not keep pace with actual fee increases if you choose low escalation',
                     'Ties up capital - you cannot access it for other needs once purchased',
@@ -757,7 +816,7 @@
                     'Emotional value of certainty vs cost'
                 ],
                 warnings: [
-                    'If die within first few years, most premium lost',
+                    'If the person passes away in the first few years, the premium will not have been fully recovered',
                     'Irreversible decision',
                     'Escalation may not match actual fee increases'
                 ]
@@ -824,7 +883,7 @@
                 title: 'Creating Liquidity - Your Options Explained',
                 summary: 'Several practical ways to increase accessible capital for care fees',
                 details: [
-                    'Review property decision: Could renting out the property generate regular income to meet fees?',
+                    'If you have already made a property decision earlier in this journey, the options below focus on additional ways to create liquidity alongside that',
                     'Sell illiquid investments: Convert stocks, bonds, or investment properties to cash',
                     'Pension drawdown: Access pension pot if age permits (but understand notional income rules)',
                     'Family support: Temporary family loans or gifts (document clearly to avoid deprivation issues)',
@@ -870,11 +929,11 @@
                     'Set up systematic withdrawal plan',
                     'Keep 12 months fees in cash buffer',
                     'Review asset allocation for appropriate risk',
-                    'Monitor "sequencing risk" (selling in downturn)',
+                    'Monitor sequencing risk — the danger that having to withdraw funds during a market downturn permanently reduces your pot',
                     'Professional investment advice recommended'
                 ],
                 warnings: [
-                    'Market downturns create "pound cost ravaging"',
+                    'Market downturns can accelerate the depletion of your capital when combined with regular withdrawals (sometimes called pound cost ravaging)',
                     'May need to sell at bad times',
                     'Requires active management',
                     'Volatility creates uncertainty'
@@ -907,6 +966,11 @@
 
         // Additional critical checks (from flowchart)
         const criticalChecks = {
+            epa: {
+                question: 'Is an Enduring Power of Attorney (EPA) in place?',
+                info: 'Northern Ireland uses Enduring Powers of Attorney (EPA), not the Lasting Powers of Attorney (LPA) used in England and Wales. An EPA allows a trusted person to manage financial affairs if the person loses mental capacity. NI does not have a separate health and welfare power of attorney.',
+                action: 'If no EPA is in place, seek legal advice urgently — an EPA can only be set up while the person still has mental capacity'
+            },
             deliberateDeprivation: {
                 question: 'Have there been any gifts, transfers, or restructuring of assets to reduce capital?',
                 warning: 'Deliberate deprivation is a serious issue. Any transactions specifically intended to reduce assets and qualify for Trust support may be challenged. The Trust can treat you as still having those assets (notional capital).',
@@ -914,13 +978,28 @@
             },
             nursingPayment: {
                 question: 'For nursing home self-funders in Northern Ireland: Have you checked eligibility for HPSS nursing care payment?',
-                info: 'If you are self-funding in a NURSING home (not residential) and assessed as needing nursing care, you may receive HPSS nursing care payment paid directly to the home.',
+                info: 'If you are self-funding in a NURSING home (not residential) and assessed as needing nursing care, you may receive the HPSS nursing care payment of £100 per week, paid directly to the home. For up-to-date information, see <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" style="color: var(--primary);">nidirect.gov.uk</a>.',
                 action: 'Request nursing care needs assessment from the Trust'
             },
             pensionDrawdown: {
                 question: 'Does the person have a pension in drawdown?',
-                warning: 'UK statutory guidance suggests deliberate failure to take pension income may result in "notional income" being attributed. While this guidance is primarily for England, verify your local Trust\'s approach.',
+                warning: 'NI Health and Social Care Trusts may attribute notional income from pensions that could reasonably be drawn. If the person is deliberately choosing not to take available pension income, the Trust may treat that income as if it were being received when calculating care contributions.',
                 advice: 'Seek financial and legal advice before making pension withdrawal decisions'
+            },
+            transition: {
+                question: 'Planning for when capital runs low',
+                info: 'If you are self-funding, your capital will reduce over time. When it approaches £23,250, you should contact your HSC Trust to request a financial assessment for Trust-funded care. It is wise to start this process early (around £25,000–£30,000) as assessments take time. Be aware that the Trust may not fund the same home at the same rate — the Trust has a standard rate and any difference may need to be met by a third-party top-up.',
+                action: 'Contact your HSC Trust well before capital drops to £23,250 to begin the financial assessment process'
+            },
+            topUps: {
+                question: 'Understanding third-party top-up payments',
+                info: 'If the person transitions to Trust-funded care and the chosen care home charges more than the Trust\'s standard rate, a third party (usually a family member) can agree to pay the difference as a top-up. The resident themselves cannot pay the top-up. This arrangement is made formally with the Trust.',
+                action: 'If a top-up may be needed, discuss affordability and sustainability with the family before committing'
+            },
+            trusts: {
+                question: 'Family financial arrangements and trust structures',
+                info: 'For families with larger estates or complex circumstances, structures such as bare trusts, discretionary trusts, or family loan arrangements may help manage care funding. These are complex and must be set up correctly to avoid deliberate deprivation challenges.',
+                action: 'Seek specialist legal and financial advice before using trust structures for care funding'
             }
         };
 
@@ -931,14 +1010,37 @@
                 breadcrumb.style.display = 'none';
                 return;
             }
-
             breadcrumb.style.display = 'block';
-            const pathText = wizardState.path.map(p => {
+            const labels = wizardState.path.map(p => {
                 const node = decisionTree[p];
-                return node.question || node.title;
-            }).join(' → ');
-            
-            breadcrumb.innerHTML = `<span>Your journey:</span> ${pathText}`;
+                // Use short labels
+                if (node.title) return node.title.length > 30 ? node.title.substring(0, 27) + '...' : node.title;
+                if (node.question) return node.question.length > 30 ? node.question.substring(0, 27) + '...' : node.question;
+                return p;
+            });
+            // Show only last 3 items
+            const display = labels.length > 3 ? ['...', ...labels.slice(-3)] : labels;
+            breadcrumb.innerHTML = `<span>Your journey:</span> ${display.join(' → ')}`;
+        }
+
+        function updateProgress() {
+            const bar = document.getElementById('progressBar');
+            const fill = document.getElementById('progressFill');
+            const text = document.getElementById('progressText');
+            const depth = wizardState.path.length;
+            const currentNode = decisionTree[wizardState.currentNode];
+
+            if (depth <= 1) {
+                bar.style.display = 'none';
+                return;
+            }
+
+            bar.style.display = 'block';
+            // Estimate total steps (most paths are 5-8 steps)
+            const estimatedTotal = currentNode.type === 'outcome' ? depth : Math.max(depth + 2, 7);
+            const pct = Math.min(Math.round((depth / estimatedTotal) * 100), 100);
+            fill.style.width = pct + '%';
+            text.textContent = currentNode.type === 'outcome' ? 'Assessment complete' : `Step ${depth} of approximately ${estimatedTotal}`;
         }
 
         function renderNode(nodeId) {
@@ -959,6 +1061,7 @@
                 renderOutcomeNode(node, container);
             }
 
+            updateProgress();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -983,7 +1086,7 @@
         function renderQuestionNode(node, container) {
             let html = '<div class="card">';
             html += `<h2 class="decision-question">${node.question}</h2>`;
-            
+
             if (node.context) {
                 html += `<div class="context-note">${node.context}</div>`;
             }
@@ -1011,6 +1114,13 @@
             let html = '<div class="card">';
             html += `<h2 class="section-title">${node.title}</h2>`;
             html += `<p class="section-subtitle">${node.message}</p>`;
+
+            if (node.niNote) {
+                html += '<div class="info-box">';
+                html += '<h4>Northern Ireland Means Test Thresholds</h4>';
+                html += `<p>${node.niNote}</p>`;
+                html += '</div>';
+            }
 
             if (node.nextSteps) {
                 html += '<div class="info-box">';
@@ -1049,7 +1159,7 @@
             html += `<p style="font-size: 1.1rem; margin-bottom: 1rem;">${node.summary}</p>`;
 
             html += '<div class="outcome-content">';
-            
+
             html += '<h4>Your Funding Strategy</h4>';
             html += '<ul>';
             node.details.forEach(detail => {
@@ -1083,6 +1193,12 @@
 
             html += '</div>';
 
+            // Next steps signpost
+            html += '<div class="card" style="border-left: 4px solid var(--accent); background: rgba(90, 143, 123, 0.05);">';
+            html += '<h3 style="font-family: \'Crimson Text\', serif; color: var(--accent); margin-bottom: 0.75rem;">What happens next?</h3>';
+            html += '<p style="color: var(--text-medium);">This tool has helped you understand your options. The next step is usually to talk through your specific situation with a qualified adviser who specialises in care funding. When you\'re ready to do that, look for a Chartered Financial Planner with experience in later-life planning — they can review your numbers, check what you may be entitled to, and help you avoid costly mistakes.</p>';
+            html += '</div>';
+
             // Add critical checks
             html += renderCriticalChecks();
 
@@ -1100,12 +1216,12 @@
         function renderCriticalChecks() {
             let html = '<div class="card">';
             html += '<h2 class="section-title">Critical Additional Checks</h2>';
-            
-            // Deliberate deprivation
-            html += '<div class="warning-box">';
-            html += `<h4>${criticalChecks.deliberateDeprivation.question}</h4>`;
-            html += `<p>${criticalChecks.deliberateDeprivation.warning}</p>`;
-            html += `<p style="margin-top: 0.5rem; font-weight: 600;">${criticalChecks.deliberateDeprivation.advice}</p>`;
+
+            // EPA (always show)
+            html += '<div class="info-box">';
+            html += `<h4>${criticalChecks.epa.question}</h4>`;
+            html += `<p>${criticalChecks.epa.info}</p>`;
+            html += `<p style="margin-top: 0.5rem; font-weight: 600;">Action: ${criticalChecks.epa.action}</p>`;
             html += '</div>';
 
             // Nursing payment (if applicable)
@@ -1124,6 +1240,34 @@
             html += `<p style="margin-top: 0.5rem; font-weight: 600;">${criticalChecks.pensionDrawdown.advice}</p>`;
             html += '</div>';
 
+            // Deliberate deprivation
+            html += '<div class="warning-box">';
+            html += `<h4>${criticalChecks.deliberateDeprivation.question}</h4>`;
+            html += `<p>${criticalChecks.deliberateDeprivation.warning}</p>`;
+            html += `<p style="margin-top: 0.5rem; font-weight: 600;">${criticalChecks.deliberateDeprivation.advice}</p>`;
+            html += '</div>';
+
+            // Transition
+            html += '<div class="info-box">';
+            html += `<h4>${criticalChecks.transition.question}</h4>`;
+            html += `<p>${criticalChecks.transition.info}</p>`;
+            html += `<p style="margin-top: 0.5rem; font-weight: 600;">Action: ${criticalChecks.transition.action}</p>`;
+            html += '</div>';
+
+            // Top-ups
+            html += '<div class="info-box">';
+            html += `<h4>${criticalChecks.topUps.question}</h4>`;
+            html += `<p>${criticalChecks.topUps.info}</p>`;
+            html += `<p style="margin-top: 0.5rem; font-weight: 600;">Action: ${criticalChecks.topUps.action}</p>`;
+            html += '</div>';
+
+            // Trusts
+            html += '<div class="info-box">';
+            html += `<h4>${criticalChecks.trusts.question}</h4>`;
+            html += `<p>${criticalChecks.trusts.info}</p>`;
+            html += `<p style="margin-top: 0.5rem; font-weight: 600;">Action: ${criticalChecks.trusts.action}</p>`;
+            html += '</div>';
+
             // NI note on Deferred Payment
             html += '<div class="info-box">';
             html += '<h4>Northern Ireland Note: Deferred Payment Agreements</h4>';
@@ -1140,7 +1284,7 @@
             const choice = node.choices[index];
 
             if (choice.action === 'showAllOptions') {
-                window.location.href = '/mnt/user-data/outputs/ni-care-funding-complete.html';
+                window.location.href = 'ni-care-funding-complete.html';
                 return;
             }
 
