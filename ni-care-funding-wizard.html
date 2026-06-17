@@ -419,6 +419,7 @@
         </div>
     </div>
 
+    <script src="figures.js"></script>
     <script>
         // Decision tree state
         const wizardState = {
@@ -434,7 +435,7 @@
                 type: 'info',
                 title: 'Self-Funder Decision Wizard',
                 message: 'We understand this can feel overwhelming. This tool is designed to help you think through the options at your own pace, so you can make informed decisions with confidence. You\'ll answer questions step-by-step to identify the most suitable funding approach for your situation.',
-                niNote: 'In Northern Ireland, if your capital (savings, investments, and in some cases property) is above £23,250, you are expected to fund your own care. Below £14,250, your Health and Social Care Trust will fund care in full. Between these amounts, you may receive a partial Trust contribution.',
+                niNote: `In Northern Ireland, if your capital (savings, investments, and in some cases property) is above ${CARE_FIGURES.upperCapitalLimit}, you are expected to fund your own care. Below ${CARE_FIGURES.lowerCapitalLimit}, your Health and Social Care Trust will fund care in full. Between these amounts, you may receive a partial Trust contribution.`,
                 nextSteps: [
                     'Answer questions about your situation',
                     'Consider your priorities (certainty, flexibility, growth)',
@@ -496,7 +497,7 @@
                 title: 'Home Care Funding Options Available',
                 message: 'Multiple funding sources can be used for care at home:',
                 nextSteps: [
-                    'Attendance Allowance (£73.90 or £110.40 per week, not means-tested) — claim this first as it applies to most people receiving care',
+                    `Attendance Allowance (${CARE_FIGURES.attendanceAllowanceLower} or ${CARE_FIGURES.attendanceAllowanceHigher} per week, not means-tested) — claim this first as it applies to most people receiving care`,
                     'Income from pensions, investments, rental property',
                     'Savings and accessible funds',
                     'Investments with planned withdrawals',
@@ -518,7 +519,7 @@
                 title: 'Home Care Funding Options',
                 message: 'Available funding sources for your situation:',
                 nextSteps: [
-                    'Attendance Allowance (£73.90 or £110.40 per week, not means-tested) — claim this first',
+                    `Attendance Allowance (${CARE_FIGURES.attendanceAllowanceLower} or ${CARE_FIGURES.attendanceAllowanceHigher} per week, not means-tested) — claim this first`,
                     'Income from pensions and investments',
                     'Savings and accessible funds',
                     'Investment portfolios with withdrawals',
@@ -654,7 +655,7 @@
                 title: 'No Property - Income and Savings Route',
                 message: 'Care fees will be met from income and available funds (savings, investments, pensions).',
                 nextSteps: [
-                    'Attendance Allowance (£73.90 or £110.40 per week, not means-tested) — available to self-funders and should be claimed',
+                    `Attendance Allowance (${CARE_FIGURES.attendanceAllowanceLower} or ${CARE_FIGURES.attendanceAllowanceHigher} per week, not means-tested) — available to self-funders and should be claimed`,
                     'Use combination of pension income, investment income, and savings withdrawals',
                     'Monitor drawdown rate carefully',
                     'Consider longevity risk - funds may need to last many years'
@@ -978,7 +979,7 @@
             },
             nursingPayment: {
                 question: 'For nursing home self-funders in Northern Ireland: Have you checked eligibility for HPSS nursing care payment?',
-                info: 'If you are self-funding in a NURSING home (not residential) and assessed as needing nursing care, you may receive the HPSS nursing care payment of £100 per week, paid directly to the home. For up-to-date information, see <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" style="color: var(--primary);">nidirect.gov.uk</a>.',
+                info: /* FIGURE: keep in sync with figures.js CARE_FIGURES.nursingCarePayment */ 'If you are self-funding in a NURSING home (not residential) and assessed as needing nursing care, you may receive the HPSS nursing care payment of £100 per week, paid directly to the home. For up-to-date information, see <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" style="color: var(--primary);">nidirect.gov.uk</a>.',
                 action: 'Request nursing care needs assessment from the Trust'
             },
             pensionDrawdown: {
@@ -988,8 +989,8 @@
             },
             transition: {
                 question: 'Planning for when capital runs low',
-                info: 'If you are self-funding, your capital will reduce over time. When it approaches £23,250, you should contact your HSC Trust to request a financial assessment for Trust-funded care. It is wise to start this process early (around £25,000–£30,000) as assessments take time. Be aware that the Trust may not fund the same home at the same rate — the Trust has a standard rate and any difference may need to be met by a third-party top-up.',
-                action: 'Contact your HSC Trust well before capital drops to £23,250 to begin the financial assessment process'
+                info: /* FIGURE: keep in sync with figures.js CARE_FIGURES.upperCapitalLimit */ 'If you are self-funding, your capital will reduce over time. When it approaches £23,250, you should contact your HSC Trust to request a financial assessment for Trust-funded care. It is wise to start this process early (around £25,000–£30,000) as assessments take time. Be aware that the Trust may not fund the same home at the same rate — the Trust has a standard rate and any difference may need to be met by a third-party top-up.',
+                action: `Contact your HSC Trust well before capital drops to ${CARE_FIGURES.upperCapitalLimit} to begin the financial assessment process`
             },
             topUps: {
                 question: 'Understanding third-party top-up payments',
