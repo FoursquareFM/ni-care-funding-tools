@@ -1,0 +1,167 @@
+/*
+ * NI Care Funding Tools — Shared Stylesheet
+ * Covers both ni-care-funding-complete.html and ni-care-funding-wizard.html
+ * Preserve the current colour palette and typography — this is unification, not a rebrand.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+:root {
+    --primary: #2c5f7a;
+    --primary-light: #4a8ba8;
+    --accent: #5a8f7b;
+    --accent-light: #7db89e;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --text-dark: #1a2332;
+    --text-medium: #4a5568;
+    --text-light: #718096;
+    --bg-light: #f8fafb;
+    --bg-white: #ffffff;
+    --border: #e2e8f0;
+    --shadow: rgba(44, 95, 122, 0.08);
+    --green: #10b981;
+    --amber: #f59e0b;
+    --red: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: linear-gradient(135deg, #f8fafb 0%, #e8f0f4 100%);
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+header { text-align: center; margin-bottom: 3rem; animation: fadeInDown 0.6s ease-out; }
+
+h1 {
+    font-family: 'Crimson Text', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.subtitle { font-size: 1.1rem; color: var(--text-medium); font-weight: 300; }
+
+.disclaimer {
+    background: var(--bg-white);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px var(--shadow);
+    animation: fadeIn 0.8s ease-out 0.2s both;
+}
+.disclaimer h3 { font-family: 'Crimson Text', serif; font-size: 1.3rem; color: var(--accent); margin-bottom: 0.75rem; }
+.disclaimer p { font-size: 0.95rem; color: var(--text-medium); line-height: 1.7; }
+
+.warning-box {
+    background: rgba(220, 38, 38, 0.05);
+    border-left: 4px solid var(--danger);
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+.warning-box h4 { font-family: 'Crimson Text', serif; color: var(--danger); font-size: 1.1rem; margin-bottom: 0.5rem; }
+.warning-box p { font-size: 0.9rem; color: var(--text-medium); line-height: 1.7; }
+
+.info-box {
+    background: rgba(74, 139, 168, 0.08);
+    border-left: 4px solid var(--primary-light);
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+.info-box h4 { font-family: 'Crimson Text', serif; color: var(--primary); font-size: 1.1rem; margin-bottom: 0.5rem; }
+.info-box p, .info-box ul { font-size: 0.9rem; color: var(--text-medium); }
+.info-box ul { margin-top: 0.5rem; padding-left: 1.5rem; }
+.info-box li { margin-bottom: 0.25rem; }
+
+.stage { display: none; animation: fadeIn 0.5s ease-out; }
+.stage.active { display: block; }
+
+.card {
+    background: var(--bg-white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.section-title { font-family: 'Crimson Text', serif; font-size: 1.8rem; font-weight: 600; color: var(--primary); margin-bottom: 1rem; }
+.section-subtitle { color: var(--text-medium); margin-bottom: 1.5rem; font-size: 1rem; }
+
+.btn {
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    touch-action: manipulation;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(44, 95, 122, 0.3); }
+.btn-secondary { background: var(--bg-light); color: var(--text-dark); border: 2px solid var(--border); }
+.btn-secondary:hover { background: var(--text-medium); color: white; }
+.button-group { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+
+.radio-option, .checkbox-option {
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 0.75rem;
+    min-height: 48px;
+}
+.radio-option:hover, .checkbox-option:hover { border-color: var(--primary-light); background: var(--bg-light); }
+.radio-option.selected, .checkbox-option.selected { border-color: var(--primary); background: rgba(44, 95, 122, 0.05); }
+.radio-option input, .checkbox-option input { margin-right: 0.75rem; cursor: pointer; min-width: 18px; min-height: 18px; }
+
+.running-summary {
+    background: linear-gradient(135deg, rgba(44,95,122,0.06) 0%, rgba(90,143,123,0.06) 100%);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+.running-summary h5 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 0.6rem; }
+.running-summary-items { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.running-summary-chip {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-medium);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.running-summary-chip strong { color: var(--primary); }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+    h1 { font-size: 1.8rem; }
+    .section-title { font-size: 1.4rem; }
+    .container { padding: 1rem 1rem 3rem; }
+    .card { padding: 1.25rem; }
+    .btn { padding: 0.75rem 1.25rem; font-size: 0.95rem; }
+    .button-group { flex-direction: column; }
+    .running-summary-items { flex-direction: column; gap: 0.35rem; }
+}

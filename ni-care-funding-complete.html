@@ -4,295 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Northern Ireland Care Funding Complete Guide</title>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --primary: #2c5f7a;
-            --primary-light: #4a8ba8;
-            --accent: #5a8f7b;
-            --accent-light: #7db89e;
-            --warning: #d97706;
-            --danger: #dc2626;
-            --text-dark: #1a2332;
-            --text-medium: #4a5568;
-            --text-light: #718096;
-            --bg-light: #f8fafb;
-            --bg-white: #ffffff;
-            --border: #e2e8f0;
-            --shadow: rgba(44, 95, 122, 0.08);
-            --green: #10b981;
-            --amber: #f59e0b;
-            --red: #ef4444;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Source Sans 3', sans-serif;
-            background: linear-gradient(135deg, #f8fafb 0%, #e8f0f4 100%);
-            color: var(--text-dark);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-        header { text-align: center; margin-bottom: 3rem; animation: fadeInDown 0.6s ease-out; }
-
-        h1 {
-            font-family: 'Crimson Text', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .subtitle { font-size: 1.1rem; color: var(--text-medium); font-weight: 300; }
-
-        .disclaimer {
-            background: var(--bg-white);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px var(--shadow);
-            animation: fadeIn 0.8s ease-out 0.2s both;
-        }
-
-        .disclaimer h3 { font-family: 'Crimson Text', serif; font-size: 1.3rem; color: var(--accent); margin-bottom: 0.75rem; }
-        .disclaimer p { font-size: 0.95rem; color: var(--text-medium); line-height: 1.7; }
-
-        .warning-box {
-            background: rgba(220, 38, 38, 0.05);
-            border-left: 4px solid var(--danger);
-            padding: 1.25rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-        .warning-box h4 { font-family: 'Crimson Text', serif; color: var(--danger); font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .warning-box p { font-size: 0.9rem; color: var(--text-medium); }
-
-        .info-box {
-            background: rgba(74, 139, 168, 0.08);
-            border-left: 4px solid var(--primary-light);
-            padding: 1.25rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-        .info-box h4 { font-family: 'Crimson Text', serif; color: var(--primary); font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .info-box p, .info-box ul { font-size: 0.9rem; color: var(--text-medium); }
-        .info-box ul { margin-top: 0.5rem; padding-left: 1.5rem; }
-
-        .stage { display: none; animation: fadeIn 0.5s ease-out; }
-        .stage.active { display: block; }
-
-        .card {
-            background: var(--bg-white);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 16px var(--shadow);
-            margin-bottom: 2rem;
-        }
-
-        .section-title { font-family: 'Crimson Text', serif; font-size: 1.8rem; font-weight: 600; color: var(--primary); margin-bottom: 1rem; }
-        .section-subtitle { color: var(--text-medium); margin-bottom: 1.5rem; font-size: 1rem; }
-
+        /* Tool 1 specific styles */
         .form-group { margin-bottom: 1.5rem; }
         .form-label { display: block; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .radio-group, .checkbox-group { display: flex; flex-direction: column; gap: 0; }
 
-        .radio-group, .checkbox-group { display: flex; flex-direction: column; gap: 0.75rem; }
+        .progress-steps { display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative; }
+        .progress-steps::before { content: ''; position: absolute; top: 15px; left: 10%; right: 10%; height: 2px; background: var(--border); z-index: 0; }
+        .step { flex: 1; text-align: center; position: relative; z-index: 1; }
+        .step-circle { width: 30px; height: 30px; border-radius: 50%; background: var(--border); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.4rem; }
+        .step.completed .step-circle { background: var(--accent); }
+        .step.active .step-circle { background: var(--primary); box-shadow: 0 0 0 4px rgba(44, 95, 122, 0.2); }
+        .step-label { font-size: 0.72rem; color: var(--text-light); line-height: 1.2; }
+        .step.active .step-label { color: var(--primary); font-weight: 600; }
 
-        .radio-option, .checkbox-option {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .radio-option:hover, .checkbox-option:hover { border-color: var(--primary-light); background: var(--bg-light); }
-        .radio-option.selected, .checkbox-option.selected { border-color: var(--primary); background: rgba(44, 95, 122, 0.05); }
-        .radio-option input, .checkbox-option input { margin-right: 0.75rem; cursor: pointer; }
-
-        .priority-card {
-            background: var(--bg-light);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+        .priority-card { background: var(--bg-light); border: 2px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; cursor: pointer; transition: all 0.3s ease; position: relative; }
         .priority-card:hover { border-color: var(--accent); transform: translateX(4px); }
-        .priority-card.selected { border-color: var(--accent); background: rgba(90, 143, 123, 0.1); position: relative; }
-        .priority-rank { position: absolute; top: 8px; right: 8px; background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
+        .priority-card.selected { border-color: var(--accent); background: rgba(90, 143, 123, 0.1); }
+        .priority-rank { position: absolute; top: 8px; right: 8px; background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.78rem; }
         .priority-card h4 { font-family: 'Crimson Text', serif; font-size: 1.1rem; color: var(--primary); margin-bottom: 0.25rem; }
         .priority-card p { font-size: 0.9rem; color: var(--text-medium); }
 
-        .option-card {
-            background: var(--bg-white);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
+        .option-card { background: var(--bg-white); border: 2px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; transition: all 0.3s ease; }
         .option-card.strong-fit { border-color: var(--green); background: rgba(16, 185, 129, 0.03); }
         .option-card.possible-fit { border-color: var(--amber); background: rgba(245, 158, 11, 0.03); }
         .option-card.poor-fit { border-color: var(--border); opacity: 0.6; }
         .option-card.self-funder { border-color: var(--primary); background: rgba(44, 95, 122, 0.03); }
-
-        .option-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
-
-        .option-title { font-family: 'Crimson Text', serif; font-size: 1.4rem; font-weight: 600; color: var(--primary); margin-bottom: 0.25rem; }
-
-        .fit-badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+        .option-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; gap: 1rem; }
+        .option-title { font-family: 'Crimson Text', serif; font-size: 1.35rem; font-weight: 600; color: var(--primary); }
+        .fit-badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
         .fit-badge.strong { background: var(--green); color: white; }
         .fit-badge.possible { background: var(--amber); color: white; }
         .fit-badge.poor { background: var(--text-light); color: white; }
         .fit-badge.explore { background: var(--primary); color: white; }
+        .option-description { color: var(--text-medium); margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.65; }
+        .why-sentence { background: rgba(90,143,123,0.12); border-radius: 6px; padding: 0.6rem 0.9rem; margin-bottom: 0.9rem; font-size: 0.9rem; color: var(--text-dark); }
 
-        .option-description { color: var(--text-medium); margin-bottom: 1rem; font-size: 0.95rem; }
-
-        .trade-offs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
-
-        .trade-off-col h5 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .accordion-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.9rem; font-size: 0.85rem; color: var(--text-medium); cursor: pointer; font-family: 'Source Sans 3', sans-serif; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
+        .accordion-toggle:hover { background: var(--bg-light); color: var(--primary); border-color: var(--primary-light); }
+        .accordion-body { display: none; margin-top: 1rem; }
+        .accordion-body.open { display: block; animation: fadeIn 0.3s ease; }
+        .trade-offs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .trade-off-col h5 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.5rem; }
         .trade-off-col.pros h5 { color: var(--green); }
         .trade-off-col.cons h5 { color: var(--red); }
         .trade-off-col ul { list-style: none; padding: 0; }
-        .trade-off-col li { padding: 0.25rem 0; font-size: 0.85rem; padding-left: 1.2rem; position: relative; }
+        .trade-off-col li { padding: 0.25rem 0; font-size: 0.83rem; padding-left: 1.2rem; position: relative; color: var(--text-medium); }
         .pros li::before { content: "\2713"; position: absolute; left: 0; color: var(--green); font-weight: bold; }
         .cons li::before { content: "\2717"; position: absolute; left: 0; color: var(--red); font-weight: bold; }
-
-        .next-steps {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-        .next-steps h5 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .next-steps ul { list-style: none; padding: 0; }
-        .next-steps li { padding: 0.25rem 0; padding-left: 1.2rem; position: relative; font-size: 0.85rem; }
-        .next-steps li::before { content: "\2192"; position: absolute; left: 0; font-weight: bold; }
-
-        .explore-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            font-family: 'Source Sans 3', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-            font-size: 0.95rem;
-        }
-        .explore-button:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(44, 95, 122, 0.3); }
-
-        .btn {
-            padding: 0.875rem 1.75rem;
-            font-size: 1rem;
-            font-family: 'Source Sans 3', sans-serif;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(44, 95, 122, 0.3); }
-        .btn-secondary { background: var(--bg-light); color: var(--text-dark); border: 2px solid var(--border); }
-        .btn-secondary:hover { background: var(--text-medium); color: white; }
-        .button-group { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
-
-        .progress-steps { display: flex; justify-content: space-between; margin-bottom: 2rem; padding: 0 1rem; }
-        .step { flex: 1; text-align: center; position: relative; }
-        .step::before { content: ''; position: absolute; top: 15px; left: -50%; right: 50%; height: 2px; background: var(--border); z-index: -1; }
-        .step:first-child::before { display: none; }
-        .step-circle { width: 30px; height: 30px; border-radius: 50%; background: var(--border); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .step.completed .step-circle { background: var(--accent); }
-        .step.active .step-circle { background: var(--primary); box-shadow: 0 0 0 4px rgba(44, 95, 122, 0.2); }
-        .step-label { font-size: 0.8rem; color: var(--text-light); }
-        .step.active .step-label { color: var(--primary); font-weight: 600; }
-
-        .filter-summary {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .filter-summary h3 { font-family: 'Crimson Text', serif; font-size: 1.4rem; margin-bottom: 1rem; }
-        .summary-item { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-        .summary-item:last-child { border-bottom: none; }
-        .summary-label { font-weight: 600; }
-
-        .situation-label {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            background: rgba(255,255,255,0.25);
-        }
-
-        .self-funder-section {
-            background: linear-gradient(135deg, rgba(44, 95, 122, 0.05) 0%, rgba(74, 139, 168, 0.05) 100%);
-            border: 2px solid var(--primary);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-        .self-funder-section h3 { font-family: 'Crimson Text', serif; font-size: 1.6rem; color: var(--primary); margin-bottom: 1.5rem; }
-
-        .funding-route-card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
-        }
-        .funding-route-card h4 { font-family: 'Crimson Text', serif; color: var(--primary); font-size: 1.2rem; margin-bottom: 0.75rem; }
-        .funding-route-card p { color: var(--text-medium); font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.75rem; }
-
         .when-suitable { background: rgba(16, 185, 129, 0.08); border-radius: 6px; padding: 0.75rem; margin: 0.75rem 0; }
         .when-suitable h5 { color: var(--green); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .when-suitable ul { list-style: none; padding: 0; font-size: 0.85rem; color: var(--text-medium); }
-        .when-suitable li { padding: 0.25rem 0; padding-left: 1rem; position: relative; }
+        .when-suitable ul, .key-risks ul { list-style: none; padding: 0; font-size: 0.83rem; color: var(--text-medium); }
+        .when-suitable li, .key-risks li { padding: 0.2rem 0; padding-left: 1rem; position: relative; }
         .when-suitable li::before { content: "\2192"; position: absolute; left: 0; color: var(--green); }
-
-        .key-risks { background: rgba(239, 68, 68, 0.08); border-radius: 6px; padding: 0.75rem; margin: 0.75rem 0; }
+        .key-risks { background: rgba(239, 68, 68, 0.07); border-radius: 6px; padding: 0.75rem; margin: 0.75rem 0; }
         .key-risks h5 { color: var(--red); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .key-risks ul { list-style: none; padding: 0; font-size: 0.85rem; color: var(--text-medium); }
-        .key-risks li { padding: 0.25rem 0; padding-left: 1rem; position: relative; }
         .key-risks li::before { content: "!"; position: absolute; left: 0; color: var(--red); font-weight: bold; }
 
-        .sources {
-            background: var(--bg-white);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 3rem;
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
+        .filter-summary { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); color: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+        .filter-summary h3 { font-family: 'Crimson Text', serif; font-size: 1.35rem; margin-bottom: 1rem; }
+        .summary-item { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 0.9rem; }
+        .summary-item:last-child { border-bottom: none; }
+        .summary-label { font-weight: 600; }
+        .situation-label { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.75rem; background: rgba(255,255,255,0.25); }
+
+        .self-funder-section { background: linear-gradient(135deg, rgba(44,95,122,0.05) 0%, rgba(74,139,168,0.05) 100%); border: 2px solid var(--primary); border-radius: 12px; padding: 2rem; margin-top: 2rem; }
+        .self-funder-section h3 { font-family: 'Crimson Text', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 1.25rem; }
+
+        .longevity-estimator { background: white; border: 2px solid var(--primary-light); border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; }
+        .longevity-estimator h4 { font-family: 'Crimson Text', serif; color: var(--primary); font-size: 1.2rem; margin-bottom: 0.25rem; }
+        .est-label { font-size: 0.82rem; color: var(--text-light); margin-bottom: 1rem; }
+        .longevity-slider-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .longevity-slider-row label { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); min-width: 130px; }
+        .longevity-slider-row input[type=range] { flex: 1; min-width: 150px; accent-color: var(--primary); cursor: pointer; }
+        .slider-val { font-weight: 600; color: var(--primary); min-width: 90px; text-align: right; }
+        .longevity-result { background: rgba(44,95,122,0.06); border-radius: 8px; padding: 1rem 1.25rem; }
+        .longevity-duration { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        .longevity-thresholds { display: flex; gap: 1rem; margin-top: 0.75rem; flex-wrap: wrap; }
+        .longevity-threshold { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.83rem; flex: 1; min-width: 140px; }
+        .th-label { color: var(--text-light); font-size: 0.75rem; }
+        .th-value { font-weight: 600; color: var(--primary); }
+        .longevity-assumptions { font-size: 0.78rem; color: var(--text-light); margin-top: 0.75rem; line-height: 1.5; }
+
+        .wizard-bridge { background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); color: white; border-radius: 12px; padding: 1.75rem; margin-top: 1.5rem; }
+        .wizard-bridge h4 { font-family: 'Crimson Text', serif; font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .wizard-bridge p { font-size: 0.93rem; opacity: 0.9; margin-bottom: 1.25rem; line-height: 1.6; }
+        .wizard-bridge a { display: inline-block; background: white; color: var(--primary); font-weight: 600; padding: 0.7rem 1.5rem; border-radius: 8px; text-decoration: none; font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem; transition: all 0.2s; }
+        .wizard-bridge a:hover { background: var(--bg-light); transform: translateY(-2px); }
+
+        .sources { background: var(--bg-white); border-radius: 8px; padding: 1.5rem; margin-top: 3rem; font-size: 0.85rem; color: var(--text-light); }
         .sources h4 { font-family: 'Crimson Text', serif; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem; }
-        .sources a { color: var(--primary-light); text-decoration: none; word-break: break-all; }
+        .sources a { color: var(--primary-light); text-decoration: none; }
         .sources a:hover { text-decoration: underline; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .under55-note { background: rgba(217,119,6,0.08); border-left: 4px solid var(--warning); border-radius: 8px; padding: 1.1rem; margin-top: 1.5rem; }
+        .under55-note h4 { color: var(--warning); font-family: 'Crimson Text', serif; font-size: 1.05rem; margin-bottom: 0.4rem; }
+        .under55-note p { font-size: 0.88rem; color: var(--text-medium); }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .section-title { font-size: 1.5rem; }
             .trade-offs { grid-template-columns: 1fr; }
-            .progress-steps { flex-wrap: wrap; }
-            .step { flex: 1 1 50%; margin-bottom: 1rem; }
+            .step-label { font-size: 0.62rem; }
+            .longevity-thresholds { flex-direction: column; }
         }
     </style>
 </head>
@@ -305,82 +119,47 @@
 
         <div class="disclaimer">
             <h3>Important note</h3>
-            <p>This guide is for information only and does not constitute legal or financial advice. Care funding rules change frequently, and circumstances vary widely. Always check the current position with your Health and Social Care Trust, seek professional advice if needed, and verify policy details before making decisions. You should also check eligibility for current support schemes or grants that may have changed since publication.</p>
+            <p>This guide is for information only and does not constitute legal or financial advice. Care funding rules change frequently, and circumstances vary widely. Always check the current position with your Health and Social Care Trust, seek professional advice if needed, and verify policy details before making decisions.</p>
         </div>
 
         <div class="progress-steps">
-            <div class="step active" id="step1">
-                <div class="step-circle">1</div>
-                <div class="step-label">Understand your situation</div>
-            </div>
-            <div class="step" id="step2">
-                <div class="step-circle">2</div>
-                <div class="step-label">Set priorities</div>
-            </div>
-            <div class="step" id="step3">
-                <div class="step-circle">3</div>
-                <div class="step-label">Explore options</div>
-            </div>
+            <div class="step active" id="step1"><div class="step-circle">1</div><div class="step-label">Your situation</div></div>
+            <div class="step" id="step2"><div class="step-circle">2</div><div class="step-label">Finances</div></div>
+            <div class="step" id="step3"><div class="step-circle">3</div><div class="step-label">About you</div></div>
+            <div class="step" id="step4"><div class="step-circle">4</div><div class="step-label">Priorities</div></div>
+            <div class="step" id="step5"><div class="step-circle">5</div><div class="step-label">Options</div></div>
         </div>
 
-        <!-- STAGE 1: QUESTIONNAIRE -->
-        <div class="stage active" id="stage1">
+        <!-- STAGE 1a: Situation, care setting, location -->
+        <div class="stage active" id="stage1a">
             <div class="card">
-                <h2 class="section-title">About your situation</h2>
-                <p class="section-subtitle">This information helps identify which funding options may be available for your situation</p>
+                <h2 class="section-title">Your situation</h2>
+                <p class="section-subtitle">A few questions about the care being considered</p>
 
                 <div class="form-group">
                     <label class="form-label">What best describes your situation?</label>
                     <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="situation" value="hospitalUrgent">
-                            <span>Hospital discharge or urgent decision needed</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="situation" value="homeStruggling">
-                            <span>At home and struggling to cope</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="situation" value="alreadyInCare">
-                            <span>Already receiving care</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="situation" value="planningAhead">
-                            <span>Planning ahead</span>
-                        </label>
+                        <label class="radio-option"><input type="radio" name="situation" value="hospitalUrgent"><span>Hospital discharge or urgent decision needed</span></label>
+                        <label class="radio-option"><input type="radio" name="situation" value="homeStruggling"><span>At home and struggling to cope</span></label>
+                        <label class="radio-option"><input type="radio" name="situation" value="alreadyInCare"><span>Already receiving care</span></label>
+                        <label class="radio-option"><input type="radio" name="situation" value="planningAhead"><span>Planning ahead</span></label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Where would care be provided?</label>
                     <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="careSetting" value="home">
-                            <span>At home (care at home service)</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="careSetting" value="residential">
-                            <span>Residential care home</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="careSetting" value="nursing">
-                            <span>Nursing home</span>
-                        </label>
+                        <label class="radio-option"><input type="radio" name="careSetting" value="home"><span>At home (care at home service)</span></label>
+                        <label class="radio-option"><input type="radio" name="careSetting" value="residential"><span>Residential care home</span></label>
+                        <label class="radio-option"><input type="radio" name="careSetting" value="nursing"><span>Nursing home</span></label>
                     </div>
                 </div>
 
-                <!-- Conditional on residential/nursing -->
                 <div class="form-group" id="stayTypeGroup" style="display: none;">
                     <label class="form-label">Duration of stay</label>
                     <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="stayType" value="temporary">
-                            <span>Temporary (expected to be short-term)</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="stayType" value="permanent">
-                            <span>Permanent or long-term</span>
-                        </label>
+                        <label class="radio-option"><input type="radio" name="stayType" value="temporary"><span>Temporary (expected to be short-term)</span></label>
+                        <label class="radio-option"><input type="radio" name="stayType" value="permanent"><span>Permanent or long-term</span></label>
                     </div>
                 </div>
 
@@ -392,119 +171,100 @@
                 <div class="form-group">
                     <label class="form-label">Where do you currently live?</label>
                     <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="location" value="hospital">
-                            <span>In hospital</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="location" value="community">
-                            <span>In the community (at home)</span>
-                        </label>
+                        <label class="radio-option"><input type="radio" name="location" value="hospital"><span>In hospital</span></label>
+                        <label class="radio-option"><input type="radio" name="location" value="community"><span>In the community (at home)</span></label>
                     </div>
                 </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="goToStage1b()">Next: Financial picture &rarr;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAGE 1b: Property + Capital -->
+        <div class="stage" id="stage1b">
+            <div class="card">
+                <div id="summaryAfter1a" class="running-summary" style="display:none;"></div>
+                <h2 class="section-title">Financial picture</h2>
+                <p class="section-subtitle">The Trust uses your capital and property to assess eligibility for funded care</p>
 
                 <div class="form-group">
                     <label class="form-label">Do you own or rent your home?</label>
                     <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="property" value="owner">
-                            <span>Own</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="property" value="notOwner">
-                            <span>Rent or other tenure</span>
-                        </label>
+                        <label class="radio-option"><input type="radio" name="property" value="owner"><span>Own</span></label>
+                        <label class="radio-option"><input type="radio" name="property" value="notOwner"><span>Rent or other tenure</span></label>
                     </div>
                 </div>
 
-                <!-- Conditional on owner -->
                 <div class="form-group" id="occupierGroup" style="display: none;">
                     <label class="form-label">Who lives in the property?</label>
                     <div class="checkbox-group">
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="occupier" value="spouse">
-                            <span>Spouse or civil partner (who will stay in the home)</span>
-                        </label>
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="occupier" value="child">
-                            <span>Dependent child (under 16)</span>
-                        </label>
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="occupier" value="relative">
-                            <span>Relative aged 60+ or disabled relative</span>
-                        </label>
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="occupier" value="alone">
-                            <span>No one else lives in the property</span>
-                        </label>
+                        <label class="checkbox-option"><input type="checkbox" name="occupier" value="spouse"><span>Spouse or civil partner (who will stay in the home)</span></label>
+                        <label class="checkbox-option"><input type="checkbox" name="occupier" value="child"><span>Dependent child (under 16)</span></label>
+                        <label class="checkbox-option"><input type="checkbox" name="occupier" value="relative"><span>Relative aged 60+ or disabled relative</span></label>
+                        <label class="checkbox-option"><input type="checkbox" name="occupier" value="alone"><span>No one else lives in the property</span></label>
                     </div>
                 </div>
 
                 <div class="info-box" id="extraDisregardNote" style="display: none;">
                     <h4>Other disregard situations</h4>
-                    <p>The categories above are the main reasons a property may be disregarded. In some cases, other situations may also apply &mdash; for example, where a carer has been living in the property or certain former partner situations. If you think this might be relevant, raise it with the Trust or seek advice.</p>
+                    <p>The categories above are the main reasons a property may be disregarded. Other situations may also apply &mdash; raise them with the Trust or seek advice.</p>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" id="capitalLabel">Total savings and investments</label>
                     <div id="capitalContextNote" class="info-box" style="display: none; margin-bottom: 1rem;"></div>
                     <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="capital" value="low">
-                            <span>Under &pound;14,250</span><!-- FIGURE: keep in sync with figures.js CARE_FIGURES.lowerCapitalLimit -->
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="capital" value="medium">
-                            <span>&pound;14,250 to &pound;23,250</span><!-- FIGURE: keep in sync with figures.js CARE_FIGURES.lowerCapitalLimit / upperCapitalLimit -->
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="capital" value="high">
-                            <span>Over &pound;23,250</span><!-- FIGURE: keep in sync with figures.js CARE_FIGURES.upperCapitalLimit -->
-                        </label>
+                        <label class="radio-option"><input type="radio" name="capital" value="low"><span>Under &pound;14,250</span><!-- FIGURE: keep in sync with figures.js CARE_FIGURES.lowerCapitalLimit --></label>
+                        <label class="radio-option"><input type="radio" name="capital" value="medium"><span>&pound;14,250 to &pound;23,250</span><!-- FIGURE: keep in sync with figures.js --></label>
+                        <label class="radio-option"><input type="radio" name="capital" value="high"><span>Over &pound;23,250</span><!-- FIGURE: keep in sync with figures.js CARE_FIGURES.upperCapitalLimit --></label>
                     </div>
                 </div>
 
                 <div class="info-box">
-                    <h4>Financial thresholds (2026/27)</h4>
-                    <!-- FIGURE: keep in sync with figures.js CARE_FIGURES.lowerCapitalLimit / upperCapitalLimit -->
-                    <p>These are the key boundaries used in Northern Ireland's financial assessment for care. If your assessable capital is under &pound;14,250, the Trust usually covers your care. Between &pound;14,250 and &pound;23,250, you contribute on a sliding scale. Above &pound;23,250, you would need to fund your care privately unless Continuing Healthcare applies.</p>
+                    <h4>Financial thresholds (2026/27)</h4><!-- FIGURE: keep in sync with figures.js -->
+                    <p>Under &pound;14,250: Trust usually covers your care. Between &pound;14,250 and &pound;23,250: you contribute on a sliding scale. Above &pound;23,250: you fund privately unless Continuing Healthcare applies.</p>
                 </div>
 
                 <div class="info-box" id="selfFunderWarning" style="display: none;">
                     <h4>What this means for you</h4>
-                    <p>Having savings above the upper threshold means you would fund your own care fees at this stage. This does not mean any fee is sustainable long-term. Consider whether the fee level will remain affordable as your savings reduce. If you choose a home that charges more than the Trust's usual rate, you or your family may face third-party top-up costs later if Trust support is needed. Think carefully about future affordability, not just what you can pay today.</p>
+                    <p>Savings above the upper threshold mean you fund care yourself at this stage. Consider how long the chosen fee level will remain affordable as savings reduce. If you choose a home that charges more than the Trust&rsquo;s rate, you or your family may face top-up costs later.</p>
                 </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="goBackTo1a()">&larr; Back</button>
+                    <button class="btn btn-primary" onclick="goToStage1c()">Next: About you &rarr;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAGE 1c: Age + Health complexity -->
+        <div class="stage" id="stage1c">
+            <div class="card">
+                <div id="summaryAfter1b" class="running-summary" style="display:none;"></div>
+                <h2 class="section-title">About you</h2>
+                <p class="section-subtitle">Age and health needs determine which options are available</p>
 
                 <div class="form-group">
                     <label class="form-label">Age</label>
                     <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="age" value="under55">
-                            <span>Under 55</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="age" value="over55">
-                            <span>55 or over</span>
-                        </label>
+                        <label class="radio-option"><input type="radio" name="age" value="under55"><span>Under 55</span></label>
+                        <label class="radio-option"><input type="radio" name="age" value="over55"><span>55 or over</span></label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Health complexity</label>
                     <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="healthComplexity" value="standard">
-                            <span>Standard care needs</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="healthComplexity" value="complex">
-                            <span>Highly complex health needs &mdash; Continuing Healthcare should be checked, but eligibility is narrow</span>
-                        </label>
+                        <label class="radio-option"><input type="radio" name="healthComplexity" value="standard"><span>Standard care needs</span></label>
+                        <label class="radio-option"><input type="radio" name="healthComplexity" value="complex"><span>Highly complex health needs &mdash; Continuing Healthcare should be checked, but eligibility is narrow</span></label>
                     </div>
                 </div>
 
                 <div class="button-group">
-                    <button class="btn btn-primary" onclick="goToStage2()">Next: Set your priorities</button>
+                    <button class="btn btn-secondary" onclick="goBackTo1b()">&larr; Back</button>
+                    <button class="btn btn-primary" onclick="goToStage2()">Next: Set priorities &rarr;</button>
                 </div>
             </div>
         </div>
@@ -512,17 +272,13 @@
         <!-- STAGE 2: PRIORITIES -->
         <div class="stage" id="stage2">
             <div class="card">
+                <div id="summaryAfter1c" class="running-summary" style="display:none;"></div>
                 <h2 class="section-title" id="stage2Title">What matters most to you?</h2>
                 <p class="section-subtitle" id="stage2Subtitle">Select up to <strong>2 priorities</strong> in order of importance. Your first choice carries more weight in the results.</p>
-
-                <div class="form-group">
-                    <label class="form-label">Choose what matters most</label>
-                    <div id="prioritiesContainer"></div>
-                </div>
-
+                <div class="form-group"><div id="prioritiesContainer"></div></div>
                 <div class="button-group">
-                    <button class="btn btn-secondary" onclick="goToStage1()">Back</button>
-                    <button class="btn btn-primary" onclick="goToStage3()">Next: Explore options</button>
+                    <button class="btn btn-secondary" onclick="goBackTo1c()">&larr; Back</button>
+                    <button class="btn btn-primary" onclick="goToStage3()">See my options &rarr;</button>
                 </div>
             </div>
         </div>
@@ -530,7 +286,6 @@
         <!-- STAGE 3: RESULTS -->
         <div class="stage" id="stage3">
             <div class="filter-summary" id="filterSummary"></div>
-
             <div id="situationContextSection"></div>
             <div id="trustFundedSection"></div>
             <div id="selfFunderSection"></div>
@@ -539,1041 +294,702 @@
 
             <div class="sources">
                 <h4>Sources &amp; further information</h4>
-                <p>This guide draws on:</p>
                 <ul style="list-style: none; padding: 0; margin-top: 0.75rem;">
                     <li><a href="https://www.nidirect.gov.uk/articles/your-home-assets-and-residential-care-or-nursing-home-fees" target="_blank">NI Direct &mdash; Your home, assets and residential care fees</a></li>
                     <li><a href="https://www.hscni.net/" target="_blank">Health and Social Care NI official site</a></li>
                     <li><a href="https://www.ageuk.org.uk/northern-ireland/" target="_blank">Age NI &mdash; guidance on care and support</a></li>
                     <li><a href="https://www.citizensadvice.org.uk/" target="_blank">Citizens Advice on adult social care</a></li>
-                    <li><a href="https://www.alzheimers.org.uk/get-support/legal-financial/paying-care-northern-ireland" target="_blank">Alzheimer's Society &mdash; paying for care in NI</a></li>
+                    <li><a href="https://www.alzheimers.org.uk/get-support/legal-financial/paying-care-northern-ireland" target="_blank">Alzheimer&rsquo;s Society &mdash; paying for care in NI</a></li>
                     <li><a href="https://beaconchc.co.uk/" target="_blank">Beacon CHC &mdash; Continuing Healthcare advocacy</a></li>
                 </ul>
             </div>
-
-            <div class="button-group">
-                <button class="btn btn-secondary" onclick="restart()">Start again</button>
-            </div>
+            <div class="button-group"><button class="btn btn-secondary" onclick="restart()">Start again</button></div>
         </div>
     </div>
 
     <script src="figures.js"></script>
     <script>
-        // State management
+        // ─── State ───────────────────────────────────────────────────────────
         const state = {
-            situation: null,
-            careSetting: null,
-            stayType: null,
-            location: null,
-            property: null,
-            occupier: [],
-            capital: null,
-            age: null,
-            healthComplexity: null,
-            priorities: []
+            situation: null, careSetting: null, stayType: null, location: null,
+            property: null, occupier: [], capital: null, age: null,
+            healthComplexity: null, priorities: []
         };
 
-        // Situation tier helper
+        // ─── Part 1: Priority alignment matrix ──────────────────────────────
+        // Scores: -2 (works against) to +2 (strongly serves this priority)
+        // Review these scores annually or if user feedback suggests retuning.
+        const PRIORITY_ALIGNMENT = {
+            //                    choice  protectHome  minCost  flexibility  familyControl  speed
+            trustFunded:         {choice:-1, protectHome: 2, minCost: 2, flexibility:-1, familyControl: 0, speed:-1},
+            topUp:               {choice: 1, protectHome: 1, minCost: 0, flexibility: 1, familyControl: 0, speed: 0},
+            continuingHealthcare:{choice: 0, protectHome: 2, minCost: 2, flexibility: 0, familyControl: 0, speed:-1},
+            selfFunded:          {choice: 2, protectHome: 0, minCost:-2, flexibility: 2, familyControl: 1, speed: 2},
+            temp:                {choice: 0, protectHome: 1, minCost: 1, flexibility: 1, familyControl: 1, speed: 2},
+        };
+
+        function getPriorityScore(optionId) {
+            const alignment = PRIORITY_ALIGNMENT[optionId];
+            if (!alignment) return 0;
+            let score = 0;
+            if (state.priorities[0]) score += (alignment[state.priorities[0]] || 0) * 2;
+            if (state.priorities[1]) score += (alignment[state.priorities[1]] || 0);
+            return score;
+        }
+
+        const PRIORITY_NAMES = {
+            minCost: 'minimising cost', protectHome: 'protecting the family home',
+            choice: 'choice of care provider', flexibility: 'flexibility and control',
+            familyControl: 'family involvement', speed: 'quick access to care'
+        };
+
+        // ─── Situation / tier helpers ────────────────────────────────────────
         function getSituationTier() {
             if (state.situation === 'planningAhead') return 'planning';
             if (state.situation === 'homeStruggling') return 'emerging';
-            return 'pointOfNeed'; // hospitalUrgent or alreadyInCare
+            return 'pointOfNeed';
         }
 
-        // Situation-aware priority definitions
         function getPrioritiesForSituation() {
             const tier = getSituationTier();
             const isOwner = state.property === 'owner';
-
-            const allPriorities = {
+            const defs = {
                 choice: {
-                    id: 'choice',
-                    planning: {
-                        label: 'Choice of care provider and location',
-                        description: 'Research options without time pressure. Understand what is available, what it costs, and what matters to you and your family.'
-                    },
-                    emerging: {
-                        label: 'Choice of care provider and location',
-                        description: 'You may still have time to research options, but the window is narrowing. Understand what is available near you and start visiting if possible.'
-                    },
-                    pointOfNeed: {
-                        label: 'Choice of care provider and location',
-                        description: 'Even under time pressure, you have some choice. Understand what is available within Trust-contracted options and what choosing a more expensive home means for costs.'
-                    }
+                    planning: {label:'Choice of care provider and location', description:'Research options without time pressure. Understand what is available, what it costs, and what matters to you and your family.'},
+                    emerging: {label:'Choice of care provider and location', description:'You may still have time to research options, but the window is narrowing. Understand what is available near you and start visiting if possible.'},
+                    pointOfNeed: {label:'Choice of care provider and location', description:'Even under time pressure, you have some choice. Understand what is available within Trust-contracted options and what choosing a more expensive home means for costs.'}
                 },
                 protectHome: {
-                    id: 'protectHome',
-                    planning: {
-                        label: 'Protect the family home',
-                        description: 'With proper legal advice, there may be legitimate steps you can take now to protect the property. This could include trusts, restructuring ownership, or other arrangements. The rules are complex and getting it wrong can be costly, so professional advice is essential.'
-                    },
-                    emerging: {
-                        label: 'Protect the family home',
-                        description: 'Some planning may still be possible depending on your circumstances. However, the closer you are to needing formal care, the more scrutiny any asset changes attract. The Trust can treat recent transfers as deprivation of assets if they believe the purpose was to avoid care fees. Get legal advice before acting.'
-                    },
-                    pointOfNeed: null // Not shown for point of need
+                    planning: {label:'Protect the family home', description:'With proper legal advice, there may be legitimate steps you can take now to protect the property. The rules are complex and getting it wrong can be costly — professional advice is essential.'},
+                    emerging: {label:'Protect the family home', description:'Some planning may still be possible depending on your circumstances. However, the closer you are to needing formal care, the more scrutiny any asset changes attract. Get legal advice before acting.'},
+                    pointOfNeed: null
                 },
                 minCost: {
-                    id: 'minCost',
-                    planning: {
-                        label: 'Minimise future care costs',
-                        description: 'Explore steps that could reduce the financial impact of care when the time comes. This includes claiming benefits like Attendance Allowance, understanding the financial thresholds, and legitimate financial planning with professional advice.'
-                    },
-                    emerging: {
-                        label: 'Minimise costs where possible',
-                        description: 'Claim everything you are entitled to, including Attendance Allowance and carer benefits. Understand the financial assessment rules so you are not paying more than you need to.'
-                    },
-                    pointOfNeed: {
-                        label: 'Pay as efficiently as possible',
-                        description: 'Your financial position is what it is. The goal now is to make sure you are using the most efficient funding route: ensure all disregards are applied correctly, check whether Continuing Healthcare applies, and know when to request a reassessment as your savings change.'
-                    }
+                    planning: {label:'Minimise future care costs', description:'Explore steps that could reduce the financial impact of care. This includes claiming benefits, understanding financial thresholds, and legitimate financial planning with professional advice.'},
+                    emerging: {label:'Minimise costs where possible', description:"Claim everything you are entitled to, including Attendance Allowance and carer benefits. Understand the financial assessment rules so you are not paying more than you need to."},
+                    pointOfNeed: {label:'Pay as efficiently as possible', description:"Your financial position is what it is. Make sure all disregards are applied correctly, check whether Continuing Healthcare applies, and know when to request a reassessment as your savings change."}
                 },
                 flexibility: {
-                    id: 'flexibility',
-                    planning: {
-                        label: 'Flexibility and control',
-                        description: 'Build in options so care arrangements can adapt as circumstances change over time.'
-                    },
-                    emerging: {
-                        label: 'Flexibility and control',
-                        description: 'Find care arrangements that can adapt. Care at home now, with the option to step up to residential care later if needed.'
-                    },
-                    pointOfNeed: {
-                        label: 'Flexibility and control',
-                        description: 'Build in review points so you can adjust as circumstances change, especially as savings reduce and you may cross funding thresholds.'
-                    }
+                    planning: {label:'Flexibility and control', description:'Build in options so care arrangements can adapt as circumstances change over time.'},
+                    emerging: {label:'Flexibility and control', description:'Find care arrangements that can adapt. Care at home now, with the option to step up to residential care later if needed.'},
+                    pointOfNeed: {label:'Flexibility and control', description:'Build in review points so you can adjust as circumstances change, especially as savings reduce and you may cross funding thresholds.'}
                 },
                 familyControl: {
-                    id: 'familyControl',
-                    planning: {
-                        label: 'Family involvement and oversight',
-                        description: 'Set up the right legal and practical frameworks now. An Enduring Power of Attorney and open family discussions mean the family can act decisively when the time comes.'
-                    },
-                    emerging: {
-                        label: 'Family involvement and oversight',
-                        description: 'If an Enduring Power of Attorney is not already in place, this is urgent. It can only be set up while the person still has mental capacity. Once capacity is lost, the more complex and expensive controllership process applies.'
-                    },
-                    pointOfNeed: {
-                        label: 'Family involvement and oversight',
-                        description: 'Understand what decisions the family can and cannot make, especially if the person lacks capacity. If no Enduring Power of Attorney is in place, you may need to explore controllership through the courts.'
-                    }
+                    planning: {label:'Family involvement and oversight', description:"Set up the right legal and practical frameworks now. An Enduring Power of Attorney and open family discussions mean the family can act decisively when the time comes."},
+                    emerging: {label:'Family involvement and oversight', description:'If an Enduring Power of Attorney is not already in place, this is urgent. It can only be set up while the person still has mental capacity.'},
+                    pointOfNeed: {label:'Family involvement and oversight', description:"Understand what decisions the family can and cannot make, especially if the person lacks capacity. If no EPA is in place, you may need to explore controllership through the courts."}
                 },
                 speed: {
-                    id: 'speed',
-                    planning: null, // Not shown for planners
-                    emerging: null, // Not prominent for emerging
-                    pointOfNeed: {
-                        label: 'Quick decision and access',
-                        description: 'Get care in place promptly. Especially important for hospital discharge, where delayed discharge affects the person and the hospital.'
-                    }
+                    planning: null, emerging: null,
+                    pointOfNeed: {label:'Quick decision and access', description:'Get care in place promptly. Especially important for hospital discharge, where delayed discharge affects the person and the hospital.'}
                 }
             };
-
-            // Build the priority list based on tier
-            let priorityOrder;
-            if (tier === 'planning') {
-                priorityOrder = ['choice', 'protectHome', 'minCost', 'flexibility', 'familyControl'];
-            } else if (tier === 'emerging') {
-                priorityOrder = ['choice', 'protectHome', 'flexibility', 'minCost', 'familyControl'];
-            } else {
-                priorityOrder = ['choice', 'speed', 'minCost', 'flexibility', 'familyControl'];
-            }
-
-            const result = [];
-            priorityOrder.forEach(key => {
-                const p = allPriorities[key];
-                const tierData = p[tier];
-                if (!tierData) return; // Skip if not applicable to this tier
-                // Additional filter: protectHome only if property owner
-                if (key === 'protectHome' && !isOwner) return;
-                result.push({ id: p.id, label: tierData.label, description: tierData.description });
-            });
-
-            return result;
+            const order = tier === 'planning' ? ['choice','protectHome','minCost','flexibility','familyControl']
+                        : tier === 'emerging'  ? ['choice','protectHome','flexibility','minCost','familyControl']
+                        :                        ['choice','speed','minCost','flexibility','familyControl'];
+            return order.reduce((acc, key) => {
+                const tierData = defs[key][tier];
+                if (!tierData) return acc;
+                if (key === 'protectHome' && !isOwner) return acc;
+                acc.push({id: key, label: tierData.label, description: tierData.description});
+                return acc;
+            }, []);
         }
 
-        // Funding options
+        // ─── Funding options ─────────────────────────────────────────────────
         const fundingOptions = [
             {
                 id: 'trustFunded',
                 name: 'Trust-funded care (full or partial)',
-                description: `The Health and Social Care Trust assesses you as needing care and funds it directly, or contributes to the cost. Northern Ireland's capital thresholds have been frozen at ${CARE_FIGURES.upperCapitalLimit} since 2010, compared to \u00a350,000 in Wales and \u00a335,500 in Scotland. The nursing care contribution in NI is only ${CARE_FIGURES.nursingCarePayment} per week, compared to ${CARE_FIGURES.englandNursingComparator} per week in England.`,
-                pros: [
-                    'Significantly lower or no personal cost',
-                    'Trust covers the full registered fee',
-                    'Includes Nursing Care Allowance if you need nursing',
-                    'No risk of care being withdrawn due to money running out',
-                    'Includes personal care and support planning'
-                ],
-                cons: [
-                    'Limited choice: only homes that contract with the Trust',
-                    'Means testing applied (financial assessment)',
-                    'Property may be counted in assessment',
-                    'Stricter eligibility rules for younger people (under 65)',
-                    'Waiting times for assessment and placement'
-                ],
-                whenSuitable: [
-                    'Capital is low (under \u00a314,250)',
-                    'You need residential or nursing care',
-                    'You want to minimise personal cost'
-                ],
-                nextSteps: [
-                    'Contact your local Health and Social Care Trust',
-                    'Request a care needs assessment',
-                    'Request a financial assessment',
-                    'Ask about their contracted homes',
-                    'Discuss timescales for assessment and placement'
-                ]
+                description: `The Health and Social Care Trust assesses you as needing care and funds it directly, or contributes to the cost. Northern Ireland's capital thresholds have been frozen at ${CARE_FIGURES.upperCapitalLimit} since 2010, compared to £50,000 in Wales and £35,500 in Scotland. The nursing care contribution in NI is only ${CARE_FIGURES.nursingCarePayment} per week, compared to ${CARE_FIGURES.englandNursingComparator} per week in England.`,
+                pros: ['Significantly lower or no personal cost','Trust covers the full registered fee','Includes Nursing Care Allowance if you need nursing','No risk of care being withdrawn due to money running out','Includes personal care and support planning'],
+                cons: ['Limited choice: only homes that contract with the Trust','Means testing applied (financial assessment)','Property may be counted in assessment','Different eligibility rules may apply for younger adults','Waiting times for assessment and placement'],
+                whenSuitable: ['Capital is low (under £14,250)','You need residential or nursing care','You want to minimise personal cost'],
+                nextSteps: ['Contact your local Health and Social Care Trust','Request a care needs assessment','Request a financial assessment','Ask about their contracted homes','Discuss timescales for assessment and placement']
             },
             {
                 id: 'topUp',
                 name: 'Trust-funded with top-up (preferred care home)',
                 description: 'The Trust funds care at their standard rate, but you pay the difference to access a home that charges more.',
-                pros: [
-                    'Some choice if you want a specific home',
-                    'Trust funds most of the cost',
-                    'Usually clearer about ongoing costs',
-                    'Nursing Care Allowance included where applicable',
-                    'Care plan and review provided by Trust'
-                ],
-                cons: [
-                    'You must pay the top-up amount every month',
-                    'A third party (usually a family member) can agree to pay the top-up, but this is voluntary and no one is legally obliged to pay',
-                    'If top-up payments stop, the placement may be at risk and you may need to move',
-                    'Top-up amount is set by the care home, not negotiated',
-                    'Risk of disputes if the care home increases fees'
-                ],
-                whenSuitable: [
-                    'Capital is low-to-medium',
-                    'You have some savings or family willing to cover top-ups',
-                    'You want a specific care home that costs more than the Trust rate'
-                ],
-                nextSteps: [
-                    'Identify the care home you prefer',
-                    'Check the Trust\'s standard fee for that type of care',
-                    'Calculate the top-up cost per month',
-                    'Ensure you or a third party can afford it long-term',
-                    'Get confirmation in writing about the top-up arrangement'
-                ]
+                pros: ['Some choice if you want a specific home','Trust funds most of the cost','Usually clearer about ongoing costs','Nursing Care Allowance included where applicable','Care plan and review provided by Trust'],
+                cons: ['You must pay the top-up amount every month','A third party (usually a family member) can agree to pay the top-up, but no one is legally obliged','If top-up payments stop, the placement may be at risk and you may need to move','Top-up amount is set by the care home, not negotiated','Risk of disputes if the care home increases fees'],
+                whenSuitable: ['Capital is low-to-medium','You have some savings or family willing to cover top-ups','You want a specific care home that costs more than the Trust rate'],
+                nextSteps: ['Identify the care home you prefer','Check the Trust\'s standard fee for that type of care','Calculate the top-up cost per month','Ensure you or a third party can afford it long-term','Get confirmation in writing about the top-up arrangement']
             },
             {
                 id: 'continuingHealthcare',
                 name: 'Continuing Healthcare (fully funded)',
-                description: 'Continuing Healthcare (CHC) is NHS-funded care for people with a "primary health need", meaning the main reason for care is health rather than social care. If eligible, all care costs are covered with no means testing.',
-                pros: [
-                    'If eligible, completely free care with no charges at all',
-                    'No means testing or financial assessment',
-                    'All assets including property fully protected',
-                    'Covers all aspects of care provision',
-                    'Can access any care home (not just Trust-contracted ones)'
-                ],
-                cons: [
-                    'Extremely narrow eligibility in NI compared to the rest of the UK',
-                    'NI nursing care contribution is only \u00a3100 per week vs \u00a3254 per week in England',
-                    'The 2021 single-question screening policy was quashed by the High Court in the McMinnis case (2023). A new policy is being developed, with a direct referral pilot launched in April 2025',
-                    'Assessment process can be lengthy and complex',
-                    'Often requires specialist advice or advocacy to access',
-                    'Subject to ongoing review and can be withdrawn'
-                ],
-                whenSuitable: [
-                    'You have highly complex health needs requiring specialist or continuous clinical input',
-                    'Your needs are primarily health-related (the "primary health need" test)',
-                    'You want to explore whether full NHS funding applies'
-                ],
-                nextSteps: [
-                    'Ask the Trust to screen you for Continuing Healthcare',
-                    'Request a full multidisciplinary CHC assessment if screening suggests eligibility',
-                    'Gather all medical evidence documenting complexity of needs',
-                    'If refused, seek specialist advice or advocacy. The McMinnis ruling may support your case',
-                    'Be aware that the legal landscape is in transition and new guidance is being developed'
-                ]
+                description: 'Continuing Healthcare (CHC) is NHS-funded care for people with a “primary health need”, meaning the main reason for care is health rather than social care. If eligible, all care costs are covered with no means testing.',
+                pros: ['If eligible, completely free care with no charges at all','No means testing or financial assessment','All assets including property fully protected','Covers all aspects of care provision','Can access any care home (not just Trust-contracted ones)'],
+                cons: ['Extremely narrow eligibility in NI compared to the rest of the UK',`NI nursing care contribution is only ${CARE_FIGURES.nursingCarePayment} per week vs ${CARE_FIGURES.englandNursingComparator} per week in England`,'The 2021 single-question screening policy was quashed by the High Court in the McMinnis case (2023). A new policy is being developed, with a direct referral pilot launched in April 2025','Assessment process can be lengthy and complex','Often requires specialist advice or advocacy to access','Subject to ongoing review and can be withdrawn'],
+                whenSuitable: ['You have highly complex health needs requiring specialist or continuous clinical input','Your needs are primarily health-related (the “primary health need” test)','You want to explore whether full NHS funding applies'],
+                nextSteps: ['Ask the Trust to screen you for Continuing Healthcare','Request a full multidisciplinary CHC assessment if screening suggests eligibility','Gather all medical evidence documenting complexity of needs','If refused, seek specialist advice or advocacy. The McMinnis ruling may support your case','Be aware that the legal landscape is in transition and new guidance is being developed']
             },
             {
                 id: 'selfFunded',
                 name: 'Self-funded (private care)',
-                description: 'You pay the full cost of care from your own money. You have full choice, but care in Northern Ireland typically costs \u00a3800 to \u00a31,500 or more per week for residential care. Very few people can sustain this indefinitely. Consider how long your capital will last and what happens when it runs down.',
-                pros: [
-                    'Complete freedom of choice of provider',
-                    'Can access any home, anywhere',
-                    'No waiting for Trust assessment',
-                    'Quick access to care',
-                    'Control over care arrangements'
-                ],
-                cons: [
-                    'Full cost falls on you: typically \u00a3800 to \u00a31,500 or more per week for residential care',
-                    'Savings can run down quickly. Even \u00a3250,000 may last only 3 to 5 years',
-                    'No guarantee of long-term affordability',
-                    'If funds run out, you may need to move to a Trust-contracted home',
-                    'Choosing an expensive home creates top-up risk if Trust support is later needed',
-                    'Higher risk of family disagreement over money'
-                ],
-                whenSuitable: [
-                    'Capital is high (over \u00a323,250)',
-                    'You want complete choice of care home',
-                    'You prefer to avoid means testing',
-                    'You want immediate access to care'
-                ],
-                nextSteps: [
-                    'Research care homes in your preferred area',
-                    'Visit homes and compare fees',
-                    'Calculate how long your savings will last at the chosen fee level',
-                    'Plan for what happens when funds reduce towards the \u00a323,250 threshold',
-                    'Ask the Trust about deferred payment: NI does not have a formal scheme like England or Wales, but some Trusts may agree informal arrangements on a case-by-case basis'
-                ]
+                description: `You pay the full cost of care from your own money. You have full choice, but care in Northern Ireland typically costs £800 to £1,500 or more per week for residential care. Very few people can sustain this indefinitely. Consider how long your capital will last and what happens when it runs down.`,
+                pros: ['Complete freedom of choice of provider','Can access any home, anywhere','No waiting for Trust assessment','Quick access to care','Control over care arrangements'],
+                cons: ['Full cost falls on you: typically £800 to £1,500 or more per week for residential care','Savings can run down quickly. Even £250,000 may last only 3 to 5 years','No guarantee of long-term affordability','If funds run out, you may need to move to a Trust-contracted home','Choosing an expensive home creates top-up risk if Trust support is later needed','Higher risk of family disagreement over money'],
+                whenSuitable: [`Capital is high (over ${CARE_FIGURES.upperCapitalLimit})`,'You want complete choice of care home','You prefer to avoid means testing','You want immediate access to care'],
+                nextSteps: ['Research care homes in your preferred area','Visit homes and compare fees','Calculate how long your savings will last at the chosen fee level',`Plan for what happens when funds reduce towards the ${CARE_FIGURES.upperCapitalLimit} threshold`,'Ask the Trust about deferred payment: NI does not have a formal scheme like England or Wales, but some Trusts may agree informal arrangements on a case-by-case basis']
             },
             {
                 id: 'temp',
                 name: 'Temporary care (first few weeks or months)',
                 description: 'Short-term placement while you recover or decisions are made. Usually funded differently and time-limited.',
-                pros: [
-                    'Often fully or largely funded by the Trust',
-                    'Time to make longer-term decisions',
-                    'Allows for recovery or reassessment',
-                    'Home usually disregarded (not counted in assessment)',
-                    'Clarity about the time-limit'
-                ],
-                cons: [
-                    'Support ends after set period',
-                    'Requires a clear plan for what happens next',
-                    'If temporary becomes permanent, funding changes',
-                    'Charging rules may change mid-stay',
-                    'Can be stressful if permanent care needed but not arranged'
-                ],
-                whenSuitable: [
-                    'You are in hospital or crisis',
-                    'You need time to plan or recover',
-                    'You are deciding between care at home or residential care',
-                    'Short-term placement while family makes decisions'
-                ],
-                nextSteps: [
-                    'Confirm the duration of the temporary stay',
-                    'Discuss what happens at the end of the period',
-                    'Start planning for permanent arrangements early',
-                    'Ask about funding for permanent care if needed',
-                    'Ensure the home and family are clear on timescales'
-                ]
+                pros: ['Often fully or largely funded by the Trust','Time to make longer-term decisions','Allows for recovery or reassessment','Home usually disregarded (not counted in assessment)','Clarity about the time-limit'],
+                cons: ['Support ends after set period','Requires a clear plan for what happens next','If temporary becomes permanent, funding changes','Charging rules may change mid-stay','Can be stressful if permanent care needed but not arranged'],
+                whenSuitable: ['You are in hospital or crisis','You need time to plan or recover','You are deciding between care at home or residential care','Short-term placement while family makes decisions'],
+                nextSteps: ['Confirm the duration of the temporary stay','Discuss what happens at the end of the period','Start planning for permanent arrangements early','Ask about funding for permanent care if needed','Ensure the home and family are clear on timescales']
             },
             {
                 id: 'attendanceAllowance',
                 name: 'Attendance Allowance',
-                description: `A non-means-tested, tax-free benefit for people aged 65 or over who need help with personal care or supervision due to physical or mental disability. You can claim regardless of your savings, property, or income. Rates are ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week (${CARE_FIGURES.reviewYear}). It does not affect other benefits and is relatively straightforward to apply for.`,
-                pros: [
-                    'Not means-tested: your savings and property do not matter',
-                    'Tax-free and does not reduce other benefits',
-                    `${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week (${CARE_FIGURES.reviewYear})`,
-                    'Can be used for any purpose including paying for care',
-                    'Can be claimed whether you live at home or are planning to move to a care home'
-                ],
-                cons: [
-                    'Only available to people aged 65 or over',
-                    'Stops if you move into a care home funded by the Trust (but continues if self-funding)',
-                    'Application requires detailed information about care needs',
-                    'Decision can take 6 to 8 weeks',
-                    'Lower rate (\u00a374.10/week) if you need help only during the day or night, not both'
-                ],
-                whenSuitable: [
-                    'Aged 65 or over with care needs',
-                    'Living at home or planning ahead',
-                    'Self-funding in a care home',
-                    'Any savings or capital level'
-                ],
-                nextSteps: [
-                    'Check eligibility: aged 65+ and needing help with personal care',
-                    'Apply through the Department for Communities (DfC) in Northern Ireland',
-                    'Describe care needs in detail on the application. Consider getting help from Age NI or Citizens Advice',
-                    'You do not need to have a formal diagnosis to apply',
-                    'If already claimed but care needs have increased, apply for a review to move from lower to higher rate'
-                ]
+                description: `A non-means-tested, tax-free benefit for people of State Pension age who need help with personal care or supervision due to physical or mental disability. You can claim regardless of your savings, property, or income. Rates are ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week (${CARE_FIGURES.reviewYear}).`,
+                pros: ['Not means-tested: your savings and property do not matter','Tax-free and does not reduce other benefits',`${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week (${CARE_FIGURES.reviewYear})`,'Can be used for any purpose including paying for care','Can be claimed whether you live at home or are planning to move to a care home'],
+                cons: ['Only available to people of State Pension age (currently 66)','Stops if you move into a care home funded by the Trust (but continues if self-funding)','Application requires detailed information about care needs','Decision can take 6 to 8 weeks'],
+                whenSuitable: ['Of State Pension age (currently 66) with care needs','Living at home or planning ahead','Self-funding in a care home','Any savings or capital level'],
+                nextSteps: ['Check eligibility: State Pension age and needing help with personal care','Apply through the Department for Communities (DfC) in Northern Ireland','Describe care needs in detail on the application. Consider getting help from Age NI or Citizens Advice','You do not need to have a formal diagnosis to apply','If already claimed but care needs have increased, apply for a review to move from lower to higher rate']
             },
             {
                 id: 'directPayments',
                 name: 'Direct Payments (self-directed support)',
                 description: 'Instead of the Trust arranging care services for you, you receive a cash payment to arrange your own care. This gives you more control over who provides your care and when. Available for care at home and some other services.',
-                pros: [
-                    'You choose your own carers and set your own schedule',
-                    'Greater flexibility and control over daily care',
-                    'Can employ family members in some circumstances',
-                    'Can combine with other care arrangements',
-                    'Funded by the Trust based on your assessed needs'
-                ],
-                cons: [
-                    'You take on responsibility for managing payments and employment',
-                    'Requires a care needs assessment from the Trust',
-                    'Financial assessment still applies to determine your contribution',
-                    'Can be administratively demanding (though support organisations exist)',
-                    'May not cover all care needs, especially complex nursing'
-                ],
-                whenSuitable: [
-                    'You want control over your care arrangements at home',
-                    'You have someone specific you want to provide care',
-                    'You value flexibility in scheduling',
-                    'You or a family member can manage the administrative side'
-                ],
-                nextSteps: [
-                    'Request a care needs assessment from your local Trust',
-                    'Ask specifically about Direct Payments during the assessment',
-                    'Contact the NI Direct Payments Support Service for practical help',
-                    'Understand your contribution under the financial assessment',
-                    'Consider whether a support organisation can help with payroll and admin'
-                ]
+                pros: ['You choose your own carers and set your own schedule','Greater flexibility and control over daily care','Can employ family members in some circumstances','Can combine with other care arrangements','Funded by the Trust based on your assessed needs'],
+                cons: ['You take on responsibility for managing payments and employment','Requires a care needs assessment from the Trust','Financial assessment still applies to determine your contribution','Can be administratively demanding (though support organisations exist)','May not cover all care needs, especially complex nursing'],
+                whenSuitable: ['You want control over your care arrangements at home','You have someone specific you want to provide care','You value flexibility in scheduling','You or a family member can manage the administrative side'],
+                nextSteps: ['Request a care needs assessment from your local Trust','Ask specifically about Direct Payments during the assessment','Contact the NI Direct Payments Support Service for practical help','Understand your contribution under the financial assessment','Consider whether a support organisation can help with payroll and admin']
             }
         ];
 
-        // Event listeners for form inputs
+        // ─── Form event listeners ────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('input[type="radio"]').forEach(input => {
-                input.addEventListener('change', (e) => selectRadio(e.target.name, e.target.value));
-            });
-            document.querySelectorAll('input[type="checkbox"]').forEach(input => {
-                input.addEventListener('change', (e) => selectCheckbox(e.target.name, e.target.value, e.target.checked));
-            });
+            document.querySelectorAll('input[type="radio"]').forEach(i => i.addEventListener('change', e => selectRadio(e.target.name, e.target.value)));
+            document.querySelectorAll('input[type="checkbox"]').forEach(i => i.addEventListener('change', e => selectCheckbox(e.target.name, e.target.value, e.target.checked)));
         });
 
+        function selectRadio(name, value) {
+            state[name] = value;
+            document.querySelectorAll('input[name="'+name+'"]').forEach(i => i.parentElement.classList.toggle('selected', i.value === value));
+            if (name === 'careSetting') {
+                document.getElementById('stayTypeGroup').style.display = (value==='residential'||value==='nursing') ? 'block' : 'none';
+                if (value==='home') { state.stayType=null; document.querySelectorAll('input[name="stayType"]').forEach(i=>i.checked=false); }
+            }
+            if (name === 'stayType') document.getElementById('temporaryStayNote').style.display = value==='temporary' ? 'block' : 'none';
+            if (name === 'property') {
+                document.getElementById('occupierGroup').style.display = value==='owner' ? 'block' : 'none';
+                document.getElementById('extraDisregardNote').style.display = value==='owner' ? 'block' : 'none';
+                if (value==='notOwner') { state.occupier=[]; document.querySelectorAll('input[name="occupier"]').forEach(i=>i.checked=false); }
+                updateCapitalQuestion();
+            }
+            if (name === 'capital') document.getElementById('selfFunderWarning').style.display = value==='high' ? 'block' : 'none';
+        }
+
+        function selectCheckbox(name, value, checked) {
+            if (name === 'occupier') {
+                if (checked) state.occupier.push(value);
+                else state.occupier = state.occupier.filter(v=>v!==value);
+                updateCapitalQuestion();
+            }
+            document.querySelector('input[name="'+name+'"][value="'+value+'"]').parentElement.classList.toggle('selected', checked);
+        }
+
         function updateCapitalQuestion() {
-            const label = document.getElementById('capitalLabel');
+            const lbl = document.getElementById('capitalLabel');
             const note = document.getElementById('capitalContextNote');
             const isOwner = state.property === 'owner';
-            const disregard = isOwner && state.occupier.some(o => ['spouse', 'child', 'relative'].includes(o));
-
+            const disregard = isOwner && state.occupier.some(o=>['spouse','child','relative'].includes(o));
             if (isOwner && disregard) {
-                label.textContent = 'Savings and investments (not including your property)';
+                lbl.textContent = 'Savings and investments (not including your property)';
                 note.style.display = 'block';
-                note.innerHTML = '<h4>Property disregard applies</h4><p>Because a qualifying person lives in your home, your property value will normally be left out of the financial assessment. Answer the question below based on your <strong>non-property assets only</strong> \u2014 savings, investments, and any other capital excluding the property.</p>';
+                note.innerHTML = '<h4>Property disregard applies</h4><p>Because a qualifying person lives in your home, your property value will normally be left out of the financial assessment. Answer based on your <strong>non-property assets only</strong>.</p>';
             } else if (isOwner) {
-                label.textContent = 'Savings and investments (not including your property)';
+                lbl.textContent = 'Savings and investments (not including your property)';
                 note.style.display = 'block';
-                note.innerHTML = '<h4>Your property will likely be counted</h4><p>If no qualifying person lives in your home, the property value will normally be included in the financial assessment after the first 12 weeks of a permanent placement. This will almost certainly take your assessable capital above \u00a323,250. However, please still answer the question below about your <strong>non-property savings</strong> \u2014 this helps us show when you should review your position as savings reduce over time.</p>';
+                note.innerHTML = '<h4>Your property will likely be counted</h4><p>If no qualifying person lives in your home, the property value will normally be included in the financial assessment after the first 12 weeks of a permanent placement. Still answer about your <strong>non-property savings</strong> — this helps us show when to review your position as savings reduce.</p>';
             } else {
-                label.textContent = 'Total savings and investments';
+                lbl.textContent = 'Total savings and investments';
                 note.style.display = 'none';
                 note.innerHTML = '';
             }
         }
 
-        function selectRadio(name, value) {
-            state[name] = value;
-
-            // Update UI
-            document.querySelectorAll('input[name="' + name + '"]').forEach(input => {
-                input.parentElement.classList.toggle('selected', input.value === value);
-            });
-
-            // Show/hide conditional groups
-            if (name === 'careSetting') {
-                const stayGroup = document.getElementById('stayTypeGroup');
-                stayGroup.style.display = (value === 'residential' || value === 'nursing') ? 'block' : 'none';
-                if (value === 'home') {
-                    state.stayType = null;
-                    document.querySelectorAll('input[name="stayType"]').forEach(input => input.checked = false);
-                }
-            }
-
-            if (name === 'stayType') {
-                const tempNote = document.getElementById('temporaryStayNote');
-                tempNote.style.display = value === 'temporary' ? 'block' : 'none';
-            }
-
-            if (name === 'property') {
-                const occupierGroup = document.getElementById('occupierGroup');
-                occupierGroup.style.display = value === 'owner' ? 'block' : 'none';
-                const extraNote = document.getElementById('extraDisregardNote');
-                extraNote.style.display = value === 'owner' ? 'block' : 'none';
-                if (value === 'notOwner') {
-                    state.occupier = [];
-                    document.querySelectorAll('input[name="occupier"]').forEach(input => input.checked = false);
-                }
-                updateCapitalQuestion();
-            }
-
-            if (name === 'capital') {
-                const sfWarning = document.getElementById('selfFunderWarning');
-                sfWarning.style.display = value === 'high' ? 'block' : 'none';
-            }
+        // ─── Running summary ─────────────────────────────────────────────────
+        function buildRunningSummary(keys) {
+            const labels = {
+                situation: {planningAhead:'Planning ahead', homeStruggling:'At home, struggling', hospitalUrgent:'Hospital / urgent', alreadyInCare:'Already in care'},
+                careSetting: {home:'Care at home', residential:'Residential care', nursing:'Nursing home'},
+                stayType: {temporary:'Temporary stay', permanent:'Permanent stay'},
+                location: {hospital:'In hospital', community:'At home'},
+                property: {owner:'Own home', notOwner:'Renting'},
+                capital: {low:'Under £14,250', medium:'£14,250–£23,250', high:'Over £23,250'},
+                age: {under55:'Under 55', over55:'55 or over'},
+                healthComplexity: {standard:'Standard health needs', complex:'Highly complex'}
+            };
+            const keyLabels = {situation:'Situation', careSetting:'Care setting', stayType:'Stay type', location:'Location', property:'Housing', capital:'Savings', age:'Age', healthComplexity:'Health needs'};
+            const chips = keys.filter(k=>state[k]).map(k=>`<span class="running-summary-chip"><strong>${keyLabels[k]}:</strong> ${(labels[k]&&labels[k][state[k]])||state[k]}</span>`);
+            if (!chips.length) return '';
+            return `<h5>What you've told us so far</h5><div class="running-summary-items">${chips.join('')}</div>`;
         }
 
-        function selectCheckbox(name, value, checked) {
-            if (name === 'occupier') {
-                if (checked) {
-                    state.occupier.push(value);
-                } else {
-                    state.occupier = state.occupier.filter(item => item !== value);
-                }
-                updateCapitalQuestion();
-            }
-            document.querySelector('input[name="' + name + '"][value="' + value + '"]').parentElement.classList.toggle('selected', checked);
+        // ─── Navigation ──────────────────────────────────────────────────────
+        function goToStage1b() {
+            if (!state.situation) { alert('Please select what best describes your situation.'); return; }
+            if (!state.careSetting) { alert('Please select where care would be provided.'); return; }
+            if (state.careSetting !== 'home' && !state.stayType) { alert('Please select duration of stay.'); return; }
+            if (!state.location) { alert('Please select where you currently live.'); return; }
+            setStep(1);
+            const s = document.getElementById('summaryAfter1a');
+            s.innerHTML = buildRunningSummary(['situation','careSetting','stayType','location']);
+            s.style.display = s.innerHTML ? 'block' : 'none';
+            showStage('stage1b');
         }
+        function goBackTo1a() { setStep(1); showStage('stage1a'); }
+
+        function goToStage1c() {
+            if (!state.property) { alert('Please select your housing status.'); return; }
+            if (!state.capital) { alert('Please select your capital level.'); return; }
+            setStep(2);
+            const s = document.getElementById('summaryAfter1b');
+            s.innerHTML = buildRunningSummary(['situation','careSetting','stayType','location','property','capital']);
+            s.style.display = s.innerHTML ? 'block' : 'none';
+            showStage('stage1c');
+        }
+        function goBackTo1b() { setStep(2); showStage('stage1b'); }
 
         function goToStage2() {
-            // Validation
-            if (!state.situation) {
-                alert('Please select what best describes your situation.');
-                return;
-            }
-            if (!state.careSetting) {
-                alert('Please select where care would be provided.');
-                return;
-            }
-            if (state.careSetting !== 'home' && !state.stayType) {
-                alert('Please select duration of stay.');
-                return;
-            }
-            if (!state.location) {
-                alert('Please select where you currently live.');
-                return;
-            }
-            if (!state.property) {
-                alert('Please select your housing status.');
-                return;
-            }
-            if (!state.capital) {
-                alert('Please select your capital level.');
-                return;
-            }
-            if (!state.age) {
-                alert('Please select your age group.');
-                return;
-            }
-            if (!state.healthComplexity) {
-                alert('Please select your health complexity.');
-                return;
-            }
-
-            // Update progress
-            document.getElementById('step1').classList.remove('active');
-            document.getElementById('step1').classList.add('completed');
-            document.getElementById('step2').classList.add('active');
-
-            // Update Stage 2 heading based on situation
+            if (!state.age) { alert('Please select your age group.'); return; }
+            if (!state.healthComplexity) { alert('Please select your health complexity.'); return; }
+            setStep(3);
+            const s = document.getElementById('summaryAfter1c');
+            s.innerHTML = buildRunningSummary(['situation','careSetting','stayType','location','property','capital','age','healthComplexity']);
+            s.style.display = s.innerHTML ? 'block' : 'none';
             const tier = getSituationTier();
-            const titleEl = document.getElementById('stage2Title');
-            const subtitleEl = document.getElementById('stage2Subtitle');
-
-            if (tier === 'planning') {
-                titleEl.textContent = 'What matters most as you plan ahead?';
-                subtitleEl.innerHTML = 'You have time to consider your options. Select up to <strong>2 priorities</strong> in order of importance.';
-            } else if (tier === 'emerging') {
-                titleEl.textContent = 'What matters most right now?';
-                subtitleEl.innerHTML = 'Your window for planning is narrowing. Select up to <strong>2 priorities</strong> in order of importance.';
-            } else {
-                titleEl.textContent = 'What matters most in your situation?';
-                subtitleEl.innerHTML = 'Select up to <strong>2 priorities</strong> to help us focus the options. Your first choice carries more weight.';
-            }
-
-            // Render priorities
+            document.getElementById('stage2Title').textContent = tier==='planning' ? 'What matters most as you plan ahead?'
+                : tier==='emerging' ? 'What matters most right now?' : 'What matters most in your situation?';
+            document.getElementById('stage2Subtitle').innerHTML = tier==='planning'
+                ? 'You have time to consider your options. Select up to <strong>2 priorities</strong> in order of importance.'
+                : tier==='emerging' ? 'Your window for planning is narrowing. Select up to <strong>2 priorities</strong> in order of importance.'
+                : 'Select up to <strong>2 priorities</strong>. Your first choice carries more weight.';
             renderPriorities();
-
-            // Show stage 2
             showStage('stage2');
         }
-
-        function renderPriorities() {
-            const container = document.getElementById('prioritiesContainer');
-            container.innerHTML = '';
-            state.priorities = []; // Reset on re-render
-
-            const relevantPriorities = getPrioritiesForSituation();
-
-            relevantPriorities.forEach(priority => {
-                const card = document.createElement('div');
-                card.className = 'priority-card';
-                card._priorityId = priority.id;
-                card.innerHTML = '<h4>' + priority.label + '</h4><p>' + priority.description + '</p>';
-                card.onclick = () => togglePriority(priority.id, card);
-                container.appendChild(card);
-            });
-        }
-
-        function togglePriority(priorityId, card) {
-            const index = state.priorities.indexOf(priorityId);
-            if (index > -1) {
-                state.priorities.splice(index, 1);
-                card.classList.remove('selected');
-                const badge = card.querySelector('.priority-rank');
-                if (badge) badge.remove();
-                updatePriorityRanks();
-            } else {
-                if (state.priorities.length < 2) {
-                    state.priorities.push(priorityId);
-                    card.classList.add('selected');
-                    updatePriorityRanks();
-                } else {
-                    alert('You can select up to 2 priorities. To change, deselect one first.');
-                }
-            }
-        }
-
-        function updatePriorityRanks() {
-            document.querySelectorAll('.priority-rank').forEach(b => b.remove());
-            state.priorities.forEach((pId, idx) => {
-                const cards = document.querySelectorAll('#prioritiesContainer .priority-card');
-                cards.forEach(c => {
-                    if (c._priorityId === pId) {
-                        const badge = document.createElement('span');
-                        badge.className = 'priority-rank';
-                        badge.textContent = idx === 0 ? '1st' : '2nd';
-                        c.style.position = 'relative';
-                        c.appendChild(badge);
-                    }
-                });
-            });
-        }
+        function goBackTo1c() { setStep(3); showStage('stage1c'); }
 
         function goToStage3() {
-            if (state.priorities.length === 0) {
-                alert('It helps to select at least one priority.');
-                return;
-            }
-
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step2').classList.add('completed');
-            document.getElementById('step3').classList.add('active');
-
+            if (state.priorities.length === 0) { alert('It helps to select at least one priority.'); return; }
+            setStep(4);
             generateResults();
             showStage('stage3');
         }
 
+        function setStep(completedUpTo) {
+            for (let i=1; i<=5; i++) {
+                const el = document.getElementById('step'+i);
+                el.classList.remove('active','completed');
+                if (i < completedUpTo+1) el.classList.add('completed');
+                else if (i === completedUpTo+1) el.classList.add('active');
+            }
+        }
+        function showStage(id) {
+            document.querySelectorAll('.stage').forEach(s=>s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo({top:0,behavior:'smooth'});
+        }
+
+        // ─── Priorities ──────────────────────────────────────────────────────
+        function renderPriorities() {
+            const c = document.getElementById('prioritiesContainer');
+            c.innerHTML = ''; state.priorities = [];
+            getPrioritiesForSituation().forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'priority-card';
+                card._priorityId = p.id;
+                card.innerHTML = '<h4>'+p.label+'</h4><p>'+p.description+'</p>';
+                card.onclick = () => togglePriority(p.id, card);
+                c.appendChild(card);
+            });
+        }
+        function togglePriority(id, card) {
+            const idx = state.priorities.indexOf(id);
+            if (idx > -1) { state.priorities.splice(idx,1); card.classList.remove('selected'); const b=card.querySelector('.priority-rank'); if(b)b.remove(); updatePriorityRanks(); }
+            else if (state.priorities.length < 2) { state.priorities.push(id); card.classList.add('selected'); updatePriorityRanks(); }
+            else { alert('You can select up to 2 priorities. To change, deselect one first.'); }
+        }
+        function updatePriorityRanks() {
+            document.querySelectorAll('.priority-rank').forEach(b=>b.remove());
+            state.priorities.forEach((id,i) => {
+                document.querySelectorAll('#prioritiesContainer .priority-card').forEach(c => {
+                    if (c._priorityId===id) { const b=document.createElement('span'); b.className='priority-rank'; b.textContent=i===0?'1st':'2nd'; c.appendChild(b); }
+                });
+            });
+        }
+
+        // ─── Results ─────────────────────────────────────────────────────────
         function generateResults() {
-            displaySummary();
-            displaySituationContext();
-            displayContextPanels();
-            filterOptions();
-            displayAdditionalSupport();
+            displaySummary(); displaySituationContext(); displayContextPanels(); filterOptions(); displayAdditionalSupport();
+        }
+
+        // ─── Part 2: assessFit — CHC strong for complex, standard hides it ───
+        function hasDisregard() {
+            return state.property === 'owner' && state.occupier.some(o=>['spouse','child','relative'].includes(o));
+        }
+        function assessFit(id) {
+            const isTmp = state.stayType === 'temporary';
+            const disr = hasDisregard();
+            const isOwner = state.property === 'owner';
+            const sav = state.capital;
+            const propCount = isOwner && !disr;
+            const isComplex = state.healthComplexity === 'complex';
+            if (id==='trustFunded') { if(propCount)return'possible'; if(sav==='low')return'strong'; return'possible'; }
+            if (id==='topUp') { if(isTmp||propCount||sav==='high')return'poor'; if(sav==='medium')return'strong'; return'possible'; }
+            if (id==='continuingHealthcare') { return isComplex ? 'strong' : 'poor'; }
+            if (id==='selfFunded') { if(propCount||sav==='high')return'selfFunder'; if(sav==='medium')return'possible'; return'poor'; }
+            if (id==='temp') { if(isTmp)return'strong'; if(state.location==='hospital')return'possible'; return'poor'; }
+            return 'possible';
+        }
+
+        // ─── Part 1+2: filterOptions with priority-sorted ordering ──────────
+        let cardCounter = 0;
+        function filterOptions() {
+            ['trustFundedSection','selfFunderSection','noFitSection'].forEach(id => document.getElementById(id).innerHTML='');
+            const core = fundingOptions.filter(o=>!['attendanceAllowance','directPayments'].includes(o.id));
+            const res = {strong:[],possible:[],poor:[],sf:[]};
+            core.forEach(o => { const f=assessFit(o.id); if(f==='strong')res.strong.push(o); else if(f==='possible')res.possible.push(o); else if(f==='poor')res.poor.push(o); else if(f==='selfFunder')res.sf.push(o); });
+
+            // Sort by priority score within each bucket
+            const byScore = (a,b) => getPriorityScore(b.id) - getPriorityScore(a.id);
+            res.strong.sort(byScore); res.possible.sort(byScore); res.sf.sort(byScore);
+
+            // Part 2: float CHC to top of strong if complex health
+            if (state.healthComplexity==='complex') {
+                const chcI = res.strong.findIndex(o=>o.id==='continuingHealthcare');
+                if (chcI>0) { const [chc]=res.strong.splice(chcI,1); res.strong.unshift(chc); }
+            }
+
+            const propCount = state.property==='owner' && !hasDisregard();
+            const hasSF = res.sf.length>0;
+            const hasTF = res.strong.length>0 || res.possible.length>0;
+            const sfFirst = hasSF && (propCount || state.capital==='high');
+
+            // "Why" sentence tracking
+            let leadShown = false;
+            function whySentence(opt) {
+                if (leadShown || !state.priorities.length) return '';
+                leadShown = true;
+                const pName = PRIORITY_NAMES[state.priorities[0]] || state.priorities[0];
+                return `<div class="why-sentence">Because you told us <strong>${pName}</strong> matters most, we've put this option first.</div>`;
+            }
+
+            const tfSection = document.getElementById('trustFundedSection');
+            const sfSection = document.getElementById('selfFunderSection');
+            const noFitSection = document.getElementById('noFitSection');
+
+            if (hasSF) {
+                const sfDiv = document.createElement('div');
+                sfDiv.className = 'self-funder-section';
+                sfDiv.innerHTML = '<h3>Self-funded care</h3><p>Based on your situation, self-funding is likely your starting position. You have full choice of care provider.</p>';
+                res.sf.forEach(o => sfDiv.appendChild(createOptionCard(o,'self-funder','Explore',whySentence(o))));
+
+                if (propCount) {
+                    const n = document.createElement('div');
+                    n.style.cssText = 'background:#fff8f0;border-left:4px solid #c47a20;padding:1.2rem 1.5rem;margin:1.5rem 0;border-radius:0 8px 8px 0;';
+                    const sCtx = state.capital==='low' ? 'Once the property is no longer counted and remaining capital falls below £14,250, the Trust takes full responsibility.'
+                        : state.capital==='medium' ? 'Your non-property savings are in the tariff band (£14,250–£23,250), so you would contribute on a sliding scale.'
+                        : 'Your non-property savings alone are above £23,250, so you remain a self-funder even without the property counted.';
+                    n.innerHTML = `<h4 style="color:#c47a20;margin:0 0 0.5rem 0;font-size:1rem;">Why you are likely a self-funder</h4><p style="margin:0 0 0.8rem 0;line-height:1.6;">No qualifying person lives in your home, so the property value will normally be included in the financial assessment after the first 12 weeks of a permanent placement.</p><p style="margin:0 0 0.8rem 0;line-height:1.6;">${sCtx}</p><p style="margin:0;line-height:1.6;"><strong>Review trigger:</strong> Request a financial reassessment from the Trust well before your capital reaches ${CARE_FIGURES.upperCapitalLimit}.</p>`;
+                    sfDiv.appendChild(n);
+                } else if (state.capital==='high' && hasTF) {
+                    const n = document.createElement('div');
+                    n.style.cssText = 'background:#f0f7ff;border-left:4px solid #2c5f8a;padding:1.2rem 1.5rem;margin:1.5rem 0;border-radius:0 8px 8px 0;';
+                    n.innerHTML = `<h4 style="color:#2c5f8a;margin:0 0 0.5rem 0;font-size:1rem;">When to review your position</h4><p style="margin:0;line-height:1.6;">As you pay for care, your capital will reduce. When it falls below ${CARE_FIGURES.upperCapitalLimit}, contact the Trust for a financial assessment. Below ${CARE_FIGURES.lowerCapitalLimit}, the Trust takes full responsibility.</p>`;
+                    sfDiv.appendChild(n);
+                }
+
+                // Part 3: longevity estimator
+                sfDiv.appendChild(createLongevityEstimator());
+                // Part 4: wizard bridge
+                sfDiv.appendChild(createWizardBridge());
+                sfSection.appendChild(sfDiv);
+            }
+
+            if (hasTF) {
+                tfSection.innerHTML = '<h2 class="section-title" style="margin-top:2rem;">Funded by the Trust</h2>';
+                if (state.healthComplexity==='complex') {
+                    const chcNote = document.createElement('div');
+                    chcNote.className = 'info-box';
+                    chcNote.style.cssText = 'border-left-color:var(--green);background:rgba(16,185,129,0.08);';
+                    chcNote.innerHTML = "<h4>Worth checking first — it's free if it applies</h4><p>Because you indicated highly complex health needs, Continuing Healthcare is at the top of this list. If you qualify, all care costs are covered with no means testing at all. The eligibility test in Northern Ireland is narrow, but given your health complexity, it is worth pursuing before committing to other funding routes.</p>";
+                    tfSection.appendChild(chcNote);
+                }
+                if (hasDisregard()) {
+                    const disrNote = document.createElement('div');
+                    disrNote.style.cssText = 'background:#f0fff4;border-left:4px solid #2d8a4e;padding:1.2rem 1.5rem;margin:0.5rem 0 1.5rem;border-radius:0 8px 8px 0;';
+                    const posText = state.capital==='low' ? 'Your non-property savings are below £14,250, so the Trust should take full responsibility, subject to the wider assessment.'
+                        : state.capital==='medium' ? 'Your non-property savings are in the tariff band (£14,250–£23,250), so you would contribute on a sliding scale.'
+                        : 'Your non-property savings are above £23,250, so you would still be treated as a self-funder even with the property disregarded.';
+                    disrNote.innerHTML = `<h4 style="color:#2d8a4e;margin:0 0 0.5rem 0;font-size:1rem;">Your property is likely disregarded</h4><p style="margin:0 0 0.8rem 0;line-height:1.6;">Because a qualifying person lives in your home, the value of your property should not be counted in the financial assessment.</p><p style="margin:0 0 0.8rem 0;line-height:1.6;"><strong>${posText}</strong></p><p style="margin:0;line-height:1.6;">Request a financial assessment from your Health and Social Care Trust to confirm your position.</p>`;
+                    tfSection.appendChild(disrNote);
+                }
+                res.strong.forEach(o => tfSection.appendChild(createOptionCard(o,'strong-fit','Strong fit',whySentence(o))));
+                res.possible.forEach(o => tfSection.appendChild(createOptionCard(o,'possible-fit','Possible fit',whySentence(o))));
+            }
+
+            if (sfFirst) sfSection.parentNode.insertBefore(sfSection, tfSection);
+            else tfSection.parentNode.insertBefore(tfSection, sfSection);
+
+            if (res.poor.length) {
+                noFitSection.innerHTML = '<h2 class="section-title" style="margin-top:2rem;color:var(--text-light);">Less suitable for your situation</h2>';
+                res.poor.forEach(o => noFitSection.appendChild(createOptionCard(o,'poor-fit','Poor fit','')));
+            }
+        }
+
+        // ─── Part 5: Option card with accordion ─────────────────────────────
+        function createOptionCard(opt, fitClass, badgeLabel, whyHtml) {
+            const card = document.createElement('div');
+            const bodyId = 'body-'+(++cardCounter);
+            const badge = fitClass.split('-')[0];
+            card.className = 'option-card '+fitClass;
+            card.innerHTML =
+                '<div class="option-header"><div class="option-title">'+opt.name+'</div><span class="fit-badge '+badge+'">'+badgeLabel+'</span></div>'+
+                (whyHtml||'')+
+                '<p class="option-description">'+opt.description+'</p>'+
+                '<button class="accordion-toggle" onclick="toggleAccordion(\''+bodyId+'\',this)"><span>Show details</span> <span>▼</span></button>'+
+                '<div class="accordion-body" id="'+bodyId+'">'+
+                    '<div class="trade-offs">'+
+                        '<div class="trade-off-col pros"><h5>Pros</h5><ul>'+opt.pros.map(p=>'<li>'+p+'</li>').join('')+'</ul></div>'+
+                        '<div class="trade-off-col cons"><h5>Cons</h5><ul>'+opt.cons.map(c=>'<li>'+c+'</li>').join('')+'</ul></div>'+
+                    '</div>'+
+                    '<div class="when-suitable"><h5>When suitable</h5><ul>'+opt.whenSuitable.map(i=>'<li>'+i+'</li>').join('')+'</ul></div>'+
+                    '<div class="key-risks"><h5>Next steps</h5><ul>'+opt.nextSteps.map(s=>'<li>'+s+'</li>').join('')+'</ul></div>'+
+                '</div>';
+            return card;
+        }
+        function toggleAccordion(bodyId, btn) {
+            const body = document.getElementById(bodyId);
+            const open = body.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open);
+            const spans = btn.querySelectorAll('span');
+            spans[0].textContent = open ? 'Hide details' : 'Show details';
+            spans[1].textContent = open ? '▲' : '▼';
+        }
+
+        // ─── Part 3: Longevity estimator ─────────────────────────────────────
+        function createLongevityEstimator() {
+            const wrap = document.createElement('div');
+            wrap.className = 'longevity-estimator';
+            const isNursing = state.careSetting === 'nursing';
+            const isHome = state.careSetting === 'home';
+            const feeMin = isHome ? 300 : (isNursing ? 900 : 800);
+            const feeMax = isHome ? 1000 : (isNursing ? 1800 : 1500);
+            const feeDefault = Math.round((feeMin+feeMax)/2/50)*50;
+            const propCount = state.property==='owner' && !hasDisregard();
+            const sav = state.capital;
+            let capStart = propCount ? (sav==='high' ? 250000 : sav==='medium' ? 175000 : 150000) : (sav==='high' ? 100000 : 40000);
+            const capMin = propCount ? 80000 : (sav==='high' ? 30000 : 23250);
+            const capMax = propCount ? 500000 : (sav==='high' ? 500000 : 100000);
+            const upper = 23250, lower = 14250;
+            const settingLabel = isHome ? 'home care' : (isNursing ? 'nursing home' : 'residential care');
+
+            wrap.innerHTML = `
+<h4>How long will the money last?</h4>
+<p class="est-label">Illustration only &mdash; move the sliders to explore. Assumes fees paid from capital only; ignores investment growth, other income, and inflation.</p>
+<div class="longevity-slider-row">
+  <label>Weekly fee (${settingLabel})</label>
+  <input type="range" class="fee-slider" min="${feeMin}" max="${feeMax}" step="50" value="${feeDefault}">
+  <span class="slider-val fee-val">&pound;${feeDefault.toLocaleString()}/wk</span>
+</div>
+<div class="longevity-slider-row">
+  <label>Starting capital</label>
+  <input type="range" class="cap-slider" min="${capMin}" max="${capMax}" step="5000" value="${capStart}">
+  <span class="slider-val cap-val">&pound;${capStart.toLocaleString()}</span>
+</div>
+<div class="longevity-result longevity-output"></div>
+<p class="longevity-assumptions">We assume fees are paid directly from capital, with no investment growth or additional income. In practice, pension income, Attendance Allowance, and investment returns would extend the period. A real plan should account for these. Figures are in today&rsquo;s money and do not allow for fee inflation.</p>`;
+
+            function fmtYrs(y) {
+                if (y<=0) return 'less than a month';
+                if (y<1/12) return 'less than a month';
+                if (y<1) return Math.round(y*12)+' months';
+                return y.toFixed(1)+' years';
+            }
+            function calc() {
+                const fee = parseInt(wrap.querySelector('.fee-slider').value);
+                const cap = parseInt(wrap.querySelector('.cap-slider').value);
+                wrap.querySelector('.fee-val').textContent = '£'+fee.toLocaleString()+'/wk';
+                wrap.querySelector('.cap-val').textContent = '£'+cap.toLocaleString();
+                const out = wrap.querySelector('.longevity-output');
+                if (cap <= lower) {
+                    out.innerHTML = '<p style="color:var(--accent);font-weight:600;">At this capital level, the Trust would likely fund your care already. The estimator applies to self-funders above £'+lower.toLocaleString()+'.</p>';
+                    return;
+                }
+                const yUpper = cap>upper ? (cap-upper)/fee/52 : 0;
+                const yLower = cap>lower ? (cap-lower)/fee/52 : 0;
+                out.innerHTML =
+                    '<p style="font-size:0.88rem;color:var(--text-medium);margin-bottom:0.5rem;">Estimated time until capital reaches:</p>'+
+                    '<div class="longevity-thresholds">'+
+                        `<div class="longevity-threshold"><div class="th-label">To ${CARE_FIGURES.upperCapitalLimit} (tariff band begins)</div><div class="th-value longevity-duration">${yUpper>0?fmtYrs(yUpper):'already below'}</div></div>`+
+                        `<div class="longevity-threshold"><div class="th-label">To ${CARE_FIGURES.lowerCapitalLimit} (Trust fully responsible)</div><div class="th-value longevity-duration">${fmtYrs(yLower)}</div></div>`+
+                    '</div>';
+            }
+            setTimeout(()=>{ wrap.querySelector('.fee-slider').addEventListener('input',calc); wrap.querySelector('.cap-slider').addEventListener('input',calc); calc(); }, 0);
+            return wrap;
+        }
+
+        // ─── Part 4: Wizard bridge ────────────────────────────────────────────
+        function createWizardBridge() {
+            const div = document.createElement('div');
+            div.className = 'wizard-bridge';
+            const p = new URLSearchParams();
+            if (state.careSetting) p.set('careSetting', state.careSetting);
+            if (state.property) p.set('property', state.property);
+            if (state.capital) p.set('capital', state.capital);
+            div.innerHTML = `<h4>Want to explore your self-funding options step by step?</h4>
+<p>Our Self-Funder Decision Tool walks through specific routes available to self-funders in more detail &mdash; property sale, equity release, immediate care plans, and more. It will pick up where this guide left off.</p>
+<a href="ni-care-funding-wizard.html?${p.toString()}">Continue to the Self-Funder Decision Tool &rarr;</a>`;
+            return div;
+        }
+
+        // ─── Part 2: Additional support with age gating ──────────────────────
+        function displayAdditionalSupport() {
+            const sec = document.getElementById('additionalSupportSection');
+            sec.innerHTML = '';
+            const tier = getSituationTier();
+            const isOver55 = state.age === 'over55';
+            const showAA = isOver55; // AA strictly for State Pension age (currently 66); the form only offers a 55+ band, so 55+ is used as a prompt to check, with caveat shown in the AA text
+            const showDP = state.careSetting === 'home';
+            const showU55 = state.age === 'under55';
+            if (!showAA && !showDP && !showU55) return;
+
+            sec.innerHTML = '<h2 class="section-title" style="margin-top:2rem;">Additional support to explore</h2>';
+
+            if (showU55) {
+                const pip = document.createElement('div');
+                pip.className = 'under55-note';
+                pip.innerHTML = '<h4>Working-age support: Personal Independence Payment (PIP)</h4>' +
+                    '<p>As someone under 55, the relevant working-age disability benefit is <strong>Personal Independence Payment (PIP)</strong>, not Attendance Allowance (which is for State Pension age). PIP has a daily living component and a mobility component. Different Continuing Healthcare considerations may also apply for working-age adults in Northern Ireland. We recommend seeking specialist advice about the range of working-age benefits available in your circumstances.</p>';
+                sec.appendChild(pip);
+            }
+            if (showAA) {
+                const aaOpt = fundingOptions.find(o=>o.id==='attendanceAllowance');
+                const aaFit = (tier==='planning'||tier==='emerging') ? 'strong-fit' : 'possible-fit';
+                const aaLabel = aaFit==='strong-fit' ? 'Worth claiming' : 'Check eligibility';
+                sec.appendChild(createOptionCard(aaOpt, aaFit, aaLabel, ''));
+            }
+            if (showDP) {
+                const dpOpt = fundingOptions.find(o=>o.id==='directPayments');
+                const dpFit = (state.priorities.includes('flexibility')||state.priorities.includes('familyControl')) ? 'strong-fit' : 'possible-fit';
+                const dpLabel = dpFit==='strong-fit' ? 'Strong fit' : 'Worth exploring';
+                sec.appendChild(createOptionCard(dpOpt, dpFit, dpLabel, ''));
+            }
+        }
+
+        // ─── Summary and context (preserved from Phase 1) ────────────────────
+        function displaySummary() {
+            const tier = getSituationTier();
+            const isReview = state.situation === 'alreadyInCare';
+            const sitLabels = {planningAhead:'Planning ahead',homeStruggling:'At home and managing for now',hospitalUrgent:'Hospital discharge or urgent',alreadyInCare:'Reviewing current care'};
+            const tierText = {planning:'You have time to plan. Here are the options to explore.',emerging:'Some planning may still be possible. Here are the most relevant options.',pointOfNeed:isReview?'Here are the options to review for your current arrangement.':'Here are the most efficient funding routes for your situation.'};
+            const careLoc = state.careSetting==='home' ? 'At home' : 'Residential/Nursing';
+            const stayInfo = (state.careSetting!=='home'&&state.stayType) ? ' ('+state.stayType+')' : '';
+            const savLbl = {low:'Under £14,250',medium:'£14,250–£23,250',high:'Over £23,250'}[state.capital];
+            const capLbl = state.property==='owner' ? savLbl+' (excl. property)' : savLbl;
+            const pLabels = {minCost:tier==='pointOfNeed'?'Pay efficiently':'Minimise costs',protectHome:'Protect family home',flexibility:'Flexibility & control',choice:'Provider choice',speed:'Quick access',familyControl:'Family involvement'};
+            const pText = state.priorities.length ? state.priorities.map((p,i)=>'<strong>'+(i===0?'1st':'2nd')+':</strong> '+(pLabels[p]||p)).join(' &nbsp;|&nbsp; ') : 'None selected';
+            document.getElementById('filterSummary').innerHTML =
+                '<span class="situation-label">'+sitLabels[state.situation]+'</span>'+
+                '<h3>'+tierText[tier]+'</h3>'+
+                '<div class="summary-item"><span class="summary-label">Care setting:</span><span>'+careLoc+stayInfo+'</span></div>'+
+                '<div class="summary-item"><span class="summary-label">Current location:</span><span>'+(state.location==='hospital'?'Hospital':'Community')+'</span></div>'+
+                '<div class="summary-item"><span class="summary-label">Housing:</span><span>'+(state.property==='owner'?'Own home':'Rent/Other')+'</span></div>'+
+                '<div class="summary-item"><span class="summary-label">Savings & assets:</span><span>'+capLbl+'</span></div>'+
+                '<div class="summary-item"><span class="summary-label">Age:</span><span>'+(state.age==='under55'?'Under 55':'55+')+'</span></div>'+
+                '<div class="summary-item"><span class="summary-label">Health needs:</span><span>'+(state.healthComplexity==='standard'?'Standard needs':'Highly complex')+'</span></div>'+
+                '<div class="summary-item"><span class="summary-label">Priorities:</span><span>'+pText+'</span></div>';
         }
 
         function displaySituationContext() {
-            const section = document.getElementById('situationContextSection');
-            section.innerHTML = '';
+            const sec = document.getElementById('situationContextSection');
+            sec.innerHTML = '';
             const tier = getSituationTier();
             const isReview = state.situation === 'alreadyInCare';
+            const isOver55 = state.age === 'over55';
+            const aaLine = isOver55
+                ? `<strong>Attendance Allowance:</strong> If you are of State Pension age (currently 66), ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week, not means-tested. (If you are between 55 and State Pension age, this does not yet apply — it is shown here as a prompt to check when you reach State Pension age.)`
+                : '<strong>Disability benefits:</strong> As someone under 55, the relevant benefit is Personal Independence Payment (PIP), not Attendance Allowance. Seek specialist advice about working-age support available in your circumstances.';
 
-            if (tier === 'planning') {
-                section.innerHTML = '<div class="info-box" style="margin-bottom: 2rem;"><h4>Planning steps you can take now</h4>' +
-                    '<p>Because you are planning ahead, you have options that people in an urgent situation do not:</p>' +
-                    '<ul style="margin-top: 0.75rem;">' +
+            if (tier==='planning') {
+                sec.innerHTML = '<div class="info-box" style="margin-bottom:2rem;"><h4>Planning steps you can take now</h4><ul style="margin-top:0.75rem;">' +
                     '<li><strong>Enduring Power of Attorney (EPA):</strong> Set this up while the person still has mental capacity. Without it, if capacity is lost, the family must apply through the courts for controllership, which is slower and more expensive.</li>' +
-                    `<li><strong>Attendance Allowance:</strong> If the person is 65 or over and needs help with personal care, they may be eligible for ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week, regardless of savings. Apply now.</li>` +
+                    '<li>'+aaLine+'</li>' +
                     '<li><strong>Professional financial and legal advice:</strong> A solicitor experienced in care funding can advise on legitimate ways to structure assets. Do not attempt asset transfers without professional advice, as the Trust can treat them as deprivation of assets.</li>' +
-                    '<li><strong>Voluntary care needs assessment:</strong> You can request one from the Trust at any time, even if care is not needed yet. This helps you understand what support may be available.</li>' +
+                    '<li><strong>Voluntary care needs assessment:</strong> You can request one from the Trust at any time. This helps you understand what support may be available.</li>' +
                     '<li><strong>Visit care providers:</strong> Research and visit homes or care agencies without the pressure of an urgent decision.</li>' +
                     '</ul></div>';
-            } else if (tier === 'emerging') {
-                section.innerHTML = '<div class="info-box" style="margin-bottom: 2rem; border-left-color: var(--warning);"><h4>Your window for planning is narrowing</h4>' +
-                    '<p>You may still have some planning options, but the closer you are to needing formal care, the more limited they become:</p>' +
-                    '<ul style="margin-top: 0.75rem;">' +
-                    '<li><strong>Enduring Power of Attorney &mdash; do this now if not done:</strong> An EPA can only be set up while the person has mental capacity. If capacity has already been lost, you will need to apply for controllership through the Office of Care and Protection, which is significantly more complex and costly.</li>' +
+            } else if (tier==='emerging') {
+                sec.innerHTML = '<div class="info-box" style="margin-bottom:2rem;border-left-color:var(--warning);"><h4>Your window for planning is narrowing</h4><ul style="margin-top:0.75rem;">' +
+                    '<li><strong>Enduring Power of Attorney — do this now if not done:</strong> An EPA can only be set up while the person has mental capacity. If capacity has already been lost, you will need to apply for controllership through the Office of Care and Protection.</li>' +
                     '<li><strong>Request a care needs assessment:</strong> Contact your local Trust to get an assessment of what support may be available. This is free and a key step.</li>' +
-                    `<li><strong>Claim Attendance Allowance:</strong> If aged 65+ with care needs, apply now. ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week, not means-tested.</li>` +
-                    `<li><strong>Carer\u2019s assessment:</strong> If a family member is providing care, they have the right to their own assessment and may be eligible for Carer\u2019s Allowance (${CARE_FIGURES.carersAllowance} per week in ${CARE_FIGURES.reviewYear}).</li>` +
-                    '<li><strong>Asset planning &mdash; proceed with caution:</strong> Some planning may still be possible, but the Trust can treat recent asset transfers as deprivation if they believe the purpose was to avoid care fees. Get legal advice before making any changes.</li>' +
+                    '<li>'+aaLine+'</li>' +
+                    `<li><strong>Carer’s assessment:</strong> If a family member is providing care, they have the right to their own assessment and may be eligible for Carer’s Allowance (${CARE_FIGURES.carersAllowance} per week in ${CARE_FIGURES.reviewYear}).</li>` +
+                    '<li><strong>Asset planning — proceed with caution:</strong> The Trust can treat recent asset transfers as deprivation if they believe the purpose was to avoid care fees. Get legal advice before making any changes.</li>' +
                     '</ul></div>';
             } else if (isReview) {
-                section.innerHTML = '<div class="info-box" style="margin-bottom: 2rem;"><h4>Reviewing your current arrangement</h4>' +
-                    '<p>You are already receiving care, so the focus is on making sure your current funding route is the right one:</p>' +
-                    '<ul style="margin-top: 0.75rem;">' +
-                    '<li><strong>Threshold transitions:</strong> If you are self-funding and your savings are reducing, plan ahead for when they drop below \u00a323,250 (tariff band) and \u00a314,250 (Trust takes full responsibility). Request a financial reassessment from the Trust well before reaching these levels.</li>' +
+                sec.innerHTML = '<div class="info-box" style="margin-bottom:2rem;"><h4>Reviewing your current arrangement</h4><ul style="margin-top:0.75rem;">' +
+                    `<li><strong>Threshold transitions:</strong> If self-funding, plan ahead for when savings drop below ${CARE_FIGURES.upperCapitalLimit} (tariff band) and ${CARE_FIGURES.lowerCapitalLimit} (Trust takes full responsibility). Request a financial reassessment from the Trust well before reaching these levels.</li>` +
                     '<li><strong>Continuing Healthcare:</strong> If your health needs have changed or increased, you can ask to be screened for CHC at any time. This is worth reviewing, especially given the changing legal landscape following the McMinnis ruling.</li>' +
                     '<li><strong>Top-up review:</strong> If a family member is paying a top-up, check whether the care home has increased fees and whether the arrangement is still affordable long-term.</li>' +
                     '<li><strong>Annual review:</strong> The Trust should carry out regular reviews of your care plan and financial assessment. If this has not happened, request one.</li>' +
                     '</ul></div>';
             } else {
-                // Hospital discharge
-                section.innerHTML = '<div class="info-box" style="margin-bottom: 2rem; border-left-color: var(--warning);"><h4>Your discharge rights</h4>' +
-                    '<p>If you are being discharged from hospital into care:</p>' +
-                    '<ul style="margin-top: 0.75rem;">' +
-                    '<li><strong>12-week property disregard:</strong> If you own your home, its value is normally not counted for the first 12 weeks of a permanent care placement. This gives time to make decisions about the property.</li>' +
+                sec.innerHTML = '<div class="info-box" style="margin-bottom:2rem;border-left-color:var(--warning);"><h4>Your discharge rights</h4><ul style="margin-top:0.75rem;">' +
+                    '<li><strong>12-week property disregard:</strong> If you own your home, its value is normally not counted for the first 12 weeks of a permanent care placement.</li>' +
                     '<li><strong>Right to assessment:</strong> You have the right to a care needs assessment before discharge. Do not feel pressured into making permanent decisions quickly.</li>' +
                     '<li><strong>Temporary placement:</strong> If decisions need more time, a temporary placement may be available while you plan longer-term arrangements.</li>' +
-                    `<li><strong>Attendance Allowance:</strong> If aged 65+ and self-funding in a care home, apply for Attendance Allowance (${CARE_FIGURES.attendanceAllowanceLower} lower rate or ${CARE_FIGURES.attendanceAllowanceHigher} higher rate per week). It stops if the Trust funds your care, but continues for self-funders.</li>` +
+                    '<li>'+aaLine+'</li>' +
                     '</ul></div>';
             }
         }
 
         function displayContextPanels() {
-            document.querySelectorAll('.context-panel').forEach(p => p.remove());
-
-            const insertPoint = document.getElementById('trustFundedSection');
+            document.querySelectorAll('.context-panel').forEach(p=>p.remove());
+            const ins = document.getElementById('trustFundedSection');
             const tier = getSituationTier();
 
-            // Temporary stay info
-            if (state.stayType === 'temporary') {
-                const tempPanel = document.createElement('div');
-                tempPanel.className = 'context-panel info-box';
-                tempPanel.style.cssText = 'margin-bottom: 2rem;';
-                tempPanel.innerHTML = '<h4>How temporary care stays are charged</h4>' +
-                    '<p><strong>First 12 weeks:</strong> If you own a property, its value is normally ignored for the first 12 weeks of any permanent placement. For genuinely temporary stays, different rules may apply.</p>' +
-                    '<p style="margin-top: 0.5rem;"><strong>Respite care:</strong> A temporary stay to give a carer a break. The Trust may fund this directly or charge a flat rate. Ask your social worker about respite charging in your area.</p>' +
-                    '<p style="margin-top: 0.5rem;"><strong>When does temporary become permanent?</strong> If a temporary placement extends beyond the agreed period or it becomes clear the person cannot return home, it may be reclassified as permanent. Full financial assessment rules then apply including property valuation.</p>' +
-                    '<p style="margin-top: 0.5rem;"><strong>Key point:</strong> Do not assume a temporary stay is free or cheaper. Get the charging position from the Trust in writing before the placement begins.</p>';
-                insertPoint.parentNode.insertBefore(tempPanel, insertPoint);
+            if (state.stayType==='temporary') {
+                const p=document.createElement('div'); p.className='context-panel info-box'; p.style.cssText='margin-bottom:2rem;';
+                p.innerHTML='<h4>How temporary care stays are charged</h4><p><strong>First 12 weeks:</strong> If you own a property, its value is normally ignored for the first 12 weeks of any permanent placement.</p><p style="margin-top:0.5rem;"><strong>Respite care:</strong> A temporary stay to give a carer a break. The Trust may fund this directly or charge a flat rate. Ask your social worker about respite charging in your area.</p><p style="margin-top:0.5rem;"><strong>When does temporary become permanent?</strong> If a temporary placement extends beyond the agreed period or it becomes clear the person cannot return home, it may be reclassified as permanent. Full financial assessment rules then apply.</p><p style="margin-top:0.5rem;"><strong>Key point:</strong> Do not assume a temporary stay is free or cheaper. Get the charging position from the Trust in writing before the placement begins.</p>';
+                ins.parentNode.insertBefore(p, ins);
             }
-
-            // Tariff income explanation for medium capital
-            if (state.capital === 'medium') {
-                const tariffPanel = document.createElement('div');
-                tariffPanel.className = 'context-panel info-box';
-                tariffPanel.style.cssText = 'margin-bottom: 2rem;';
-                tariffPanel.innerHTML = '<h4>How your contribution is calculated (tariff income)</h4>' +
-                    '<p>With capital between \u00a314,250 and \u00a323,250, the Trust uses <strong>tariff income</strong> to calculate your weekly contribution. For every \u00a3250 (or part of \u00a3250) above \u00a314,250, the Trust adds \u00a31 per week to your assessed income.</p>' +
-                    '<p style="margin-top: 0.5rem;"><strong>Example:</strong> If you have \u00a320,000 in savings, the excess above \u00a314,250 is \u00a35,750. Divided by 250 = 23 units. So \u00a323 per week is added to your assessed income on top of your actual pension and other income. Your total assessed income is then compared to the care home fee to determine your contribution.</p>' +
-                    `<p style="margin-top: 0.5rem;"><strong>What happens as capital reduces:</strong> As you pay contributions, your capital falls. When it drops below \u00a314,250, tariff income no longer applies and the Trust covers almost all of the care costs. You keep a Personal Expenses Allowance of ${CARE_FIGURES.personalExpensesAllowance} per week (from April 2026).</p>`;
-                insertPoint.parentNode.insertBefore(tariffPanel, insertPoint);
+            if (state.capital==='medium') {
+                const p=document.createElement('div'); p.className='context-panel info-box'; p.style.cssText='margin-bottom:2rem;';
+                p.innerHTML=`<h4>How your contribution is calculated (tariff income)</h4><p>With capital between ${CARE_FIGURES.lowerCapitalLimit} and ${CARE_FIGURES.upperCapitalLimit}, the Trust uses <strong>tariff income</strong> to calculate your weekly contribution. For every £250 (or part of £250) above ${CARE_FIGURES.lowerCapitalLimit}, the Trust adds £1 per week to your assessed income.</p><p style="margin-top:0.5rem;"><strong>What happens as capital reduces:</strong> When it drops below ${CARE_FIGURES.lowerCapitalLimit}, tariff income no longer applies and the Trust covers almost all care costs. You keep a Personal Expenses Allowance of ${CARE_FIGURES.personalExpensesAllowance} per week (from April 2026).</p>`;
+                ins.parentNode.insertBefore(p, ins);
             }
-
-            // Couples guidance when spouse is in the home
-            if (state.property === 'owner' && state.occupier.includes('spouse')) {
-                const couplesPanel = document.createElement('div');
-                couplesPanel.className = 'context-panel info-box';
-                couplesPanel.style.cssText = 'margin-bottom: 2rem; border-left-color: var(--accent);';
-                couplesPanel.innerHTML = '<h4>When one partner enters care and the other stays at home</h4>' +
-                    '<p>This is one of the most common situations families face. Here is how it works in Northern Ireland:</p>' +
-                    '<ul style="margin-top: 0.75rem;">' +
-                    '<li><strong>Property disregard:</strong> Because your spouse or partner will continue to live in the home, the property is disregarded (not counted) in the financial assessment. This is confirmed.</li>' +
-                    '<li><strong>Joint savings:</strong> The Trust conventionally treats jointly held savings as split 50/50. Only the care recipient\u2019s share is assessed. Keep records of which accounts are joint and which are sole.</li>' +
-                    '<li><strong>Income:</strong> Only the care recipient\u2019s income is assessed (pension, benefits). The at-home partner\u2019s income is not counted.</li>' +
-                    '<li><strong>At-home partner\u2019s needs:</strong> The financial assessment should take into account the reasonable needs of the partner remaining at home. If the assessment feels unfair, challenge it.</li>' +
-                    '</ul>';
-                insertPoint.parentNode.insertBefore(couplesPanel, insertPoint);
+            if (state.property==='owner' && state.occupier.includes('spouse')) {
+                const p=document.createElement('div'); p.className='context-panel info-box'; p.style.cssText='margin-bottom:2rem;border-left-color:var(--accent);';
+                p.innerHTML='<h4>When one partner enters care and the other stays at home</h4><ul style="margin-top:0.75rem;"><li><strong>Property disregard:</strong> Because your spouse or partner will continue to live in the home, the property is disregarded in the financial assessment.</li><li><strong>Joint savings:</strong> The Trust conventionally treats jointly held savings as split 50/50. Only the care recipient’s share is assessed.</li><li><strong>Income:</strong> Only the care recipient’s income is assessed. The at-home partner’s income is not counted.</li><li><strong>At-home partner’s needs:</strong> The financial assessment should take into account the reasonable needs of the partner remaining at home.</li></ul>';
+                ins.parentNode.insertBefore(p, ins);
             }
-
-            // Deprivation of assets panel for planning and emerging tiers when protect home is selected
-            if ((tier === 'planning' || tier === 'emerging') && state.priorities.includes('protectHome')) {
-                const depPanel = document.createElement('div');
-                depPanel.className = 'context-panel info-box';
-                depPanel.style.cssText = 'margin-bottom: 2rem; border-left-color: var(--warning);';
-                let depContent = '<h4>Deprivation of assets: what you need to know</h4>';
-                if (tier === 'planning') {
-                    depContent += '<p>If you are planning ahead, it may be possible to take legitimate steps to restructure assets. However, the Trust has the power to treat assets as still belonging to you if it believes they were transferred to avoid care fees. This is called <strong>deprivation of assets</strong>.</p>';
-                    depContent += '<p style="margin-top: 0.5rem;">Key points:</p>';
-                    depContent += '<ul style="margin-top: 0.5rem;">';
-                    depContent += '<li>The earlier any planning is done, the stronger the position. Planning years before a care need arises is very different from transferring assets when care is foreseeable.</li>';
-                    depContent += '<li>There is no fixed time limit. The Trust looks at intention, not just timing.</li>';
-                    depContent += '<li>Common arrangements that can be challenged include: gifting a property to children, transferring savings, setting up trusts without genuine independent purpose.</li>';
-                    depContent += '<li>If the Trust determines deprivation occurred, it will assess you as though you still own the asset. The person who received the asset could also be pursued for payment.</li>';
-                    depContent += '<li><strong>Professional legal advice is essential.</strong> A solicitor experienced in care funding can advise on what is legitimate in your circumstances.</li>';
-                    depContent += '</ul>';
-                } else {
-                    depContent += '<p>Because a care need is becoming foreseeable, the Trust is more likely to scrutinise any recent asset transfers. The Trust can treat assets as still belonging to you if it believes they were moved to avoid care fees.</p>';
-                    depContent += '<p style="margin-top: 0.5rem;"><strong>At this stage, major asset transfers carry significant risk.</strong> The Trust will look at both the timing and the intention behind any changes. If you are considering any financial restructuring, get legal advice first.</p>';
-                }
-                depPanel.innerHTML = depContent;
-                insertPoint.parentNode.insertBefore(depPanel, insertPoint);
+            if ((tier==='planning'||tier==='emerging') && state.priorities.includes('protectHome')) {
+                const p=document.createElement('div'); p.className='context-panel info-box'; p.style.cssText='margin-bottom:2rem;border-left-color:var(--warning);';
+                p.innerHTML='<h4>Deprivation of assets: what you need to know</h4>' +
+                    (tier==='planning' ? '<p>If you are planning ahead, it may be possible to take legitimate steps to restructure assets. However, the Trust has the power to treat assets as still belonging to you if it believes they were transferred to avoid care fees (deprivation of assets).</p><ul style="margin-top:0.5rem;"><li>Planning years before a care need arises is very different from transferring assets when care is foreseeable.</li><li>There is no fixed time limit — the Trust looks at intention, not just timing.</li><li><strong>Professional legal advice is essential.</strong></li></ul>'
+                    : '<p>Because a care need is becoming foreseeable, the Trust is more likely to scrutinise any recent asset transfers. <strong>At this stage, major asset transfers carry significant risk.</strong> Get legal advice first.</p>');
+                ins.parentNode.insertBefore(p, ins);
             }
         }
 
-        function displayAdditionalSupport() {
-            const section = document.getElementById('additionalSupportSection');
-            section.innerHTML = '';
-            const tier = getSituationTier();
-
-            // Show AA and Direct Payments cards in additional support section
-            const aaOption = fundingOptions.find(o => o.id === 'attendanceAllowance');
-            const dpOption = fundingOptions.find(o => o.id === 'directPayments');
-
-            let showAA = state.age === 'over55'; // AA is for 65+ but our age bracket is 55+, so show it as worth checking
-            let showDP = state.careSetting === 'home';
-
-            if (showAA || showDP) {
-                section.innerHTML = '<h2 class="section-title" style="margin-top: 2rem;">Additional support to explore</h2>';
-
-                if (showAA) {
-                    const aaFit = (tier === 'planning' || tier === 'emerging') ? 'strong' : 'possible';
-                    const aaBadge = aaFit === 'strong' ? 'Worth claiming' : 'Check eligibility';
-                    section.appendChild(createOptionCard(aaOption, aaFit === 'strong' ? 'strong-fit' : 'possible-fit', aaBadge));
-                }
-                if (showDP) {
-                    const dpFit = state.priorities.includes('flexibility') || state.priorities.includes('familyControl') ? 'strong' : 'possible';
-                    const dpBadge = dpFit === 'strong' ? 'Strong fit' : 'Worth exploring';
-                    section.appendChild(createOptionCard(dpOption, dpFit === 'strong' ? 'strong-fit' : 'possible-fit', dpBadge));
-                }
-            }
-        }
-
-        function displaySummary() {
-            const summary = document.getElementById('filterSummary');
-            const tier = getSituationTier();
-            const isReview = state.situation === 'alreadyInCare';
-
-            const situationLabels = {
-                planningAhead: 'Planning ahead',
-                homeStruggling: 'At home and managing for now',
-                hospitalUrgent: 'Hospital discharge or urgent',
-                alreadyInCare: 'Reviewing current care'
-            };
-            const tierFraming = {
-                planning: 'You have time to plan. Here are the options to explore.',
-                emerging: 'Some planning may still be possible. Here are the most relevant options.',
-                pointOfNeed: isReview ? 'Here are the options to review for your current arrangement.' : 'Here are the most efficient funding routes for your situation.'
-            };
-
-            const careLoc = state.careSetting === 'home' ? 'At home' : 'Residential/Nursing';
-            const stayInfo = (state.careSetting !== 'home' && state.stayType) ? ' (' + state.stayType + ')' : '';
-            const currentLoc = state.location === 'hospital' ? 'Hospital' : 'Community';
-            const homeStatus = state.property === 'owner' ? 'Own home' : 'Rent/Other';
-            const savingsLabel = state.capital === 'low' ? 'Under \u00a314,250' : state.capital === 'medium' ? '\u00a314,250\u2013\u00a323,250' : 'Over \u00a323,250';
-            const isOwnerSummary = state.property === 'owner';
-            const capitalLabel = isOwnerSummary ? savingsLabel + ' (excl. property)' : savingsLabel;
-            const ageLabel = state.age === 'under55' ? 'Under 55' : '55+';
-            const healthLabel = state.healthComplexity === 'standard' ? 'Standard needs' : 'Highly complex';
-
-            const priorityLabels = {
-                minCost: tier === 'pointOfNeed' ? 'Pay efficiently' : 'Minimise costs',
-                protectHome: 'Protect family home',
-                flexibility: 'Flexibility & control',
-                choice: 'Provider choice',
-                speed: 'Quick access',
-                familyControl: 'Family involvement'
-            };
-            const priorityText = state.priorities.length > 0
-                ? state.priorities.map((p, i) => '<strong>' + (i === 0 ? '1st' : '2nd') + ':</strong> ' + (priorityLabels[p] || p)).join(' &nbsp;|&nbsp; ')
-                : 'None selected';
-
-            summary.innerHTML = '<span class="situation-label">' + situationLabels[state.situation] + '</span>' +
-                '<h3>' + tierFraming[tier] + '</h3>' +
-                '<div class="summary-item"><span class="summary-label">Care setting:</span><span>' + careLoc + stayInfo + '</span></div>' +
-                '<div class="summary-item"><span class="summary-label">Current location:</span><span>' + currentLoc + '</span></div>' +
-                '<div class="summary-item"><span class="summary-label">Housing:</span><span>' + homeStatus + '</span></div>' +
-                '<div class="summary-item"><span class="summary-label">Savings & assets:</span><span>' + capitalLabel + '</span></div>' +
-                '<div class="summary-item"><span class="summary-label">Age:</span><span>' + ageLabel + '</span></div>' +
-                '<div class="summary-item"><span class="summary-label">Health needs:</span><span>' + healthLabel + '</span></div>' +
-                '<div class="summary-item"><span class="summary-label">Priorities:</span><span>' + priorityText + '</span></div>';
-        }
-
-        function filterOptions() {
-            const trustFundedSection = document.getElementById('trustFundedSection');
-            const selfFunderSection = document.getElementById('selfFunderSection');
-            const noFitSection = document.getElementById('noFitSection');
-
-            trustFundedSection.innerHTML = '';
-            selfFunderSection.innerHTML = '';
-            noFitSection.innerHTML = '';
-
-            const results = {
-                strongFit: [],
-                possibleFit: [],
-                poorFit: [],
-                selfFunder: []
-            };
-
-            // Only assess core funding options (not AA/DP which go in additional support)
-            const coreFundingOptions = fundingOptions.filter(o => !['attendanceAllowance', 'directPayments'].includes(o.id));
-
-            coreFundingOptions.forEach(option => {
-                const fit = assessFit(option.id);
-                if (fit === 'strong') {
-                    results.strongFit.push(option);
-                } else if (fit === 'possible') {
-                    results.possibleFit.push(option);
-                } else if (fit === 'poor') {
-                    results.poorFit.push(option);
-                } else if (fit === 'selfFunder') {
-                    results.selfFunder.push(option);
-                }
-            });
-
-            const isOwner = state.property === 'owner';
-            const disregard = hasDisregard();
-            const propertyWillCount = isOwner && !disregard;
-            const savings = state.capital;
-            const hasSelfFunder = results.selfFunder.length > 0;
-            const hasTrustFunded = results.strongFit.length > 0 || results.possibleFit.length > 0;
-
-            const selfFunderFirst = hasSelfFunder && (
-                propertyWillCount ||
-                (!propertyWillCount && savings === 'high') ||
-                (!isOwner && savings === 'high')
-            );
-
-            // --- Render self-funder section ---
-            if (hasSelfFunder) {
-                selfFunderSection.innerHTML = '<div class="self-funder-section"><h3>Self-funded care</h3><p>Based on your situation, you may want to consider self-funded options where you have complete choice:</p></div>';
-                results.selfFunder.forEach(option => {
-                    selfFunderSection.querySelector('.self-funder-section').appendChild(createOptionCard(option, 'self-funder', 'Explore'));
-                });
-
-                if (propertyWillCount) {
-                    const propertyCountedNote = document.createElement('div');
-                    propertyCountedNote.className = 'info-callout';
-                    propertyCountedNote.style.cssText = 'background: #fff8f0; border-left: 4px solid #c47a20; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;';
-
-                    let savingsContext = '';
-                    if (savings === 'low') {
-                        savingsContext = '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">You indicated your non-property savings are under \u00a314,250. Once the property is sold or no longer counted, if your remaining capital falls below \u00a314,250, the Trust takes full responsibility for your care costs. You should request a financial assessment from the Trust at that point.</p>';
-                    } else if (savings === 'medium') {
-                        savingsContext = '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">You indicated your non-property savings are between \u00a314,250 and \u00a323,250. Once the property is sold or no longer counted, you would enter the <strong>tariff band</strong>, contributing on a sliding scale (\u00a31 per week for every \u00a3250 above \u00a314,250). You should request a financial assessment from the Trust at that point.</p>';
-                    } else {
-                        savingsContext = '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">Your non-property savings alone are above \u00a323,250, so you would remain a self-funder even without the property being counted.</p>';
-                    }
-
-                    propertyCountedNote.innerHTML =
-                        '<h4 style="color: #c47a20; margin: 0 0 0.5rem 0; font-size: 1rem;">Why you are likely a self-funder</h4>' +
-                        '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">No qualifying person lives in your home, so the property value will normally be included in the financial assessment after the first 12 weeks of a permanent placement. This will almost certainly take your total assessable capital above \u00a323,250.</p>' +
-                        savingsContext +
-                        '<p style="margin: 0; line-height: 1.6;"><strong>Review trigger:</strong> As you pay for care, your capital will reduce. Northern Ireland uses two thresholds: the <strong>tariff band (\u00a314,250\u2013\u00a323,250)</strong> where you contribute on a sliding scale, and <strong>below \u00a314,250</strong> where the Trust takes full responsibility. Request a financial reassessment well before reaching these levels.</p>';
-                    selfFunderSection.querySelector('.self-funder-section').appendChild(propertyCountedNote);
-                }
-                else if (savings === 'high' && hasTrustFunded) {
-                    const tariffNote = document.createElement('div');
-                    tariffNote.className = 'info-callout';
-                    tariffNote.style.cssText = 'background: #f0f7ff; border-left: 4px solid #2c5f8a; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;';
-                    tariffNote.innerHTML =
-                        '<h4 style="color: #2c5f8a; margin: 0 0 0.5rem 0; font-size: 1rem;">When to review your position</h4>' +
-                        '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">As you pay for care, your capital will reduce over time. Northern Ireland uses two capital thresholds:</p>' +
-                        '<p style="margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>\u00a314,250 \u2013 \u00a323,250 (tariff band):</strong> Once your assets fall below \u00a323,250, you enter the tariff band. In this range you contribute on a sliding scale. You should contact the Trust for a financial assessment at this point.</p>' +
-                        '<p style="margin: 0; line-height: 1.6;"><strong>Below \u00a314,250:</strong> The Trust takes full responsibility for funding your care. Request a financial reassessment well before reaching this level.</p>';
-                    selfFunderSection.querySelector('.self-funder-section').appendChild(tariffNote);
-                }
-            }
-
-            // --- Render Trust-funded options ---
-            if (hasTrustFunded) {
-                trustFundedSection.innerHTML = '<h2 class="section-title" style="margin-top: 2rem;">Funded by the Trust</h2>';
-
-                if (disregard) {
-                    const disregardNote = document.createElement('div');
-                    disregardNote.className = 'info-callout';
-                    disregardNote.style.cssText = 'background: #f0fff4; border-left: 4px solid #2d8a4e; padding: 1.2rem 1.5rem; margin: 0.5rem 0 1.5rem 0; border-radius: 0 8px 8px 0;';
-
-                    let positionText = '';
-                    if (savings === 'low') {
-                        positionText = 'Your non-property savings are below \u00a314,250, so the Trust should take full responsibility for funding your care, subject to the wider assessment.';
-                    } else if (savings === 'medium') {
-                        positionText = 'Your non-property savings are in the tariff band (\u00a314,250\u2013\u00a323,250), so you would contribute on a sliding scale \u2014 \u00a31 per week for every \u00a3250 above \u00a314,250.';
-                    } else {
-                        positionText = 'Your non-property savings are above \u00a323,250, so you would still be treated as a self-funder even with the property disregarded. However, as your savings reduce you may move into the tariff band or below the lower threshold.';
-                    }
-
-                    disregardNote.innerHTML =
-                        '<h4 style="color: #2d8a4e; margin: 0 0 0.5rem 0; font-size: 1rem;">Your property is likely disregarded</h4>' +
-                        '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;">Because a qualifying person lives in your home, the value of your property should not be counted in the financial assessment. Your funding position is based on your non-property savings and investments only.</p>' +
-                        '<p style="margin: 0 0 0.8rem 0; line-height: 1.6;"><strong>' + positionText + '</strong></p>' +
-                        '<p style="margin: 0; line-height: 1.6;">Request a financial assessment from your Health and Social Care Trust to confirm your position.</p>';
-                    trustFundedSection.appendChild(disregardNote);
-                }
-
-                results.strongFit.forEach(option => trustFundedSection.appendChild(createOptionCard(option, 'strong-fit', 'Strong fit')));
-                results.possibleFit.forEach(option => trustFundedSection.appendChild(createOptionCard(option, 'possible-fit', 'Possible fit')));
-            }
-
-            // --- Reorder sections ---
-            if (selfFunderFirst) {
-                selfFunderSection.parentNode.insertBefore(selfFunderSection, trustFundedSection);
-            } else {
-                selfFunderSection.parentNode.insertBefore(trustFundedSection, selfFunderSection);
-            }
-
-            // Render poor fit
-            if (results.poorFit.length > 0) {
-                noFitSection.innerHTML = '<h2 class="section-title" style="margin-top: 2rem; color: var(--text-light);">Less suitable for your situation</h2>';
-                results.poorFit.forEach(option => noFitSection.appendChild(createOptionCard(option, 'poor-fit', 'Poor fit')));
-            }
-        }
-
-        function hasDisregard() {
-            if (state.property !== 'owner') return false;
-            return state.occupier.some(o => ['spouse', 'child', 'relative'].includes(o));
-        }
-
-        function assessFit(optionId) {
-            const isTemporary = state.stayType === 'temporary';
-            const disregard = hasDisregard();
-            const isOwner = state.property === 'owner';
-            const savings = state.capital;
-            const propertyWillCount = isOwner && !disregard;
-
-            if (optionId === 'trustFunded') {
-                if (propertyWillCount) return 'possible';
-                if (savings === 'low') return 'strong';
-                if (savings === 'medium') return 'possible';
-                if (savings === 'high') return 'possible';
-                return 'poor';
-            }
-            if (optionId === 'topUp') {
-                if (isTemporary) return 'poor';
-                if (propertyWillCount) return 'poor';
-                if (savings === 'high') return 'poor';
-                if (savings === 'medium') return 'strong';
-                if (savings === 'low') return 'possible';
-                return 'poor';
-            }
-            if (optionId === 'continuingHealthcare') {
-                if (state.healthComplexity === 'complex') return 'possible';
-                return 'poor';
-            }
-            if (optionId === 'selfFunded') {
-                if (propertyWillCount) return 'selfFunder';
-                if (savings === 'high') return 'selfFunder';
-                if (savings === 'medium') return 'possible';
-                return 'poor';
-            }
-            if (optionId === 'temp') {
-                if (isTemporary) return 'strong';
-                if (state.location === 'hospital') return 'possible';
-                return 'poor';
-            }
-            return 'possible';
-        }
-
-        function createOptionCard(option, fitClass, badgeLabel) {
-            const card = document.createElement('div');
-            card.className = 'option-card ' + fitClass;
-            card.innerHTML =
-                '<div class="option-header">' +
-                    '<div><div class="option-title">' + option.name + '</div></div>' +
-                    '<span class="fit-badge ' + fitClass.split('-')[0] + '">' + badgeLabel + '</span>' +
-                '</div>' +
-                '<p class="option-description">' + option.description + '</p>' +
-                '<div class="trade-offs">' +
-                    '<div class="trade-off-col pros"><h5>Pros</h5><ul>' + option.pros.map(pro => '<li>' + pro + '</li>').join('') + '</ul></div>' +
-                    '<div class="trade-off-col cons"><h5>Cons</h5><ul>' + option.cons.map(con => '<li>' + con + '</li>').join('') + '</ul></div>' +
-                '</div>' +
-                '<div class="when-suitable"><h5>When suitable</h5><ul>' + option.whenSuitable.map(item => '<li>' + item + '</li>').join('') + '</ul></div>' +
-                '<div class="key-risks"><h5>Key considerations</h5><ul>' + option.nextSteps.map(step => '<li>' + step + '</li>').join('') + '</ul></div>';
-            return card;
-        }
-
-        function showStage(stageId) {
-            document.querySelectorAll('.stage').forEach(stage => stage.classList.remove('active'));
-            document.getElementById(stageId).classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        function goToStage1() {
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step1').classList.remove('completed');
-            document.getElementById('step1').classList.add('active');
-            showStage('stage1');
-        }
-
+        // ─── Restart ─────────────────────────────────────────────────────────
         function restart() {
-            state.situation = null;
-            state.careSetting = null;
-            state.stayType = null;
-            state.location = null;
-            state.property = null;
-            state.occupier = [];
-            state.capital = null;
-            state.age = null;
-            state.healthComplexity = null;
-            state.priorities = [];
-
-            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
-                input.checked = false;
-                input.parentElement.classList.remove('selected');
-            });
-
-            document.getElementById('stayTypeGroup').style.display = 'none';
-            document.getElementById('occupierGroup').style.display = 'none';
-            document.getElementById('temporaryStayNote').style.display = 'none';
-            document.getElementById('selfFunderWarning').style.display = 'none';
-            document.getElementById('extraDisregardNote').style.display = 'none';
-            document.getElementById('capitalContextNote').style.display = 'none';
-            document.getElementById('capitalLabel').textContent = 'Total savings and investments';
-
-            document.getElementById('step1').classList.remove('completed');
-            document.getElementById('step1').classList.add('active');
-            document.getElementById('step2').classList.remove('completed', 'active');
-            document.getElementById('step3').classList.remove('completed', 'active');
-
-            showStage('stage1');
+            Object.assign(state, {situation:null,careSetting:null,stayType:null,location:null,property:null,occupier:[],capital:null,age:null,healthComplexity:null,priorities:[]});
+            document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(i=>{i.checked=false;i.parentElement.classList.remove('selected');});
+            ['stayTypeGroup','occupierGroup','temporaryStayNote','selfFunderWarning','extraDisregardNote','capitalContextNote'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
+            document.getElementById('capitalLabel').textContent='Total savings and investments';
+            cardCounter=0;
+            for(let i=1;i<=5;i++){const e=document.getElementById('step'+i);e.classList.remove('completed','active');if(i===1)e.classList.add('active');}
+            showStage('stage1a');
         }
     </script>
 </body>
