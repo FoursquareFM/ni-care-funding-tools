@@ -451,21 +451,22 @@
                     <div class="radio-group">
                         <label class="radio-option">
                             <input type="radio" name="capital" value="low">
-                            <span>Under &pound;14,250</span>
+                            <span>Under &pound;14,250</span><!-- FIGURE: keep in sync with figures.js CARE_FIGURES.lowerCapitalLimit -->
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="capital" value="medium">
-                            <span>&pound;14,250 to &pound;23,250</span>
+                            <span>&pound;14,250 to &pound;23,250</span><!-- FIGURE: keep in sync with figures.js CARE_FIGURES.lowerCapitalLimit / upperCapitalLimit -->
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="capital" value="high">
-                            <span>Over &pound;23,250</span>
+                            <span>Over &pound;23,250</span><!-- FIGURE: keep in sync with figures.js CARE_FIGURES.upperCapitalLimit -->
                         </label>
                     </div>
                 </div>
 
                 <div class="info-box">
-                    <h4>Financial thresholds (2025/26)</h4>
+                    <h4>Financial thresholds (2026/27)</h4>
+                    <!-- FIGURE: keep in sync with figures.js CARE_FIGURES.lowerCapitalLimit / upperCapitalLimit -->
                     <p>These are the key boundaries used in Northern Ireland's financial assessment for care. If your assessable capital is under &pound;14,250, the Trust usually covers your care. Between &pound;14,250 and &pound;23,250, you contribute on a sliding scale. Above &pound;23,250, you would need to fund your care privately unless Continuing Healthcare applies.</p>
                 </div>
 
@@ -555,6 +556,7 @@
         </div>
     </div>
 
+    <script src="figures.js"></script>
     <script>
         // State management
         const state = {
@@ -694,7 +696,7 @@
             {
                 id: 'trustFunded',
                 name: 'Trust-funded care (full or partial)',
-                description: 'The Health and Social Care Trust assesses you as needing care and funds it directly, or contributes to the cost. Northern Ireland\'s capital thresholds have been frozen at \u00a323,250 since 2010, compared to \u00a350,000 in Wales and \u00a335,500 in Scotland. The nursing care contribution in NI is only \u00a3100 per week, compared to \u00a3254 per week in England.',
+                description: `The Health and Social Care Trust assesses you as needing care and funds it directly, or contributes to the cost. Northern Ireland's capital thresholds have been frozen at ${CARE_FIGURES.upperCapitalLimit} since 2010, compared to \u00a350,000 in Wales and \u00a335,500 in Scotland. The nursing care contribution in NI is only ${CARE_FIGURES.nursingCarePayment} per week, compared to ${CARE_FIGURES.englandNursingComparator} per week in England.`,
                 pros: [
                     'Significantly lower or no personal cost',
                     'Trust covers the full registered fee',
@@ -853,11 +855,11 @@
             {
                 id: 'attendanceAllowance',
                 name: 'Attendance Allowance',
-                description: 'A non-means-tested, tax-free benefit for people aged 65 or over who need help with personal care or supervision due to physical or mental disability. You can claim regardless of your savings, property, or income. The higher rate is \u00a3110.40 per week (2025/26). It does not affect other benefits and is relatively straightforward to apply for.',
+                description: `A non-means-tested, tax-free benefit for people aged 65 or over who need help with personal care or supervision due to physical or mental disability. You can claim regardless of your savings, property, or income. Rates are ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week (${CARE_FIGURES.reviewYear}). It does not affect other benefits and is relatively straightforward to apply for.`,
                 pros: [
                     'Not means-tested: your savings and property do not matter',
                     'Tax-free and does not reduce other benefits',
-                    'Up to \u00a3110.40 per week (higher rate, 2025/26)',
+                    `${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week (${CARE_FIGURES.reviewYear})`,
                     'Can be used for any purpose including paying for care',
                     'Can be claimed whether you live at home or are planning to move to a care home'
                 ],
@@ -1148,7 +1150,7 @@
                     '<p>Because you are planning ahead, you have options that people in an urgent situation do not:</p>' +
                     '<ul style="margin-top: 0.75rem;">' +
                     '<li><strong>Enduring Power of Attorney (EPA):</strong> Set this up while the person still has mental capacity. Without it, if capacity is lost, the family must apply through the courts for controllership, which is slower and more expensive.</li>' +
-                    '<li><strong>Attendance Allowance:</strong> If the person is 65 or over and needs help with personal care, they may be eligible for up to \u00a3110.40 per week, regardless of savings. Apply now.</li>' +
+                    `<li><strong>Attendance Allowance:</strong> If the person is 65 or over and needs help with personal care, they may be eligible for ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week, regardless of savings. Apply now.</li>` +
                     '<li><strong>Professional financial and legal advice:</strong> A solicitor experienced in care funding can advise on legitimate ways to structure assets. Do not attempt asset transfers without professional advice, as the Trust can treat them as deprivation of assets.</li>' +
                     '<li><strong>Voluntary care needs assessment:</strong> You can request one from the Trust at any time, even if care is not needed yet. This helps you understand what support may be available.</li>' +
                     '<li><strong>Visit care providers:</strong> Research and visit homes or care agencies without the pressure of an urgent decision.</li>' +
@@ -1159,8 +1161,8 @@
                     '<ul style="margin-top: 0.75rem;">' +
                     '<li><strong>Enduring Power of Attorney &mdash; do this now if not done:</strong> An EPA can only be set up while the person has mental capacity. If capacity has already been lost, you will need to apply for controllership through the Office of Care and Protection, which is significantly more complex and costly.</li>' +
                     '<li><strong>Request a care needs assessment:</strong> Contact your local Trust to get an assessment of what support may be available. This is free and a key step.</li>' +
-                    '<li><strong>Claim Attendance Allowance:</strong> If aged 65+ with care needs, apply now. Up to \u00a3110.40 per week, not means-tested.</li>' +
-                    '<li><strong>Carer\u2019s assessment:</strong> If a family member is providing care, they have the right to their own assessment and may be eligible for Carer\u2019s Allowance (\u00a381.90 per week in 2025/26).</li>' +
+                    `<li><strong>Claim Attendance Allowance:</strong> If aged 65+ with care needs, apply now. ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week, not means-tested.</li>` +
+                    `<li><strong>Carer\u2019s assessment:</strong> If a family member is providing care, they have the right to their own assessment and may be eligible for Carer\u2019s Allowance (${CARE_FIGURES.carersAllowance} per week in ${CARE_FIGURES.reviewYear}).</li>` +
                     '<li><strong>Asset planning &mdash; proceed with caution:</strong> Some planning may still be possible, but the Trust can treat recent asset transfers as deprivation if they believe the purpose was to avoid care fees. Get legal advice before making any changes.</li>' +
                     '</ul></div>';
             } else if (isReview) {
@@ -1180,7 +1182,7 @@
                     '<li><strong>12-week property disregard:</strong> If you own your home, its value is normally not counted for the first 12 weeks of a permanent care placement. This gives time to make decisions about the property.</li>' +
                     '<li><strong>Right to assessment:</strong> You have the right to a care needs assessment before discharge. Do not feel pressured into making permanent decisions quickly.</li>' +
                     '<li><strong>Temporary placement:</strong> If decisions need more time, a temporary placement may be available while you plan longer-term arrangements.</li>' +
-                    '<li><strong>Attendance Allowance:</strong> If aged 65+ and self-funding in a care home, apply for Attendance Allowance (up to \u00a3110.40 per week). It stops if the Trust funds your care, but continues for self-funders.</li>' +
+                    `<li><strong>Attendance Allowance:</strong> If aged 65+ and self-funding in a care home, apply for Attendance Allowance (${CARE_FIGURES.attendanceAllowanceLower} lower rate or ${CARE_FIGURES.attendanceAllowanceHigher} higher rate per week). It stops if the Trust funds your care, but continues for self-funders.</li>` +
                     '</ul></div>';
             }
         }
@@ -1212,7 +1214,7 @@
                 tariffPanel.innerHTML = '<h4>How your contribution is calculated (tariff income)</h4>' +
                     '<p>With capital between \u00a314,250 and \u00a323,250, the Trust uses <strong>tariff income</strong> to calculate your weekly contribution. For every \u00a3250 (or part of \u00a3250) above \u00a314,250, the Trust adds \u00a31 per week to your assessed income.</p>' +
                     '<p style="margin-top: 0.5rem;"><strong>Example:</strong> If you have \u00a320,000 in savings, the excess above \u00a314,250 is \u00a35,750. Divided by 250 = 23 units. So \u00a323 per week is added to your assessed income on top of your actual pension and other income. Your total assessed income is then compared to the care home fee to determine your contribution.</p>' +
-                    '<p style="margin-top: 0.5rem;"><strong>What happens as capital reduces:</strong> As you pay contributions, your capital falls. When it drops below \u00a314,250, tariff income no longer applies and the Trust covers almost all of the care costs. You keep a Personal Expenses Allowance of \u00a334.10 per week (from April 2025).</p>';
+                    `<p style="margin-top: 0.5rem;"><strong>What happens as capital reduces:</strong> As you pay contributions, your capital falls. When it drops below \u00a314,250, tariff income no longer applies and the Trust covers almost all of the care costs. You keep a Personal Expenses Allowance of ${CARE_FIGURES.personalExpensesAllowance} per week (from April 2026).</p>`;
                 insertPoint.parentNode.insertBefore(tariffPanel, insertPoint);
             }
 
