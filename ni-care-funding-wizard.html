@@ -392,6 +392,7 @@
             .decision-question { font-size: 1.3rem; }
         }
     </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -1154,11 +1155,26 @@
             container.innerHTML = html;
         }
 
+        // Part 5: accordion helpers for wizard
+        let wizardCardCounter = 0;
+        function toggleWizardAccordion(bodyId, btn) {
+            const body = document.getElementById(bodyId);
+            const open = body.classList.toggle('wiz-acc-open');
+            btn.setAttribute('aria-expanded', open);
+            const spans = btn.querySelectorAll('span');
+            if (spans[0]) spans[0].textContent = open ? 'Hide detail' : 'Show detail';
+            if (spans[1]) spans[1].textContent = open ? '▲' : '▼';
+        }
+
         function renderOutcomeNode(node, container) {
             let html = '<div class="outcome-card">';
             html += `<h3>${node.title}</h3>`;
             html += `<p style="font-size: 1.1rem; margin-bottom: 1rem;">${node.summary}</p>`;
 
+            // Progressive disclosure: details in accordion
+            const accId = 'wiz-acc-' + (++wizardCardCounter);
+            html += `<button class="wiz-acc-toggle" aria-expanded="false" onclick="toggleWizardAccordion('${accId}', this)" style="background:none;border:1px solid var(--border);border-radius:6px;padding:0.45rem 0.9rem;font-size:0.85rem;color:var(--text-medium);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:0.75rem;"><span>Show detail</span> <span>▼</span></button>`;
+            html += `<div id="${accId}" style="display:none;">`;
             html += '<div class="outcome-content">';
 
             html += '<h4>Your Funding Strategy</h4>';
@@ -1192,7 +1208,10 @@
             html += '<p>' + wizardState.path.map(p => decisionTree[p].question || decisionTree[p].title).join(' → ') + '</p>';
             html += '</div>';
 
-            html += '</div>';
+            html += '</div>'; // close accordion body
+            html += '</div>'; // close outcome-card
+
+
 
             // Next steps signpost
             html += '<div class="card" style="border-left: 4px solid var(--accent); background: rgba(90, 143, 123, 0.05);">';
@@ -1331,8 +1350,53 @@
             renderNode('start');
         }
 
-        // Initialize
-        renderNode('start');
+        // Part 4: Read query string state passed from the Complete Guide
+        function applyPassedState() {
+            const params = new URLSearchParams(window.location.search);
+            const careSetting = params.get('careSetting');
+            const property = params.get('property');
+            const capital = params.get('capital');
+            if (!careSetting && !property) return null; // nothing passed
+
+            let startNode = null;
+            if (careSetting === 'home') {
+                wizardState.decisions['care_at_home'] = true;
+                // Skip start → checkCHC → careSetting; begin at homeCareAge
+                wizardState.path = ['start', 'checkCHC', 'careSetting'];
+                wizardState.decisions['chc_not_active'] = true;
+                startNode = 'homeCareAge';
+            } else if (careSetting === 'residential' || careSetting === 'nursing') {
+                wizardState.decisions['care_home'] = true;
+                wizardState.decisions['chc_not_active'] = true;
+                wizardState.path = ['start', 'checkCHC', 'careSetting'];
+                if (property === 'owner') {
+                    wizardState.decisions['has_property'] = true;
+                    wizardState.path.push('checkProperty');
+                    startNode = 'spouseCheck';
+                } else if (property === 'notOwner') {
+                    wizardState.decisions['no_property'] = true;
+                    wizardState.path.push('checkProperty');
+                    startNode = 'noPropertyRoute';
+                } else {
+                    startNode = 'checkProperty';
+                }
+            }
+            if (capital) wizardState._passedCapital = capital; // store for context
+            return startNode;
+        }
+
+        // Initialize — apply any passed state first
+        const passedStart = applyPassedState();
+        if (passedStart) {
+            // Show a brief banner that state was passed in
+            const banner = document.createElement('div');
+            banner.style.cssText = 'background:rgba(90,143,123,0.12);border-left:4px solid var(--accent);padding:0.9rem 1.25rem;border-radius:0 8px 8px 0;margin-bottom:1.5rem;font-size:0.9rem;color:var(--text-dark);';
+            banner.innerHTML = '<strong>Continuing from the Complete Guide</strong> &mdash; some of your answers have been carried across. You can go back at any point to adjust them.';
+            document.querySelector('.container').insertBefore(banner, document.getElementById('appContainer'));
+            renderNode(passedStart);
+        } else {
+            renderNode('start');
+        }
     </script>
 </body>
 </html>
