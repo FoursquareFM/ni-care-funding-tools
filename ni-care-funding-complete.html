@@ -169,10 +169,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Where do you currently live?</label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="location" value="hospital"><span>In hospital</span></label>
-                        <label class="radio-option"><input type="radio" name="location" value="community"><span>In the community (at home)</span></label>
+                    <label class="form-label" id="locationLabel">Where do you currently live?</label>
+                    <div class="radio-group" id="locationRadioGroup">
+                        <label class="radio-option location-standard"><input type="radio" name="location" value="hospital"><span>In hospital</span></label>
+                        <label class="radio-option location-standard"><input type="radio" name="location" value="community"><span>In the community (at home)</span></label>
+                        <label class="radio-option location-incare" style="display:none;"><input type="radio" name="location" value="careHome"><span>In a residential or nursing home</span></label>
+                        <label class="radio-option location-incare" style="display:none;"><input type="radio" name="location" value="communityInCare"><span>Receiving care in my own home</span></label>
                     </div>
                 </div>
 
@@ -189,6 +191,7 @@
                 <h2 class="section-title">Financial picture</h2>
                 <p class="section-subtitle">The Trust uses your capital and property to assess eligibility for funded care</p>
 
+                <div id="propertyGroup">
                 <div class="form-group">
                     <label class="form-label">Do you own or rent your home?</label>
                     <div class="radio-group">
@@ -210,6 +213,19 @@
                 <div class="info-box" id="extraDisregardNote" style="display: none;">
                     <h4>Other disregard situations</h4>
                     <p>The categories above are the main reasons a property may be disregarded. Other situations may also apply &mdash; raise them with the Trust or seek advice.</p>
+                </div>
+                </div><!-- /propertyGroup -->
+
+                <!-- Former-home status question — shown when already living in a care home -->
+                <div class="form-group" id="formerHomeGroup" style="display:none;">
+                    <label class="form-label">What is happening with your previous home?</label>
+                    <div class="radio-group">
+                        <label class="radio-option"><input type="radio" name="formerHomeStatus" value="formerHomeSpouse"><span>Still lived in by my spouse/partner or a dependent relative</span></label>
+                        <label class="radio-option"><input type="radio" name="formerHomeStatus" value="formerHomeEmpty"><span>Empty or unoccupied</span></label>
+                        <label class="radio-option"><input type="radio" name="formerHomeStatus" value="formerHomeSelling"><span>Being sold / on the market</span></label>
+                        <label class="radio-option"><input type="radio" name="formerHomeStatus" value="formerHomeSold"><span>Already sold</span></label>
+                        <label class="radio-option"><input type="radio" name="formerHomeStatus" value="formerHomeRented"><span>I rented / did not own a home</span></label>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -250,7 +266,8 @@
                     <label class="form-label">Age</label>
                     <div class="radio-group">
                         <label class="radio-option"><input type="radio" name="age" value="under55"><span>Under 55</span></label>
-                        <label class="radio-option"><input type="radio" name="age" value="over55"><span>55 or over</span></label>
+                        <label class="radio-option"><input type="radio" name="age" value="55to65"><span>55 to State Pension age (currently 66)</span></label>
+                        <label class="radio-option"><input type="radio" name="age" value="atSPA"><span>State Pension age (66) or over</span></label>
                     </div>
                 </div>
 
@@ -312,7 +329,8 @@
         // ─── State ───────────────────────────────────────────────────────────
         const state = {
             situation: null, careSetting: null, stayType: null, location: null,
-            property: null, occupier: [], capital: null, age: null,
+            property: null, occupier: [], formerHomeStatus: null,
+            capital: null, age: null,
             healthComplexity: null, priorities: []
         };
 
@@ -472,6 +490,19 @@
         function selectRadio(name, value) {
             state[name] = value;
             document.querySelectorAll('input[name="'+name+'"]').forEach(i => i.parentElement.classList.toggle('selected', i.value === value));
+            if (name === 'situation') {
+                updateLocationOptions(value);
+                // Clear location selection if it no longer applies to the chosen situation
+                const incareVals = ['careHome','communityInCare'];
+                const standardVals = ['hospital','community'];
+                if (value === 'alreadyInCare' && state.location && standardVals.includes(state.location)) {
+                    state.location = null;
+                    document.querySelectorAll('input[name="location"]').forEach(i=>{ i.checked=false; i.parentElement.classList.remove('selected'); });
+                } else if (value !== 'alreadyInCare' && state.location && incareVals.includes(state.location)) {
+                    state.location = null;
+                    document.querySelectorAll('input[name="location"]').forEach(i=>{ i.checked=false; i.parentElement.classList.remove('selected'); });
+                }
+            }
             if (name === 'careSetting') {
                 document.getElementById('stayTypeGroup').style.display = (value==='residential'||value==='nursing') ? 'block' : 'none';
                 if (value==='home') { state.stayType=null; document.querySelectorAll('input[name="stayType"]').forEach(i=>i.checked=false); }
@@ -483,7 +514,25 @@
                 if (value==='notOwner') { state.occupier=[]; document.querySelectorAll('input[name="occupier"]').forEach(i=>i.checked=false); }
                 updateCapitalQuestion();
             }
+            if (name === 'formerHomeStatus') {
+                state.formerHomeStatus = value;
+                // Derive property and occupier from former-home status so existing logic works unchanged
+                if (value === 'formerHomeSpouse') {
+                    state.property = 'owner'; state.occupier = ['spouse'];
+                } else if (value === 'formerHomeEmpty' || value === 'formerHomeSelling') {
+                    state.property = 'owner'; state.occupier = [];
+                } else { // formerHomeSold, formerHomeRented
+                    state.property = 'notOwner'; state.occupier = [];
+                }
+                updateCapitalQuestion();
+            }
             if (name === 'capital') document.getElementById('selfFunderWarning').style.display = value==='high' ? 'block' : 'none';
+        }
+
+        function updateLocationOptions(situation) {
+            const isAlreadyInCare = situation === 'alreadyInCare';
+            document.querySelectorAll('.location-standard').forEach(el => el.style.display = isAlreadyInCare ? 'none' : '');
+            document.querySelectorAll('.location-incare').forEach(el => el.style.display = isAlreadyInCare ? '' : 'none');
         }
 
         function selectCheckbox(name, value, checked) {
@@ -498,6 +547,24 @@
         function updateCapitalQuestion() {
             const lbl = document.getElementById('capitalLabel');
             const note = document.getElementById('capitalContextNote');
+
+            if (state.location === 'careHome') {
+                // Already in a care home — capital question relates to savings; former-home handled separately
+                lbl.textContent = 'Savings and investments';
+                const fhs = state.formerHomeStatus;
+                if (fhs === 'formerHomeSpouse') {
+                    note.style.display = 'block';
+                    note.innerHTML = '<h4>Former home disregarded</h4><p>Because a qualifying person continues to live in your former home, its value is excluded from the financial assessment. Answer based on your <strong>savings and investments only</strong>.</p>';
+                } else if (fhs === 'formerHomeEmpty' || fhs === 'formerHomeSelling') {
+                    note.style.display = 'block';
+                    note.innerHTML = '<h4>Former home may be counted</h4><p>Your former home&rsquo;s value will normally be included in the financial assessment unless you are still within the first 12 weeks of your current permanent placement. Answer based on your <strong>non-property savings</strong> — the Trust will add the property value in their full assessment.</p>';
+                } else {
+                    note.style.display = 'none';
+                    note.innerHTML = '';
+                }
+                return;
+            }
+
             const isOwner = state.property === 'owner';
             const disregard = isOwner && state.occupier.some(o=>['spouse','child','relative'].includes(o));
             if (isOwner && disregard) {
@@ -521,25 +588,39 @@
                 situation: {planningAhead:'Planning ahead', homeStruggling:'At home, struggling', hospitalUrgent:'Hospital / urgent', alreadyInCare:'Already in care'},
                 careSetting: {home:'Care at home', residential:'Residential care', nursing:'Nursing home'},
                 stayType: {temporary:'Temporary stay', permanent:'Permanent stay'},
-                location: {hospital:'In hospital', community:'At home'},
+                location: {hospital:'In hospital', community:'At home', careHome:'In a care home', communityInCare:'At home (receiving care)'},
                 property: {owner:'Own home', notOwner:'Renting'},
+                formerHomeStatus: {formerHomeSpouse:'Spouse/relative in former home', formerHomeEmpty:'Former home empty', formerHomeSelling:'Former home being sold', formerHomeSold:'Former home sold', formerHomeRented:'Did not own a home'},
                 capital: {low:'Under £14,250', medium:'£14,250–£23,250', high:'Over £23,250'},
-                age: {under55:'Under 55', over55:'55 or over'},
+                age: {under55:'Under 55', over55:'55 or over', '55to65':'55–State Pension age', atSPA:'State Pension age+'},
                 healthComplexity: {standard:'Standard health needs', complex:'Highly complex'}
             };
-            const keyLabels = {situation:'Situation', careSetting:'Care setting', stayType:'Stay type', location:'Location', property:'Housing', capital:'Savings', age:'Age', healthComplexity:'Health needs'};
-            const chips = keys.filter(k=>state[k]).map(k=>`<span class="running-summary-chip"><strong>${keyLabels[k]}:</strong> ${(labels[k]&&labels[k][state[k]])||state[k]}</span>`);
+            const keyLabels = {situation:'Situation', careSetting:'Care setting', stayType:'Stay type', location:'Location', property:'Housing', formerHomeStatus:'Former home', capital:'Savings', age:'Age', healthComplexity:'Health needs'};
+            const chips = keys.filter(k=>state[k] && (k!=='formerHomeStatus' || state.location==='careHome')).map(k=>`<span class="running-summary-chip"><strong>${keyLabels[k]}:</strong> ${(labels[k]&&labels[k][state[k]])||state[k]}</span>`);
             if (!chips.length) return '';
             return `<h5>What you've told us so far</h5><div class="running-summary-items">${chips.join('')}</div>`;
         }
 
         // ─── Navigation ──────────────────────────────────────────────────────
+        function updateStage1bDisplay() {
+            const isInCareHome = state.location === 'careHome';
+            document.getElementById('propertyGroup').style.display = isInCareHome ? 'none' : '';
+            document.getElementById('formerHomeGroup').style.display = isInCareHome ? 'block' : 'none';
+            if (isInCareHome) {
+                // Ensure occupier/disregard UI is hidden when using former-home path
+                document.getElementById('occupierGroup').style.display = 'none';
+                document.getElementById('extraDisregardNote').style.display = 'none';
+            }
+            updateCapitalQuestion();
+        }
+
         function goToStage1b() {
             if (!state.situation) { alert('Please select what best describes your situation.'); return; }
             if (!state.careSetting) { alert('Please select where care would be provided.'); return; }
             if (state.careSetting !== 'home' && !state.stayType) { alert('Please select duration of stay.'); return; }
             if (!state.location) { alert('Please select where you currently live.'); return; }
             setStep(1);
+            updateStage1bDisplay();
             const s = document.getElementById('summaryAfter1a');
             s.innerHTML = buildRunningSummary(['situation','careSetting','stayType','location']);
             s.style.display = s.innerHTML ? 'block' : 'none';
@@ -548,11 +629,15 @@
         function goBackTo1a() { setStep(1); showStage('stage1a'); }
 
         function goToStage1c() {
-            if (!state.property) { alert('Please select your housing status.'); return; }
+            if (state.location === 'careHome') {
+                if (!state.formerHomeStatus) { alert('Please select what is happening with your previous home.'); return; }
+            } else {
+                if (!state.property) { alert('Please select your housing status.'); return; }
+            }
             if (!state.capital) { alert('Please select your capital level.'); return; }
             setStep(2);
             const s = document.getElementById('summaryAfter1b');
-            s.innerHTML = buildRunningSummary(['situation','careSetting','stayType','location','property','capital']);
+            s.innerHTML = buildRunningSummary(['situation','careSetting','stayType','location','formerHomeStatus','property','capital']);
             s.style.display = s.innerHTML ? 'block' : 'none';
             showStage('stage1c');
         }
@@ -781,8 +866,9 @@
             wrap.className = 'longevity-estimator';
             const isNursing = state.careSetting === 'nursing';
             const isHome = state.careSetting === 'home';
-            const feeMin = isHome ? 300 : (isNursing ? 900 : 800);
-            const feeMax = isHome ? 1000 : (isNursing ? 1800 : 1500);
+            // Fee ranges from figures.js — verified June 2026 against NI market data
+            const feeMin = isHome ? CARE_FIGURES.homeCareWeeklyFeeMin : (isNursing ? CARE_FIGURES.nursingWeeklyFeeMin : CARE_FIGURES.residentialWeeklyFeeMin);
+            const feeMax = isHome ? CARE_FIGURES.homeCareWeeklyFeeMax : (isNursing ? CARE_FIGURES.nursingWeeklyFeeMax : CARE_FIGURES.residentialWeeklyFeeMax);
             const feeDefault = Math.round((feeMin+feeMax)/2/50)*50;
             const propCount = state.property==='owner' && !hasDisregard();
             const sav = state.capital;
@@ -791,6 +877,11 @@
             const capMax = propCount ? 500000 : (sav==='high' ? 500000 : 100000);
             const upper = 23250, lower = 14250;
             const settingLabel = isHome ? 'home care' : (isNursing ? 'nursing home' : 'residential care');
+            const typicalRangeText = isHome
+                ? `Typical home care in Northern Ireland costs around &pound;${feeMin.toLocaleString()} to &pound;${feeMax.toLocaleString()} per week, though costs vary significantly depending on hours needed.`
+                : isNursing
+                ? `Typical nursing home in Northern Ireland costs around &pound;${feeMin.toLocaleString()} to &pound;${feeMax.toLocaleString()} per week, though some homes charge more.`
+                : `Typical residential care in Northern Ireland costs around &pound;${feeMin.toLocaleString()} to &pound;${feeMax.toLocaleString()} per week, though some homes charge more.`;
 
             wrap.innerHTML = `
 <h4>How long will the money last?</h4>
@@ -800,6 +891,7 @@
   <input type="range" class="fee-slider" min="${feeMin}" max="${feeMax}" step="50" value="${feeDefault}">
   <span class="slider-val fee-val">&pound;${feeDefault.toLocaleString()}/wk</span>
 </div>
+<p class="longevity-assumptions" style="margin-top:0;margin-bottom:0.75rem;">${typicalRangeText}</p>
 <div class="longevity-slider-row">
   <label>Starting capital</label>
   <input type="range" class="cap-slider" min="${capMin}" max="${capMax}" step="5000" value="${capStart}">
@@ -856,11 +948,13 @@
             const sec = document.getElementById('additionalSupportSection');
             sec.innerHTML = '';
             const tier = getSituationTier();
-            const isOver55 = state.age === 'over55';
-            const showAA = isOver55; // AA strictly for State Pension age (currently 66); the form only offers a 55+ band, so 55+ is used as a prompt to check, with caveat shown in the AA text
+            const isAtSPA = state.age === 'atSPA' || state.age === 'over55'; // over55 kept for any legacy state
+            const is55to65 = state.age === '55to65';
+            const showAA = isAtSPA; // AA available now only at State Pension age
+            const showPreSPA = is55to65; // AA not yet available but worth flagging for future
             const showDP = state.careSetting === 'home';
             const showU55 = state.age === 'under55';
-            if (!showAA && !showDP && !showU55) return;
+            if (!showAA && !showDP && !showU55 && !showPreSPA) return;
 
             sec.innerHTML = '<h2 class="section-title" style="margin-top:2rem;">Additional support to explore</h2>';
 
@@ -868,8 +962,15 @@
                 const pip = document.createElement('div');
                 pip.className = 'under55-note';
                 pip.innerHTML = '<h4>Working-age support: Personal Independence Payment (PIP)</h4>' +
-                    '<p>As someone under 55, the relevant working-age disability benefit is <strong>Personal Independence Payment (PIP)</strong>, not Attendance Allowance (which is for State Pension age). PIP has a daily living component and a mobility component. Different Continuing Healthcare considerations may also apply for working-age adults in Northern Ireland. We recommend seeking specialist advice about the range of working-age benefits available in your circumstances.</p>';
+                    '<p>As someone under 55, the relevant working-age disability benefit is <strong>Personal Independence Payment (PIP)</strong>, not Attendance Allowance (which is for State Pension age, currently 66). PIP has a daily living component and a mobility component. Different Continuing Healthcare considerations may also apply for working-age adults in Northern Ireland. We recommend seeking specialist advice about the range of working-age benefits available in your circumstances.</p>';
                 sec.appendChild(pip);
+            }
+            if (showPreSPA) {
+                const preSPA = document.createElement('div');
+                preSPA.className = 'under55-note';
+                preSPA.innerHTML = '<h4>Attendance Allowance: not yet available, but worth planning for</h4>' +
+                    '<p>Attendance Allowance is only available at State Pension age (currently 66). As someone between 55 and State Pension age, you cannot claim it yet &mdash; but once you reach State Pension age, it becomes available regardless of savings or income. It is worth noting for future planning and worth claiming as soon as you become eligible.</p>';
+                sec.appendChild(preSPA);
             }
             if (showAA) {
                 const aaOpt = fundingOptions.find(o=>o.id==='attendanceAllowance');
@@ -901,10 +1002,10 @@
                 '<span class="situation-label">'+sitLabels[state.situation]+'</span>'+
                 '<h3>'+tierText[tier]+'</h3>'+
                 '<div class="summary-item"><span class="summary-label">Care setting:</span><span>'+careLoc+stayInfo+'</span></div>'+
-                '<div class="summary-item"><span class="summary-label">Current location:</span><span>'+(state.location==='hospital'?'Hospital':'Community')+'</span></div>'+
+                '<div class="summary-item"><span class="summary-label">Current location:</span><span>'+(state.location==='hospital'?'Hospital':state.location==='careHome'?'Care home':state.location==='communityInCare'?'At home (receiving care)':'Community')+'</span></div>'+
                 '<div class="summary-item"><span class="summary-label">Housing:</span><span>'+(state.property==='owner'?'Own home':'Rent/Other')+'</span></div>'+
                 '<div class="summary-item"><span class="summary-label">Savings & assets:</span><span>'+capLbl+'</span></div>'+
-                '<div class="summary-item"><span class="summary-label">Age:</span><span>'+(state.age==='under55'?'Under 55':'55+')+'</span></div>'+
+                '<div class="summary-item"><span class="summary-label">Age:</span><span>'+(state.age==='under55'?'Under 55':state.age==='55to65'?'55–State Pension age':'State Pension age+')+'</span></div>'+
                 '<div class="summary-item"><span class="summary-label">Health needs:</span><span>'+(state.healthComplexity==='standard'?'Standard needs':'Highly complex')+'</span></div>'+
                 '<div class="summary-item"><span class="summary-label">Priorities:</span><span>'+pText+'</span></div>';
         }
@@ -914,9 +1015,12 @@
             sec.innerHTML = '';
             const tier = getSituationTier();
             const isReview = state.situation === 'alreadyInCare';
-            const isOver55 = state.age === 'over55';
-            const aaLine = isOver55
-                ? `<strong>Attendance Allowance:</strong> If you are of State Pension age (currently 66), ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week, not means-tested. (If you are between 55 and State Pension age, this does not yet apply — it is shown here as a prompt to check when you reach State Pension age.)`
+            const isAtSPA = state.age === 'atSPA' || state.age === 'over55';
+            const is55to65 = state.age === '55to65';
+            const aaLine = isAtSPA
+                ? `<strong>Attendance Allowance:</strong> ${CARE_FIGURES.attendanceAllowanceLower} (lower rate) or ${CARE_FIGURES.attendanceAllowanceHigher} (higher rate) per week, not means-tested. Available at State Pension age (currently 66) regardless of savings.`
+                : is55to65
+                ? '<strong>Attendance Allowance:</strong> Not yet available — this benefit starts at State Pension age (currently 66). Worth noting for your planning: once you reach State Pension age it becomes available regardless of savings or income.'
                 : '<strong>Disability benefits:</strong> As someone under 55, the relevant benefit is Personal Independence Payment (PIP), not Attendance Allowance. Seek specialist advice about working-age support available in your circumstances.';
 
             if (tier==='planning') {
@@ -979,14 +1083,28 @@
                     : '<p>Because a care need is becoming foreseeable, the Trust is more likely to scrutinise any recent asset transfers. <strong>At this stage, major asset transfers carry significant risk.</strong> Get legal advice first.</p>');
                 ins.parentNode.insertBefore(p, ins);
             }
+
+            // Context for already-in-care users whose former home is empty or being sold
+            if (state.location === 'careHome' && (state.formerHomeStatus === 'formerHomeEmpty' || state.formerHomeStatus === 'formerHomeSelling')) {
+                const p=document.createElement('div'); p.className='context-panel info-box'; p.style.cssText='margin-bottom:2rem;';
+                p.innerHTML='<h4>Your former home in the financial assessment</h4>'+
+                    '<p><strong>12-week property disregard:</strong> For the first 12 weeks of a permanent care placement, your former home is normally excluded from the financial assessment. If you are already past this point, the property value is likely included.</p>'+
+                    (state.formerHomeStatus === 'formerHomeSelling' ? '<p style="margin-top:0.5rem;">While a sale is in progress, the Trust should work with you on timing. Discuss with your Trust how the property is being treated in the current assessment.</p>' : '')+
+                    '<p style="margin-top:0.5rem;"><strong>Confirm your position in writing with your Health and Social Care Trust.</strong></p>';
+                ins.parentNode.insertBefore(p, ins);
+            }
         }
 
         // ─── Restart ─────────────────────────────────────────────────────────
         function restart() {
-            Object.assign(state, {situation:null,careSetting:null,stayType:null,location:null,property:null,occupier:[],capital:null,age:null,healthComplexity:null,priorities:[]});
+            Object.assign(state, {situation:null,careSetting:null,stayType:null,location:null,property:null,occupier:[],formerHomeStatus:null,capital:null,age:null,healthComplexity:null,priorities:[]});
             document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(i=>{i.checked=false;i.parentElement.classList.remove('selected');});
-            ['stayTypeGroup','occupierGroup','temporaryStayNote','selfFunderWarning','extraDisregardNote','capitalContextNote'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
+            ['stayTypeGroup','occupierGroup','temporaryStayNote','selfFunderWarning','extraDisregardNote','capitalContextNote','formerHomeGroup'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
+            document.getElementById('propertyGroup').style.display = '';
             document.getElementById('capitalLabel').textContent='Total savings and investments';
+            // Restore default location options
+            document.querySelectorAll('.location-standard').forEach(el=>el.style.display='');
+            document.querySelectorAll('.location-incare').forEach(el=>el.style.display='none');
             cardCounter=0;
             for(let i=1;i<=5;i++){const e=document.getElementById('step'+i);e.classList.remove('completed','active');if(i===1)e.classList.add('active');}
             showStage('stage1a');
