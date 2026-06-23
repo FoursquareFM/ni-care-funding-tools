@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Care Funding Guidance — Foursquare Financial Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Brand tokens ─────────────────────────────────────────── */
+    :root {
+      --teal:        #00847F;
+      --teal-dark:   #006560;
+      --teal-light:  #e6f4f3;
+      --blue:        #025687;
+      --blue-light:  #e8f0f7;
+      --text-dark:   #1a2332;
+      --text-mid:    #4a5568;
+      --text-light:  #718096;
+      --border:      #d1dce8;
+      --bg:          #f5f8fa;
+      --white:       #ffffff;
+      --warn-bg:     #fff8e1;
+      --warn-border: #f59e0b;
+      --shadow-sm:   0 2px 8px rgba(0,132,127,0.08);
+      --shadow-md:   0 6px 24px rgba(0,132,127,0.12);
+      --radius:      12px;
+      --radius-sm:   8px;
+    }
+
+    /* ─── Reset & base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ─── Layout ────────────────────────────────────────────────── */
+    .page-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 3px solid var(--teal);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      text-decoration: none;
+    }
+
+    /* Four-square mark (SVG inline) */
+    .logo-mark svg {
+      display: block;
+    }
+
+    .logo-text {
+      line-height: 1.1;
+    }
+
+    .logo-text .foursquare {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: -0.01em;
+      display: block;
+    }
+
+    .logo-text .tagline {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      max-width: 660px;
+      width: 100%;
+      padding: 2.5rem 2.25rem;
+      animation: fadeUp 0.35s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Progress bar ──────────────────────────────────────────── */
+    .progress-bar-wrap {
+      margin-bottom: 2rem;
+    }
+
+    .progress-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .progress-track {
+      height: 5px;
+      background: var(--teal-light);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--teal);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    /* ─── Typography ────────────────────────────────────────────── */
+    .step-title {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+
+    .step-subtitle {
+      font-size: 1rem;
+      color: var(--text-mid);
+      margin-bottom: 1.75rem;
+      line-height: 1.55;
+    }
+
+    /* ─── Choice buttons ─────────────────────────────────────────── */
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .choice-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.1rem;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+      font-family: inherit;
+      width: 100%;
+      position: relative;
+    }
+
+    .choice-btn:hover,
+    .choice-btn:focus-visible {
+      border-color: var(--teal);
+      background: var(--teal-light);
+      box-shadow: 0 0 0 3px rgba(0,132,127,0.15);
+      outline: none;
+    }
+
+    .choice-btn.selected {
+      border-color: var(--teal);
+      background: var(--teal-light);
+    }
+
+    .choice-icon {
+      flex-shrink: 0;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-top: 0.05rem;
+      background: var(--white);
+      transition: border-color 0.18s, background 0.18s;
+    }
+
+    .choice-btn:hover .choice-icon,
+    .choice-btn.selected .choice-icon {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: white;
+    }
+
+    .choice-content .choice-main {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      display: block;
+      line-height: 1.3;
+    }
+
+    .choice-content .choice-sub {
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    /* ─── Multi-select ──────────────────────────────────────────── */
+    .multi-choice-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.18s, background 0.18s;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      width: 100%;
+    }
+
+    .multi-choice-btn:hover,
+    .multi-choice-btn:focus-visible {
+      border-color: var(--teal);
+      background: var(--teal-light);
+      outline: none;
+    }
+
+    .multi-choice-btn.selected {
+      border-color: var(--teal);
+      background: var(--teal-light);
+    }
+
+    .checkbox-mark {
+      flex-shrink: 0;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      margin-top: 0.1rem;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.18s, background 0.18s;
+    }
+
+    .multi-choice-btn.selected .checkbox-mark {
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    .checkbox-tick {
+      display: none;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .multi-choice-btn.selected .checkbox-tick { display: block; }
+
+    /* ─── Navigation ────────────────────────────────────────────── */
+    .nav-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.1s;
+      flex: 1;
+    }
+
+    .btn-primary:hover { background: var(--teal-dark); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-mid);
+      border: 2px solid var(--border);
+      padding: 0.8rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: border-color 0.18s, color 0.18s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    /* ─── Reassurance block ─────────────────────────────────────── */
+    .reassurance-block {
+      border-left: 4px solid var(--teal);
+      background: var(--teal-light);
+      padding: 1.25rem 1.35rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 1.75rem;
+    }
+
+    .reassurance-block p {
+      font-size: 0.925rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+    }
+
+    .reassurance-block .re-name {
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    /* ─── Asset note ────────────────────────────────────────────── */
+    .asset-note {
+      background: var(--blue-light);
+      border: 1px solid rgba(2,86,135,0.2);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      font-size: 0.875rem;
+      color: var(--blue);
+      margin-bottom: 1.35rem;
+      line-height: 1.5;
+    }
+
+    .asset-note strong { color: var(--blue); }
+
+    /* ─── Outcome screens ───────────────────────────────────────── */
+    .outcome-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      background: var(--teal-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .outcome-icon.referral { background: var(--blue-light); }
+
+    .outcome-title {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+
+    .outcome-title.referral { color: var(--blue); }
+
+    .outcome-body {
+      font-size: 0.975rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .outcome-body p + p { margin-top: 0.75rem; }
+
+    .cta-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-calendly {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: var(--teal);
+      color: white;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: background 0.18s;
+      text-align: center;
+    }
+
+    .btn-calendly:hover { background: var(--teal-dark); }
+
+    .btn-form-toggle {
+      background: transparent;
+      color: var(--teal);
+      border: 2px solid var(--teal);
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      width: 100%;
+    }
+
+    .btn-form-toggle:hover {
+      background: var(--teal-light);
+    }
+
+    .referral-resources {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+
+    .referral-resources h3 {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.15rem;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-item .ri-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .resource-item a {
+      color: var(--blue);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .resource-item p {
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      margin-top: 0.1rem;
+    }
+
+    /* ─── Lead capture form ─────────────────────────────────────── */
+    .form-section {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .form-section.open { display: block; }
+
+    .form-section h3 {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.2rem;
+      color: var(--teal);
+      margin-bottom: 0.25rem;
+    }
+
+    .form-section .form-desc {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      margin-bottom: 1.25rem;
+      line-height: 1.55;
+    }
+
+    .form-field {
+      margin-bottom: 1rem;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-field label .optional {
+      font-weight: 400;
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      background: var(--white);
+      transition: border-color 0.18s;
+      appearance: none;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--teal);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,132,127,0.12);
+    }
+
+    .form-field textarea { resize: vertical; min-height: 5rem; }
+
+    .privacy-note {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+
+    .privacy-note a {
+      color: var(--teal);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .btn-submit {
+      background: var(--teal);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.75rem;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.18s;
+    }
+
+    .btn-submit:hover { background: var(--teal-dark); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* ─── Thank you / post-submit ───────────────────────────────── */
+    .thankyou-icon {
+      width: 4rem;
+      height: 4rem;
+      background: var(--teal-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .thankyou-title {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.9rem;
+      color: var(--teal);
+      margin-bottom: 0.6rem;
+    }
+
+    .thankyou-body {
+      font-size: 1rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ─── Compliance flags ──────────────────────────────────────── */
+    .compliance-flag {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-left: 4px solid var(--warn-border);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 0.9rem 1rem;
+      font-size: 0.8rem;
+      color: #7c5e00;
+      line-height: 1.55;
+      margin-top: 1rem;
+    }
+
+    .compliance-flag strong { display: block; margin-bottom: 0.25rem; }
+
+    /* ─── Privacy draft section ─────────────────────────────────── */
+    #privacy-draft {
+      background: var(--warn-bg);
+      border: 1px dashed var(--warn-border);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      margin: 2rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      max-width: 660px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #privacy-draft h2 {
+      font-family: 'Crimson Text', serif;
+      color: #7c5e00;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    #privacy-draft p { margin-bottom: 0.6rem; }
+    #privacy-draft ul { padding-left: 1.25rem; }
+    #privacy-draft li { margin-bottom: 0.35rem; }
+
+    /* ─── Footer ────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      border-top: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    footer a { color: var(--teal); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ─── Honeypot (hidden) ─────────────────────────────────────── */
+    .hp-field { display: none !important; }
+
+    /* ─── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      main { padding: 1rem 0.5rem 3rem; }
+      .card { padding: 1.75rem 1.25rem; }
+      .step-title { font-size: 1.5rem; }
+      .nav-row { flex-direction: column-reverse; }
+      .btn-secondary { width: 100%; }
+      .logo-text .foursquare { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ─── Header ─────────────────────────────────────────────────── -->
+  <header>
+    <a href="https://www.foursquarefm.com" class="logo-block" aria-label="Foursquare Financial Management homepage">
+      <!-- Four-square mark -->
+      <div class="logo-mark">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="19" height="19" rx="3" fill="#00847F"/>
+          <rect x="24" y="1" width="19" height="19" rx="3" fill="#025687"/>
+          <rect x="1" y="24" width="19" height="19" rx="3" fill="#025687"/>
+          <rect x="24" y="24" width="19" height="19" rx="3" fill="#00847F"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="foursquare">Foursquare</span>
+        <span class="tagline">Financial Management</span>
+      </div>
+    </a>
+  </header>
+
+  <!-- ─── Main funnel ─────────────────────────────────────────────── -->
+  <main>
+    <div class="card" id="funnel-card">
+      <!-- Step content injected here by JS -->
+    </div>
+  </main>
+
+  <!-- ─── Privacy Notice Draft (visible below funnel, clearly labelled for review) ── -->
+  <div id="privacy-draft">
+    <h2>⚠️ Privacy Notice — DRAFT FOR COMPLIANCE REVIEW (not yet approved)</h2>
+    <p><strong>Who we are:</strong> Foursquare Financial Management Ltd, [registered address to be inserted], [FCA reference / regulatory status to be inserted by owner].</p>
+    <p><strong>What we collect:</strong> The contact details you provide (name, email, phone number) and the answers you give in this tool (your situation, location, approximate assets, property status, and any complexity factors you choose to share).</p>
+    <p><strong>Why we collect it / Lawful basis:</strong> To respond to your enquiry and assess how we may be able to help you. Lawful basis: [legitimate interests / consent — to be confirmed by compliance consultant].</p>
+    <p><strong>How it is handled:</strong> Your submission is sent to us by email via Web3Forms, a third-party form-to-email service. <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms privacy policy</a>.</p>
+    <p><strong>Retention:</strong> We keep enquiry data for [period to be set by compliance consultant].</p>
+    <p><strong>Your rights:</strong> You have the right to access, correct, or request erasure of your personal data, to object to processing, and to complain to the ICO (ico.org.uk). Contact us at hello@foursquarefm.com.</p>
+    <p><strong>No selling or sharing</strong> of your data beyond what is needed to respond to your enquiry.</p>
+    <ul>
+      <li>⚠️ "Northern Ireland's leading specialist" is a superlative claim — requires compliance sign-off before public launch (FCA financial-promotion rules).</li>
+      <li>⚠️ Lawful basis (legitimate interests vs. consent) must be confirmed before launch.</li>
+      <li>⚠️ Retention period must be set.</li>
+      <li>⚠️ FCA reference and registered address must be inserted.</li>
+    </ul>
+  </div>
+
+  <!-- ─── Footer ─────────────────────────────────────────────────── -->
+  <footer>
+    <p>Foursquare Financial Management Ltd · <a href="#privacy-draft">Privacy Notice (draft — for review)</a> · <a href="mailto:hello@foursquarefm.com">hello@foursquarefm.com</a></p>
+    <p style="margin-top:0.4rem;">This tool does not constitute financial advice. Foursquare Financial Management is authorised and regulated by the Financial Conduct Authority. [FCA reference to be inserted.]</p>
+  </footer>
+
+</div><!-- /page-wrap -->
+
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   Foursquare Care Funding Funnel — state machine
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── State ──────────────────────────────────────────────────────── */
+const state = {
+  step: 'welcome',
+  situation: null,      // 'planning' | 'now' | 'other'
+  ni: null,             // 'yes' | 'no'
+  assets: null,         // 'under250' | '250to500' | 'over500' | 'prefer'
+  property: null,       // 'own' | 'none' | 'selling'
+  complexity: [],       // array of selected flags
+  pathway: null,        // 'early_planning' | 'point_of_need' | 'referral' | 'soft'
+  formOpen: false,
+  submitted: false,
+};
+
+/* ── Step order for back-navigation ────────────────────────────── */
+const stepHistory = [];
+
+/* ── Routing logic ──────────────────────────────────────────────── */
+function resolvePathway() {
+  if (state.situation === 'other') return 'referral';
+  if (state.ni === 'no')          return 'referral';
+  if (state.assets === 'prefer')  return 'soft';
+  if (state.assets === 'under250' && state.property === 'none') return 'referral';
+  if (state.situation === 'planning') return 'early_planning';
+  return 'point_of_need';
+}
+
+/* ── Icons per step ─────────────────────────────────────────────── */
+const ICONS = {
+  planning:  '🗓️',
+  now:       '🏥',
+  other:     '🤝',
+  yes:       '✅',
+  no:        '❌',
+  under250:  '💰',
+  '250to500':'💰',
+  over500:   '💰',
+  prefer:    '🔒',
+  own:       '🏠',
+  none:      '🚫',
+  selling:   '🔑',
+};
+
+/* ── Progress mapping ───────────────────────────────────────────── */
+const TOTAL_STEPS = 6; // welcome, situation, ni, assets, property, complexity
+const STEP_NUM = { welcome:0, q_situation:1, q_ni:2, q_assets:3, q_property:4, q_complexity:5 };
+
+/* ════════════════════════════════════════════════════════════════
+   RENDER functions — return HTML strings
+   ════════════════════════════════════════════════════════════════ */
+
+function progressBar(n) {
+  const pct = Math.round((n / TOTAL_STEPS) * 100);
+  return `
+    <div class="progress-bar-wrap" aria-label="Progress: step ${n} of ${TOTAL_STEPS}">
+      <div class="progress-label">Step ${n} of ${TOTAL_STEPS}</div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>`;
+}
+
+function backBtn(label='Back') {
+  return `<button class="btn-secondary" onclick="goBack()" aria-label="Go back">&larr; ${label}</button>`;
+}
+
+/* ── Welcome ──────────────────────────────────────────────────── */
+function renderWelcome() {
+  return `
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="width:3.5rem;height:3.5rem;background:var(--teal-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;">🧭</div>
+      <h1 class="step-title" style="font-size:1.9rem;">Care Funding Guidance</h1>
+      <p class="step-subtitle" style="max-width:480px;margin:0.5rem auto 0;">A short conversation to help us understand your situation and point you to the right support.</p>
+    </div>
+
+    <div class="reassurance-block">
+      <p><span class="re-name">Foursquare Financial Management</span> is Northern Ireland's leading specialist in care funding and later-life financial planning. Led by Barra Gorman, with over two decades of experience, Foursquare exists to lift the burden from families and individuals navigating one of life's most stressful moments, giving them the clarity, confidence, and expert guidance they need to make the right decisions.</p>
+    </div>
+
+    <div class="compliance-flag">
+      <strong>⚠️ Compliance note (for owner's review before public launch):</strong>
+      "Northern Ireland's leading specialist" is a superlative claim. Under FCA financial-promotion rules, comparative/superlative claims must be fair, clear, not misleading, and substantiable. This line must be reviewed and approved by your compliance consultant before this page goes public.
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <p style="font-size:0.875rem;color:var(--text-light);text-align:center;margin-bottom:1rem;">Takes about 2 minutes &middot; No details required to get started</p>
+      <button class="btn-primary" onclick="goTo('q_situation')" style="width:100%;">Get started &rarr;</button>
+    </div>`;
+}
+
+/* ── Q1 — Situation ──────────────────────────────────────────── */
+function renderSituation() {
+  return `
+    ${progressBar(1)}
+    <h2 class="step-title">What best describes your situation?</h2>
+    <p class="step-subtitle">Choose whichever feels closest — there are no wrong answers.</p>
+    <div class="choices">
+      ${choiceBtn('planning', '🗓️', 'I\'m planning ahead for the future', 'Thinking about future care costs, lasting power of attorney, or long-term planning', state.situation)}
+      ${choiceBtn('now', '🏥', 'Care is needed now or very soon', 'A loved one is moving into care, or a decision needs to be made in the near term', state.situation)}
+      ${choiceBtn('other', '🤝', 'I need help with something else', 'Care placement, dealing with the local authority, navigating the system, or another question', state.situation)}
+    </div>
+    <div class="nav-row">
+      ${backBtn()}
+      <button class="btn-primary" onclick="submitSituation()" ${!state.situation ? 'disabled' : ''}>Continue &rarr;</button>
+    </div>`;
+}
+
+/* ── Q2 — NI location ────────────────────────────────────────── */
+function renderNI() {
+  return `
+    ${progressBar(2)}
+    <h2 class="step-title">Are you — or is the person who needs care — based in Northern Ireland?</h2>
+    <p class="step-subtitle">Foursquare specialises in Northern Ireland's care funding rules, which differ significantly from England, Scotland, and Wales.</p>
+    <div class="choices">
+      ${choiceBtn('yes', '✅', 'Yes, Northern Ireland', '', state.ni)}
+      ${choiceBtn('no', '❌', 'No, somewhere else in the UK', '', state.ni)}
+    </div>
+    <div class="nav-row">
+      ${backBtn()}
+      <button class="btn-primary" onclick="submitNI()" ${!state.ni ? 'disabled' : ''}>Continue &rarr;</button>
+    </div>`;
+}
+
+/* ── Q3 — Assets ─────────────────────────────────────────────── */
+function renderAssets() {
+  return `
+    ${progressBar(3)}
+    <h2 class="step-title">Roughly what is the total value of savings and investments?</h2>
+    <p class="step-subtitle">This helps us point you to the right level of support. Your answer is completely confidential.</p>
+    <div class="asset-note">
+      <strong>Important:</strong> Please <strong>do not include the value of your home</strong> in this figure — we'll ask about property separately. This is about savings, pensions, investments, and other liquid assets only.
+    </div>
+    <div class="choices">
+      ${choiceBtn('under250', '💰', 'Under £250,000', '', state.assets)}
+      ${choiceBtn('250to500', '💰', '£250,000 – £500,000', '', state.assets)}
+      ${choiceBtn('over500', '💰', '£500,000 or more', '', state.assets)}
+      ${choiceBtn('prefer', '🔒', 'Prefer not to say', 'That\'s fine — we\'ll still do our best to help', state.assets)}
+    </div>
+    <div class="nav-row">
+      ${backBtn()}
+      <button class="btn-primary" onclick="submitAssets()" ${!state.assets ? 'disabled' : ''}>Continue &rarr;</button>
+    </div>`;
+}
+
+/* ── Q4 — Property ───────────────────────────────────────────── */
+function renderProperty() {
+  return `
+    ${progressBar(4)}
+    <h2 class="step-title">Is there a property that may be relevant to funding care?</h2>
+    <p class="step-subtitle">The family home can play a big role in care funding planning — this helps us understand your picture more fully.</p>
+    <div class="choices">
+      ${choiceBtn('own', '🏠', 'Yes — there is a property that may be used', 'Own home, a second property, or an investment property', state.property)}
+      ${choiceBtn('none', '🚫', 'No property', '', state.property)}
+      ${choiceBtn('selling', '🔑', 'Property already being sold or rented out', 'The property is in the process of being sold, or is currently rented', state.property)}
+    </div>
+    <div class="nav-row">
+      ${backBtn()}
+      <button class="btn-primary" onclick="submitProperty()" ${!state.property ? 'disabled' : ''}>Continue &rarr;</button>
+    </div>`;
+}
+
+/* ── Q5 — Complexity ─────────────────────────────────────────── */
+const COMPLEXITY_FLAGS = [
+  { id: 'spouse',   label: 'A spouse or partner is remaining in the family home' },
+  { id: 'chc',      label: 'An NHS Continuing Healthcare (CHC) check or appeal is ongoing' },
+  { id: 'family',   label: 'There is a family disagreement or conflict about care decisions' },
+  { id: 'business', label: 'There is a business interest or business assets involved' },
+  { id: 'none',     label: 'None of these apply' },
+];
+
+function renderComplexity() {
+  const items = COMPLEXITY_FLAGS.map(f => {
+    const sel = state.complexity.includes(f.id);
+    return `
+      <button class="multi-choice-btn ${sel ? 'selected' : ''}" onclick="toggleComplexity('${f.id}')" aria-pressed="${sel}">
+        <span class="checkbox-mark"><span class="checkbox-tick">✓</span></span>
+        <span>${f.label}</span>
+      </button>`;
+  }).join('');
+
+  return `
+    ${progressBar(5)}
+    <h2 class="step-title">Does any of the following apply? <span style="font-size:1rem;font-weight:400;color:var(--text-light);">(optional)</span></h2>
+    <p class="step-subtitle">Select any that are relevant — or skip ahead if none apply. This helps us come prepared.</p>
+    <div class="choices" style="gap:0.6rem;">${items}</div>
+    <div class="nav-row">
+      ${backBtn()}
+      <button class="btn-primary" onclick="submitComplexity()">See your guidance &rarr;</button>
+    </div>`;
+}
+
+/* ── Outcomes ─────────────────────────────────────────────────── */
+function renderEarlyPlanning() {
+  return `
+    <div class="outcome-icon">🌱</div>
+    <h2 class="outcome-title">Planning ahead — you're in the right place</h2>
+    <div class="outcome-body">
+      <p>Taking time to plan early is one of the most valuable things you can do. Care funding is complex, and the decisions you make now — around lasting powers of attorney, investment structure, and estate planning — can make an enormous difference later.</p>
+      <p>Foursquare Financial Management works with families across Northern Ireland on exactly this. Our job is to give you clarity and confidence before decisions become urgent.</p>
+      <p>The best first step is a short conversation with Barra to understand your situation and explore what options are available.</p>
+    </div>
+    <div class="cta-row">
+      <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
+        📅 Book a free introductory call
+      </a>
+      <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll be in touch</button>
+    </div>
+    ${renderCaptureForm('EARLY PLANNING')}
+    ${renderKitPlaceholder()}`;
+}
+
+function renderPointOfNeed() {
+  return `
+    <div class="outcome-icon">🤲</div>
+    <h2 class="outcome-title">We can help — and we'll move at your pace</h2>
+    <div class="outcome-body">
+      <p>We understand this is likely a stressful and time-pressured moment. When care is needed now or very soon, it's easy to feel overwhelmed by the financial decisions that come alongside it — and to worry about making costly mistakes.</p>
+      <p>Foursquare offers a dedicated care funding assessment: a thorough, unhurried review of your situation, your options under Northern Ireland's rules, and a clear plan for what to do next. Details of our assessment service, including fees, are discussed on the call.</p>
+      <p>Book a call with Barra whenever suits you — including at short notice if the situation is urgent.</p>
+    </div>
+    <div class="cta-row">
+      <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
+        📅 Book a call with Barra
+      </a>
+      <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll call you</button>
+    </div>
+    ${renderCaptureForm('POINT-OF-NEED')}
+    ${renderKitPlaceholder()}`;
+}
+
+function renderSoftOutcome() {
+  return `
+    <div class="outcome-icon">💬</div>
+    <h2 class="outcome-title">Happy to talk — no numbers needed</h2>
+    <div class="outcome-body">
+      <p>That's completely understandable. Asset questions can feel personal, especially at a stressful time. You don't need to share any figures to start a conversation with Foursquare.</p>
+      <p>A short call with Barra costs nothing and commits you to nothing. It's simply a chance to get a clearer picture of your options.</p>
+    </div>
+    <div class="cta-row">
+      <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
+        📅 Book a free introductory call
+      </a>
+      <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll be in touch</button>
+    </div>
+    ${renderCaptureForm('ENQUIRY (PREFER NOT TO SAY)')}
+    ${renderKitPlaceholder()}`;
+}
+
+function renderReferral() {
+  const isNotNI = state.ni === 'no';
+  const isLowAssets = state.assets === 'under250' && state.property === 'none';
+  const isOther = state.situation === 'other';
+
+  let intro = '';
+  if (isNotNI) {
+    intro = `<p>Foursquare Financial Management specialises specifically in Northern Ireland's care funding rules, which are administered differently to England, Scotland, and Wales. We're not the right fit for your location — but the resources below should point you in the right direction.</p>`;
+  } else if (isLowAssets) {
+    intro = `<p>Based on what you've shared, it's possible that the local authority may meet a significant part of your care costs through a financial assessment. This means the focus right now may be less on private funding and more on understanding your entitlements.</p><p>The resources below are genuinely useful in this situation — and if circumstances change, Foursquare is here.</p>`;
+  } else if (isOther) {
+    intro = `<p>It sounds like you need help navigating the care system itself — placement support, dealing with the Trust, or finding your footing in a complex situation. The resources below are the best starting points for that kind of support in Northern Ireland.</p>`;
+  }
+
+  return `
+    <div class="outcome-icon referral">🧭</div>
+    <h2 class="outcome-title referral">Some genuinely useful places to start</h2>
+    <div class="outcome-body">
+      ${intro}
+      <p>We've listed the organisations below because they're actually helpful — not as a brush-off. Foursquare's door remains open if your situation changes.</p>
+    </div>
+
+    <div class="referral-resources">
+      <h3>Helpful organisations</h3>
+
+      <div class="resource-item">
+        <span class="ri-icon">🦸</span>
+        <div>
+          <a href="https://www.karehero.com" target="_blank" rel="noopener">KareHero</a>
+          <p>Expert care navigation support — helps families find and choose the right care, manage placements, and understand what they're entitled to. Available across the UK.</p>
+        </div>
+      </div>
+
+      <div class="resource-item">
+        <span class="ri-icon">🏛️</span>
+        <div>
+          <a href="https://www.nidirect.gov.uk/articles/care-homes-and-funding" target="_blank" rel="noopener">NI Direct — Care Homes and Funding</a>
+          <p>Northern Ireland's official guidance on care home funding assessments, the capital threshold, and what the Health and Social Care Trust covers.</p>
+        </div>
+      </div>
+
+      <div class="resource-item">
+        <span class="ri-icon">⚖️</span>
+        <div>
+          <a href="https://www.citizensadvice.org.uk/nireland/" target="_blank" rel="noopener">Citizens Advice NI</a>
+          <p>Free, impartial advice on benefits, social care, and your rights when dealing with the local authority or Trust.</p>
+        </div>
+      </div>
+
+      <div class="resource-item">
+        <span class="ri-icon">💙</span>
+        <div>
+          <a href="https://www.ageuk.org.uk/northern-ireland/" target="_blank" rel="noopener">Age UK Northern Ireland</a>
+          <p>Information, advice, and practical support for older people and carers in Northern Ireland.</p>
+        </div>
+      </div>
+
+      ${!isNotNI ? `
+      <div class="resource-item">
+        <span class="ri-icon">📖</span>
+        <div>
+          <a href="/ni-care-funding-complete.html">Foursquare's Free NI Care Funding Guide</a>
+          <p>Our comprehensive, free guide to how care is funded in Northern Ireland — no details required to access it.</p>
+        </div>
+      </div>` : ''}
+    </div>
+
+    <p style="margin-top:1.5rem;font-size:0.875rem;color:var(--text-light);text-align:center;">
+      If your situation changes, or if you'd just like to talk it through, <a href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener" style="color:var(--teal);">Barra's door is always open</a>.
+    </p>`;
+}
+
+/* ── Lead capture form ────────────────────────────────────────── */
+function renderCaptureForm(pathway) {
+  const complexityStr = state.complexity.length
+    ? state.complexity.map(c => COMPLEXITY_FLAGS.find(f=>f.id===c)?.label || c).join('; ')
+    : 'None selected';
+
+  const niStr = state.ni === 'yes' ? 'Yes — Northern Ireland' : state.ni === 'no' ? 'No' : 'Not asked';
+  const assetsStr = { under250: 'Under £250,000', '250to500': '£250,000–£500,000', over500: '£500,000+', prefer: 'Prefer not to say' }[state.assets] || 'Not asked';
+  const propStr = { own: 'Yes — own home / property', none: 'No property', selling: 'Being sold or rented' }[state.property] || 'Not asked';
+  const situationStr = { planning: 'Planning ahead', now: 'Care needed now / soon', other: 'Something else' }[state.situation] || '';
+
+  return `
+    <div class="form-section" id="capture-form-section">
+      <h3>Leave your details</h3>
+      <p class="form-desc">We'll only use these to get back to you about your enquiry. No spam, no hard sell.</p>
+
+      <form id="lead-form" onsubmit="submitForm(event)">
+        <!-- Web3Forms config -->
+        <input type="hidden" name="access_key" value="c2745b8d-933d-4fa6-8146-1f5d9785811d" />
+        <input type="hidden" name="subject" value="Foursquare Funnel — ${pathway} lead" />
+        <input type="hidden" name="from_name" value="Foursquare Care Funding Funnel" />
+        <input type="hidden" name="redirect" value="false" />
+        <!-- Context fields -->
+        <input type="hidden" name="Pathway" value="${pathway}" />
+        <input type="hidden" name="Situation" value="${situationStr}" />
+        <input type="hidden" name="Northern Ireland" value="${niStr}" />
+        <input type="hidden" name="Asset band" value="${assetsStr}" />
+        <input type="hidden" name="Property" value="${propStr}" />
+        <input type="hidden" name="Complexity flags" value="${complexityStr}" />
+        <!-- Honeypot -->
+        <input class="hp-field" type="text" name="botcheck" tabindex="-1" autocomplete="off" />
+
+        <div class="form-field">
+          <label for="f-name">Your name</label>
+          <input type="text" id="f-name" name="name" placeholder="e.g. Mary Murphy" required autocomplete="name" />
+        </div>
+        <div class="form-field">
+          <label for="f-email">Email address</label>
+          <input type="email" id="f-email" name="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <div class="form-field">
+          <label for="f-phone">Phone number <span class="optional">(optional)</span></label>
+          <input type="tel" id="f-phone" name="phone" placeholder="+44 28 …" autocomplete="tel" />
+        </div>
+        <div class="form-field">
+          <label for="f-message">Anything else you'd like us to know <span class="optional">(optional)</span></label>
+          <textarea id="f-message" name="message" placeholder="e.g. best time to call, specific questions…"></textarea>
+        </div>
+
+        <p class="privacy-note">We'll use these details only to respond to your enquiry. See our <a href="#privacy-draft">Privacy Notice (draft — pending compliance review)</a> for how we handle your information.</p>
+
+        <!-- ── Kit newsletter placeholder — SWITCHED OFF / reserved for future activation ──
+        <div style="border-top:1px solid var(--border);padding-top:1rem;margin-top:0.5rem;">
+          <label style="display:flex;gap:0.6rem;align-items:flex-start;cursor:pointer;">
+            <input type="checkbox" name="newsletter_opt_in" style="margin-top:0.2rem;" />
+            <span style="font-size:0.875rem;color:var(--text-mid);">
+              Tick here to receive occasional updates and guidance from Foursquare by email.
+              You can unsubscribe at any time. [Kit / ConvertKit — DRAFT, not active.
+              Requires separate compliance sign-off before enabling.]
+            </span>
+          </label>
+        </div>
+        ── End Kit placeholder ── -->
+
+        <button type="submit" class="btn-submit" id="submit-btn">Send my details &rarr;</button>
+        <div id="form-msg" style="margin-top:0.75rem;font-size:0.9rem;display:none;"></div>
+      </form>
+    </div>`;
+}
+
+/* ── Kit newsletter slot (commented-out placeholder below outcome) */
+function renderKitPlaceholder() {
+  return `
+  <!-- ══════════════════════════════════════════════════════════════
+       KIT (ConvertKit) NEWSLETTER SLOT — RESERVED, NOT YET ACTIVE
+       ══════════════════════════════════════════════════════════════
+       When activated:
+       - Insert Kit embeddable inline form here, styled to match.
+       - Consent must be SEPARATE from the enquiry form above.
+       - Wording (draft): "Tick here to receive occasional updates
+         and guidance from Foursquare by email. You can unsubscribe
+         at any time."
+       - Lawful basis: consent (UK GDPR) + PECR opt-in required.
+       - Do NOT activate until compliance consultant has approved
+         wording, consent method, and separate records process.
+       ══════════════════════════════════════════════════════════════ -->`;
+}
+
+/* ── Thank-you screen (post-form submission) ─────────────────── */
+function renderThankYou() {
+  return `
+    <div class="thankyou-icon">✉️</div>
+    <h2 class="thankyou-title">Thank you — we'll be in touch</h2>
+    <p class="thankyou-body">Your details have been received. Barra will be in touch shortly — usually within one working day.</p>
+    <p style="font-size:0.95rem;color:var(--text-mid);margin-bottom:1.5rem;">If you'd prefer to speak sooner, or at a time that suits you, you're welcome to book a call directly:</p>
+    <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
+      📅 Book a call with Barra
+    </a>
+    ${renderKitPlaceholder()}`;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   STATE TRANSITIONS
+   ════════════════════════════════════════════════════════════════ */
+
+function goTo(step) {
+  stepHistory.push(state.step);
+  state.step = step;
+  render();
+}
+
+function goBack() {
+  const prev = stepHistory.pop();
+  if (prev) { state.step = prev; render(); }
+}
+
+function render() {
+  const card = document.getElementById('funnel-card');
+  let html = '';
+  switch (state.step) {
+    case 'welcome':         html = renderWelcome();        break;
+    case 'q_situation':     html = renderSituation();      break;
+    case 'q_ni':            html = renderNI();             break;
+    case 'q_assets':        html = renderAssets();         break;
+    case 'q_property':      html = renderProperty();       break;
+    case 'q_complexity':    html = renderComplexity();     break;
+    case 'outcome_early':   html = renderEarlyPlanning();  break;
+    case 'outcome_need':    html = renderPointOfNeed();    break;
+    case 'outcome_soft':    html = renderSoftOutcome();    break;
+    case 'outcome_referral':html = renderReferral();       break;
+    case 'thank_you':       html = renderThankYou();       break;
+    default:                html = renderWelcome();
+  }
+  card.innerHTML = html;
+  card.style.animation = 'none';
+  void card.offsetWidth; // reflow
+  card.style.animation = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Choice helpers ──────────────────────────────────────────── */
+function choiceBtn(value, icon, main, sub, current) {
+  const sel = current === value;
+  return `
+    <button class="choice-btn ${sel ? 'selected' : ''}" onclick="selectChoice(this, '${value}')" aria-pressed="${sel}">
+      <span class="choice-icon">${sel ? '✓' : icon}</span>
+      <span class="choice-content">
+        <span class="choice-main">${main}</span>
+        ${sub ? `<span class="choice-sub">${sub}</span>` : ''}
+      </span>
+    </button>`;
+}
+
+function selectChoice(btn, value) {
+  // Find step from state
+  const step = state.step;
+  if (step === 'q_situation') state.situation = value;
+  else if (step === 'q_ni')   state.ni = value;
+  else if (step === 'q_assets') state.assets = value;
+  else if (step === 'q_property') state.property = value;
+
+  // Update UI without full re-render (for responsiveness)
+  btn.closest('.choices').querySelectorAll('.choice-btn').forEach(b => {
+    b.classList.remove('selected');
+    b.setAttribute('aria-pressed', 'false');
+    const ic = b.querySelector('.choice-icon');
+    // restore icon from data
+    const v = b.getAttribute('onclick').match(/'([^']+)'\)/)[1];
+    ic.textContent = ICONS[v] || '●';
+  });
+  btn.classList.add('selected');
+  btn.setAttribute('aria-pressed', 'true');
+  btn.querySelector('.choice-icon').textContent = '✓';
+
+  // Enable continue button
+  const continueBtn = btn.closest('.card').querySelector('.btn-primary');
+  if (continueBtn) continueBtn.disabled = false;
+}
+
+/* ── Submit handlers ─────────────────────────────────────────── */
+function submitSituation() {
+  if (!state.situation) return;
+  if (state.situation === 'other') {
+    state.pathway = 'referral';
+    goTo('outcome_referral');
+  } else {
+    goTo('q_ni');
+  }
+}
+
+function submitNI() {
+  if (!state.ni) return;
+  if (state.ni === 'no') {
+    state.pathway = 'referral';
+    goTo('outcome_referral');
+  } else {
+    goTo('q_assets');
+  }
+}
+
+function submitAssets() {
+  if (!state.assets) return;
+  goTo('q_property');
+}
+
+function submitProperty() {
+  if (!state.property) return;
+  goTo('q_complexity');
+}
+
+function submitComplexity() {
+  state.pathway = resolvePathway();
+  switch (state.pathway) {
+    case 'early_planning': goTo('outcome_early');   break;
+    case 'point_of_need':  goTo('outcome_need');    break;
+    case 'soft':           goTo('outcome_soft');    break;
+    default:               goTo('outcome_referral');
+  }
+}
+
+/* ── Multi-select toggle ─────────────────────────────────────── */
+function toggleComplexity(id) {
+  if (id === 'none') {
+    // Selecting "none" clears everything else
+    state.complexity = state.complexity.includes('none') ? [] : ['none'];
+  } else {
+    // Remove 'none' if it was selected
+    state.complexity = state.complexity.filter(c => c !== 'none');
+    if (state.complexity.includes(id)) {
+      state.complexity = state.complexity.filter(c => c !== id);
+    } else {
+      state.complexity.push(id);
+    }
+  }
+  // Re-render just this step
+  const card = document.getElementById('funnel-card');
+  card.innerHTML = renderComplexity();
+}
+
+/* ── Form toggle ─────────────────────────────────────────────── */
+function toggleForm() {
+  const section = document.getElementById('capture-form-section');
+  const btn = document.getElementById('form-toggle-btn');
+  if (!section) return;
+  section.classList.toggle('open');
+  if (section.classList.contains('open')) {
+    btn.textContent = 'Hide form';
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    btn.textContent = 'Or leave your details and we\'ll be in touch';
+  }
+}
+
+/* ── Form submission ─────────────────────────────────────────── */
+async function submitForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('lead-form');
+  const btn  = document.getElementById('submit-btn');
+  const msg  = document.getElementById('form-msg');
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    const data = new FormData(form);
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: data,
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      state.submitted = true;
+      goTo('thank_you');
+    } else {
+      msg.style.display = 'block';
+      msg.style.color = '#dc2626';
+      msg.textContent = 'Something went wrong — please try again or email hello@foursquarefm.com directly.';
+      btn.disabled = false;
+      btn.textContent = 'Send my details →';
+    }
+  } catch (err) {
+    msg.style.display = 'block';
+    msg.style.color = '#dc2626';
+    msg.textContent = 'Network error — please check your connection and try again.';
+    btn.disabled = false;
+    btn.textContent = 'Send my details →';
+  }
+}
+
+/* ── Boot ────────────────────────────────────────────────────── */
+render();
+</script>
+</body>
+</html>
