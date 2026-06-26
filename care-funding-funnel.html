@@ -58,36 +58,18 @@
     .logo-block {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
       text-decoration: none;
     }
 
-    /* Four-square mark (SVG inline) */
-    .logo-mark svg {
+    /* A. Real logo image — constrained by height, crisp on all screens */
+    .logo-img {
+      height: 44px;
+      width: auto;
       display: block;
     }
 
-    .logo-text {
-      line-height: 1.1;
-    }
-
-    .logo-text .foursquare {
-      font-family: 'Crimson Text', Georgia, serif;
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: var(--teal);
-      letter-spacing: -0.01em;
-      display: block;
-    }
-
-    .logo-text .tagline {
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--blue);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      display: block;
+    @media (max-width: 480px) {
+      .logo-img { height: 36px; }
     }
 
     main {
@@ -647,16 +629,80 @@
     #privacy-draft ul { padding-left: 1.25rem; }
     #privacy-draft li { margin-bottom: 0.35rem; }
 
+    /* ─── B. Credentials strip ──────────────────────────────────── */
+    .cred-strip {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 0.5rem;
+      margin: 1.75rem 0;
+      text-align: center;
+    }
+
+    .cred-strip-heading {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 1.1rem;
+    }
+
+    /* All six logos the same display height; wrap cleanly on mobile */
+    .cred-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1.1rem 2rem;
+    }
+
+    .cred-logos img {
+      height: 52px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    @media (max-width: 480px) {
+      .cred-logos {
+        gap: 0.9rem 1.25rem;
+      }
+      .cred-logos img {
+        height: 44px;
+      }
+    }
+
+    /* ─── D. Contact block ──────────────────────────────────────── */
+    .contact-block {
+      text-align: center;
+      margin: 1.25rem 0 0.25rem;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+
+    .contact-block a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    .contact-block a:hover {
+      text-decoration: underline;
+    }
+
     /* ─── Footer ────────────────────────────────────────────────── */
     footer {
       text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: 0.8rem;
+      padding: 2rem 1.5rem;
+      font-size: 0.78rem;
       color: var(--text-light);
       border-top: 1px solid var(--border);
       background: var(--white);
+      line-height: 1.7;
     }
 
+    footer p + p { margin-top: 0.6rem; }
     footer a { color: var(--teal); text-decoration: underline; text-underline-offset: 2px; }
 
     /* ─── Honeypot (hidden) ─────────────────────────────────────── */
@@ -669,7 +715,6 @@
       .step-title { font-size: 1.5rem; }
       .nav-row { flex-direction: column-reverse; }
       .btn-secondary { width: 100%; }
-      .logo-text .foursquare { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -677,22 +722,10 @@
 
 <div class="page-wrap">
 
-  <!-- ─── Header ─────────────────────────────────────────────────── -->
+  <!-- ─── A. Header — real logo image ────────────────────────────── -->
   <header>
     <a href="https://www.foursquarefm.com" class="logo-block" aria-label="Foursquare Financial Management homepage">
-      <!-- Four-square mark -->
-      <div class="logo-mark">
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="1" y="1" width="19" height="19" rx="3" fill="#00847F"/>
-          <rect x="24" y="1" width="19" height="19" rx="3" fill="#025687"/>
-          <rect x="1" y="24" width="19" height="19" rx="3" fill="#025687"/>
-          <rect x="24" y="24" width="19" height="19" rx="3" fill="#00847F"/>
-        </svg>
-      </div>
-      <div class="logo-text">
-        <span class="foursquare">Foursquare</span>
-        <span class="tagline">Financial Management</span>
-      </div>
+      <img src="images/logo-foursquare.png" alt="Foursquare Financial Management" class="logo-img" />
     </a>
   </header>
 
@@ -706,7 +739,7 @@
   <!-- ─── Privacy Notice Draft (visible below funnel, clearly labelled for review) ── -->
   <div id="privacy-draft">
     <h2>⚠️ Privacy Notice — DRAFT FOR COMPLIANCE REVIEW (not yet approved)</h2>
-    <p><strong>Who we are:</strong> Foursquare Financial Management Ltd, [registered address to be inserted], [FCA reference / regulatory status to be inserted by owner].</p>
+    <p><strong>Who we are:</strong> Foursquare Financial Management Limited, Suite 2.06, Custom House, Custom House Square, Belfast, Northern Ireland, BT1 3ET. FCA reference 952580.</p>
     <p><strong>What we collect:</strong> The contact details you provide (name, email, phone number) and the answers you give in this tool (your situation, location, approximate assets, property status, and any complexity factors you choose to share).</p>
     <p><strong>Why we collect it / Lawful basis:</strong> To respond to your enquiry and assess how we may be able to help you. Lawful basis: [legitimate interests / consent — to be confirmed by compliance consultant].</p>
     <p><strong>How it is handled:</strong> Your submission is sent to us by email via Web3Forms, a third-party form-to-email service. <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms privacy policy</a>.</p>
@@ -714,17 +747,19 @@
     <p><strong>Your rights:</strong> You have the right to access, correct, or request erasure of your personal data, to object to processing, and to complain to the ICO (ico.org.uk). Contact us at hello@foursquarefm.com.</p>
     <p><strong>No selling or sharing</strong> of your data beyond what is needed to respond to your enquiry.</p>
     <ul>
-      <li>⚠️ "Northern Ireland's leading specialist" is a superlative claim — requires compliance sign-off before public launch (FCA financial-promotion rules).</li>
+      <li>⚠️ The claims "Chartered," "independent," and the specialism in care funding are FCA financial-promotion claims requiring compliance sign-off before public launch.</li>
       <li>⚠️ Lawful basis (legitimate interests vs. consent) must be confirmed before launch.</li>
       <li>⚠️ Retention period must be set.</li>
-      <li>⚠️ FCA reference and registered address must be inserted.</li>
     </ul>
   </div>
 
-  <!-- ─── Footer ─────────────────────────────────────────────────── -->
+  <!-- ─── E. Footer — verified regulatory text ───────────────────── -->
   <footer>
-    <p>Foursquare Financial Management Ltd · <a href="#privacy-draft">Privacy Notice (draft — for review)</a> · <a href="mailto:hello@foursquarefm.com">hello@foursquarefm.com</a></p>
-    <p style="margin-top:0.4rem;">This tool does not constitute financial advice. Foursquare Financial Management is authorised and regulated by the Financial Conduct Authority. [FCA reference to be inserted.]</p>
+    <p>Foursquare Financial Management Limited is registered in Northern Ireland no. NI678253. Registered office: Suite 2.06, Custom House, Custom House Square, Belfast, Northern Ireland, BT1 3ET.</p>
+    <p>Authorised and regulated by the Financial Conduct Authority. Foursquare Financial Management Limited is entered on the Financial Services Register (<a href="https://register.fca.org.uk/" target="_blank" rel="noopener">register.fca.org.uk</a>) under reference 952580. If you wish to register a complaint, please write to us at the address above or email <a href="mailto:hello@foursquarefm.com">hello@foursquarefm.com</a>.</p>
+    <p>A summary of our internal procedures for the reasonable and prompt handling of complaints is available on request. If you cannot settle your complaint with us, you may be entitled to refer it to the Financial Ombudsman Service (<a href="https://www.financial-ombudsman.org.uk" target="_blank" rel="noopener">www.financial-ombudsman.org.uk</a>) or by contacting them on 0800 0234 567.</p>
+    <p>This tool does not constitute financial advice.</p>
+    <p style="margin-top:0.75rem;"><a href="#privacy-draft">Privacy Notice (draft — for review)</a> &middot; <a href="mailto:hello@foursquarefm.com">hello@foursquarefm.com</a></p>
   </footer>
 
 </div><!-- /page-wrap -->
@@ -798,6 +833,22 @@ function backBtn(label='Back') {
   return `<button class="btn-secondary" onclick="goBack()" aria-label="Go back">&larr; ${label}</button>`;
 }
 
+/* ── B. Credentials strip ─────────────────────────────────────── */
+function renderCredentialsStrip() {
+  return `
+    <div class="cred-strip">
+      <p class="cred-strip-heading">Accreditations and standards</p>
+      <div class="cred-logos">
+        <img src="images/cred-chartered.png"       alt="CII Chartered Financial Planner" />
+        <img src="images/cred-solla-accredited.png" alt="SOLLA Accredited" />
+        <img src="images/cred-flsp.png"             alt="FLSP Endorsed Later Life Adviser" />
+        <img src="images/cred-cda.png"              alt="Consumer Duty Alliance" />
+        <img src="images/cred-bereavement.png"      alt="Family Bereavement Standard" />
+        <img src="images/cred-fvc.png"              alt="Financial Vulnerability Charter" />
+      </div>
+    </div>`;
+}
+
 /* ── Welcome ──────────────────────────────────────────────────── */
 function renderWelcome() {
   return `
@@ -808,15 +859,25 @@ function renderWelcome() {
     </div>
 
     <div class="reassurance-block">
-      <p><span class="re-name">Foursquare Financial Management</span> is Northern Ireland's leading specialist in care funding and later-life financial planning. Led by Barra Gorman, with over two decades of experience, Foursquare exists to lift the burden from families and individuals navigating one of life's most stressful moments, giving them the clarity, confidence, and expert guidance they need to make the right decisions.</p>
+      <p><span class="re-name">Foursquare Financial Management</span> offers Chartered financial planning and independent financial advice, based in Belfast, specialising in care funding and later-life planning for people across Northern Ireland. Led by Barra Gorman, with over two decades of experience, Foursquare exists to lift the burden from families navigating one of life's most stressful moments — giving them the clarity, confidence, and expert guidance to make the right decisions.</p>
     </div>
 
     <div class="compliance-flag">
       <strong>⚠️ Compliance note (for owner's review before public launch):</strong>
-      "Northern Ireland's leading specialist" is a superlative claim. Under FCA financial-promotion rules, comparative/superlative claims must be fair, clear, not misleading, and substantiable. This line must be reviewed and approved by your compliance consultant before this page goes public.
+      The claims "Chartered," "independent," and the specialism in care funding and later-life planning are FCA financial-promotion claims. Under FCA financial-promotion rules, these must be fair, clear, not misleading, and substantiable. These claims must be reviewed and approved by your compliance consultant before this page goes public.
     </div>
 
-    <div style="margin-top:1.5rem;">
+    <div class="contact-block">
+      <a href="tel:02895909717">028 9590 9717</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:hello@foursquarefm.com">hello@foursquarefm.com</a><br>
+      Suite 2.06, Custom House, Custom House Square, Belfast, BT1 3ET
+    </div>
+
+    ${renderCredentialsStrip()}
+
+    <p style="font-style:italic;color:var(--teal);font-size:0.95rem;text-align:center;margin-bottom:1.5rem;">Firmly and resolutely in support of your future</p>
+
+    <div>
       <p style="font-size:0.875rem;color:var(--text-light);text-align:center;margin-bottom:1rem;">Takes about 2 minutes &middot; No details required to get started</p>
       <button class="btn-primary" onclick="goTo('q_situation')" style="width:100%;">Get started &rarr;</button>
     </div>`;
@@ -829,7 +890,7 @@ function renderSituation() {
     <h2 class="step-title">What best describes your situation?</h2>
     <p class="step-subtitle">Choose whichever feels closest — there are no wrong answers.</p>
     <div class="choices">
-      ${choiceBtn('planning', '🗓️', 'I\'m planning ahead for the future', 'Thinking about future care costs, lasting power of attorney, or long-term planning', state.situation)}
+      ${choiceBtn('planning', '🗓️', 'I\'m planning ahead for the future', 'Thinking about future care costs, enduring power of attorney, or long-term planning', state.situation)}
       ${choiceBtn('now', '🏥', 'Care is needed now or very soon', 'A loved one is moving into care, or a decision needs to be made in the near term', state.situation)}
       ${choiceBtn('other', '🤝', 'I need help with something else', 'Care placement, dealing with the local authority, navigating the system, or another question', state.situation)}
     </div>
@@ -924,14 +985,16 @@ function renderComplexity() {
 }
 
 /* ── Outcomes ─────────────────────────────────────────────────── */
+
+/* H. Early Planning — no em-dashes in body, EPA, updated final line, + tagline + cred strip */
 function renderEarlyPlanning() {
   return `
     <div class="outcome-icon">🌱</div>
     <h2 class="outcome-title">Planning ahead — you're in the right place</h2>
     <div class="outcome-body">
-      <p>Taking time to plan early is one of the most valuable things you can do. Care funding is complex, and the decisions you make now — around lasting powers of attorney, investment structure, and estate planning — can make an enormous difference later.</p>
+      <p>Taking time to plan early is one of the most valuable things you can do. Care funding is complex, and the decisions you make now around enduring powers of attorney, investment structure, and estate planning can make an enormous difference later.</p>
       <p>Foursquare Financial Management works with families across Northern Ireland on exactly this. Our job is to give you clarity and confidence before decisions become urgent.</p>
-      <p>The best first step is a short conversation with Barra to understand your situation and explore what options are available.</p>
+      <p>The best first step is a short conversation with us to understand your situation and explore what options are available.</p>
     </div>
     <div class="cta-row">
       <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
@@ -940,6 +1003,8 @@ function renderEarlyPlanning() {
       <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll be in touch</button>
     </div>
     ${renderCaptureForm('EARLY PLANNING')}
+    <p style="font-style:italic;color:var(--teal);font-size:0.95rem;text-align:center;margin:1.5rem 0 0.5rem;">Firmly and resolutely in support of your future</p>
+    ${renderCredentialsStrip()}
     ${renderKitPlaceholder()}`;
 }
 
@@ -959,6 +1024,7 @@ function renderPointOfNeed() {
       <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll call you</button>
     </div>
     ${renderCaptureForm('POINT-OF-NEED')}
+    ${renderCredentialsStrip()}
     ${renderKitPlaceholder()}`;
 }
 
@@ -977,46 +1043,128 @@ function renderSoftOutcome() {
       <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll be in touch</button>
     </div>
     ${renderCaptureForm('ENQUIRY (PREFER NOT TO SAY)')}
+    ${renderCredentialsStrip()}
     ${renderKitPlaceholder()}`;
 }
 
+/* G. Three distinct referral pages */
 function renderReferral() {
-  const isNotNI = state.ni === 'no';
+  const isOther  = state.situation === 'other';
+  const isNotNI  = state.ni === 'no';
   const isLowAssets = state.assets === 'under250' && state.property === 'none';
-  const isOther = state.situation === 'other';
 
-  let intro = '';
-  if (isNotNI) {
-    intro = `<p>Foursquare Financial Management specialises specifically in Northern Ireland's care funding rules, which are administered differently to England, Scotland, and Wales. We're not the right fit for your location — but the resources below should point you in the right direction.</p>`;
-  } else if (isLowAssets) {
-    intro = `<p>Based on what you've shared, it's possible that the local authority may meet a significant part of your care costs through a financial assessment. This means the focus right now may be less on private funding and more on understanding your entitlements.</p><p>The resources below are genuinely useful in this situation — and if circumstances change, Foursquare is here.</p>`;
-  } else if (isOther) {
-    intro = `<p>It sounds like you need help navigating the care system itself — placement support, dealing with the Trust, or finding your footing in a complex situation. The resources below are the best starting points for that kind of support in Northern Ireland.</p>`;
+  /* ── Case A: "something else", in Northern Ireland ── */
+  if (isOther) {
+    return `
+      <div class="outcome-icon referral">🧭</div>
+      <h2 class="outcome-title referral">Some genuinely useful places to start</h2>
+      <div class="outcome-body">
+        <p>It sounds like you need help navigating the care system itself — placement support, dealing with the Trust, or finding your footing in a complex situation. The resources below are the best starting points for that kind of support in Northern Ireland.</p>
+      </div>
+
+      <div class="referral-resources">
+        <h3>Helpful organisations</h3>
+
+        <div class="resource-item">
+          <span class="ri-icon">🏛️</span>
+          <div>
+            <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" rel="noopener">NI Direct — Paying for residential care or nursing home fees</a>
+            <p>Northern Ireland's official guidance on care home funding assessments, the capital threshold, and what the Health and Social Care Trust covers.</p>
+          </div>
+        </div>
+
+        <div class="resource-item">
+          <span class="ri-icon">⚖️</span>
+          <div>
+            <a href="https://www.citizensadvice.org.uk/nireland/" target="_blank" rel="noopener">Citizens Advice NI</a>
+            <p>Free, impartial advice on benefits, social care, and your rights when dealing with the local authority or Trust.</p>
+          </div>
+        </div>
+
+        <div class="resource-item">
+          <span class="ri-icon">💙</span>
+          <div>
+            <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK — Finding and arranging care</a>
+            <p>Practical information and guidance on finding and arranging care, including what to expect and how to plan.</p>
+          </div>
+        </div>
+
+        <div class="resource-item">
+          <span class="ri-icon">🤝</span>
+          <div>
+            <a href="https://mycareconsultant.co.uk/" target="_blank" rel="noopener">My Care Consultant</a>
+            <p>Expert, independent care navigation support to help families find the right care and understand their options.</p>
+          </div>
+        </div>
+
+        <div class="resource-item">
+          <span class="ri-icon">📖</span>
+          <div>
+            <a href="/ni-care-funding-complete.html">Foursquare's Free NI Care Funding Guide</a>
+            <p>Our comprehensive, free guide to how care is funded in Northern Ireland — no details required to access it.</p>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:1.5rem;font-size:0.875rem;color:var(--text-light);text-align:center;">
+        If your situation changes, or if you'd just like to talk it through, <a href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener" style="color:var(--teal);">our door is always open</a>.
+      </p>`;
   }
 
+  /* ── Case B: outside Northern Ireland ── */
+  if (isNotNI) {
+    return `
+      <div class="outcome-icon referral">🧭</div>
+      <h2 class="outcome-title referral">Some genuinely useful places to start</h2>
+      <div class="outcome-body">
+        <p>We're not the best fit for your location — but the resources below should point you in the right direction.</p>
+      </div>
+
+      <div class="referral-resources">
+        <h3>Helpful organisations</h3>
+
+        <div class="resource-item">
+          <span class="ri-icon">🔍</span>
+          <div>
+            <a href="https://societyoflaterlifeadvisers.co.uk/find-an-adviser" target="_blank" rel="noopener">SOLLA — Find an Adviser</a>
+            <p>The Society of Later Life Advisers can help you find a specialist financial adviser in your area who understands care funding.</p>
+          </div>
+        </div>
+
+        <div class="resource-item">
+          <span class="ri-icon">🤝</span>
+          <div>
+            <a href="https://mycareconsultant.co.uk/" target="_blank" rel="noopener">My Care Consultant</a>
+            <p>Expert, independent care navigation support to help families find the right care and understand their options.</p>
+          </div>
+        </div>
+
+        <div class="resource-item">
+          <span class="ri-icon">💙</span>
+          <div>
+            <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK — Finding and arranging care</a>
+            <p>Practical information and guidance on finding and arranging care, including what to expect and how to plan.</p>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  /* ── Case C: low assets, in NI ── */
   return `
     <div class="outcome-icon referral">🧭</div>
     <h2 class="outcome-title referral">Some genuinely useful places to start</h2>
     <div class="outcome-body">
-      ${intro}
-      <p>We've listed the organisations below because they're actually helpful — not as a brush-off. Foursquare's door remains open if your situation changes.</p>
+      <p>Based on what you've shared, it's possible that the local authority may meet a significant part of your care costs through a financial assessment. This means the focus right now may be less on private funding and more on understanding your entitlements.</p>
+      <p>The resources below are genuinely useful in this situation — and if circumstances change, Foursquare is here.</p>
     </div>
 
     <div class="referral-resources">
       <h3>Helpful organisations</h3>
 
       <div class="resource-item">
-        <span class="ri-icon">🦸</span>
-        <div>
-          <a href="https://www.karehero.com" target="_blank" rel="noopener">KareHero</a>
-          <p>Expert care navigation support — helps families find and choose the right care, manage placements, and understand what they're entitled to. Available across the UK.</p>
-        </div>
-      </div>
-
-      <div class="resource-item">
         <span class="ri-icon">🏛️</span>
         <div>
-          <a href="https://www.nidirect.gov.uk/articles/care-homes-and-funding" target="_blank" rel="noopener">NI Direct — Care Homes and Funding</a>
+          <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" rel="noopener">NI Direct — Paying for residential care or nursing home fees</a>
           <p>Northern Ireland's official guidance on care home funding assessments, the capital threshold, and what the Health and Social Care Trust covers.</p>
         </div>
       </div>
@@ -1032,23 +1180,22 @@ function renderReferral() {
       <div class="resource-item">
         <span class="ri-icon">💙</span>
         <div>
-          <a href="https://www.ageuk.org.uk/northern-ireland/" target="_blank" rel="noopener">Age UK Northern Ireland</a>
-          <p>Information, advice, and practical support for older people and carers in Northern Ireland.</p>
+          <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK — Finding and arranging care</a>
+          <p>Information, advice, and practical support for older people and carers.</p>
         </div>
       </div>
 
-      ${!isNotNI ? `
       <div class="resource-item">
         <span class="ri-icon">📖</span>
         <div>
           <a href="/ni-care-funding-complete.html">Foursquare's Free NI Care Funding Guide</a>
           <p>Our comprehensive, free guide to how care is funded in Northern Ireland — no details required to access it.</p>
         </div>
-      </div>` : ''}
+      </div>
     </div>
 
     <p style="margin-top:1.5rem;font-size:0.875rem;color:var(--text-light);text-align:center;">
-      If your situation changes, or if you'd just like to talk it through, <a href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener" style="color:var(--teal);">Barra's door is always open</a>.
+      If your situation changes, or if you'd just like to talk it through, <a href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener" style="color:var(--teal);">our door is always open</a>.
     </p>`;
 }
 
@@ -1140,12 +1287,12 @@ function renderKitPlaceholder() {
        ══════════════════════════════════════════════════════════════ -->`;
 }
 
-/* ── Thank-you screen (post-form submission) ─────────────────── */
+/* ── I. Thank-you screen (post-form submission) ──────────────── */
 function renderThankYou() {
   return `
     <div class="thankyou-icon">✉️</div>
     <h2 class="thankyou-title">Thank you — we'll be in touch</h2>
-    <p class="thankyou-body">Your details have been received. Barra will be in touch shortly — usually within one working day.</p>
+    <p class="thankyou-body">Your details have been received. We will be in touch shortly — usually within two working days.</p>
     <p style="font-size:0.95rem;color:var(--text-mid);margin-bottom:1.5rem;">If you'd prefer to speak sooner, or at a time that suits you, you're welcome to book a call directly:</p>
     <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
       📅 Book a call with Barra
