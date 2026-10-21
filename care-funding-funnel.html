@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Care Funding Guidance — Foursquare Financial Management</title>
+  <title>Care Funding Guidance | Foursquare Financial Management</title>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ─── Brand tokens ─────────────────────────────────────────── */
@@ -606,8 +606,8 @@
 
     /* ─── Privacy draft section ─────────────────────────────────── */
     #privacy-draft {
-      background: var(--warn-bg);
-      border: 1px dashed var(--warn-border);
+      background: var(--white);
+      border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       padding: 1.5rem;
       margin: 2rem 1rem;
@@ -620,7 +620,7 @@
 
     #privacy-draft h2 {
       font-family: 'Crimson Text', serif;
-      color: #7c5e00;
+      color: var(--teal);
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
     }
@@ -674,6 +674,70 @@
     }
 
     /* ─── D. Contact block ──────────────────────────────────────── */
+    /* ── Consumer Duty block, support note, fees, consent, person ── */
+    .duty-block {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.1rem 1.35rem;
+      margin-bottom: 1.5rem;
+      background: #fff;
+    }
+    .duty-block h3 {
+      font-size: 1.05rem;
+      color: var(--teal);
+      margin-bottom: 0.4rem;
+    }
+    .duty-block p, .support-note p {
+      font-size: 0.925rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+    }
+    .support-note {
+      background: var(--teal-light);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1.1rem;
+      margin: 0 0 1.25rem;
+    }
+    .fee-note {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      text-align: center;
+      margin: 0.75rem 0 1rem;
+    }
+    .btn-form-primary {
+      border: none !important;
+      background: var(--teal) !important;
+      color: #fff !important;
+    }
+    .consent-row {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      margin: 0.5rem 0 0.75rem;
+      cursor: pointer;
+    }
+    .consent-row input { margin-top: 0.25rem; flex-shrink: 0; }
+    .person-block {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin: 1.25rem 0;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .person-block img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .person-name { font-weight: 700; color: var(--text-dark, #1f2937); margin-bottom: 0.2rem; }
+    .person-bio { font-size: 0.9rem; color: var(--text-mid); line-height: 1.55; }
+
     .contact-block {
       text-align: center;
       margin: 1.25rem 0 0.25rem;
@@ -738,19 +802,14 @@
 
   <!-- ─── Privacy Notice Draft (visible below funnel, clearly labelled for review) ── -->
   <div id="privacy-draft">
-    <h2>⚠️ Privacy Notice — DRAFT FOR COMPLIANCE REVIEW (not yet approved)</h2>
+    <h2>Privacy notice</h2>
     <p><strong>Who we are:</strong> Foursquare Financial Management Limited, Suite 2.06, Custom House, Custom House Square, Belfast, Northern Ireland, BT1 3ET. FCA reference 952580.</p>
     <p><strong>What we collect:</strong> The contact details you provide (name, email, phone number) and the answers you give in this tool (your situation, location, approximate assets, property status, and any complexity factors you choose to share).</p>
-    <p><strong>Why we collect it / Lawful basis:</strong> To respond to your enquiry and assess how we may be able to help you. Lawful basis: [legitimate interests / consent — to be confirmed by compliance consultant].</p>
+    <p><strong>Why we collect it and our lawful basis:</strong> We use your contact details and answers to respond to your enquiry, on the basis of our legitimate interest in replying to people who contact us, and to take steps you ask for before any agreement with us. Where you tell us about health or care needs, we use that information only with your consent, which you give by ticking the box on the form. You can withdraw it at any time by emailing hello@foursquarefm.com.</p>
     <p><strong>How it is handled:</strong> Your submission is sent to us by email via Web3Forms, a third-party form-to-email service. <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms privacy policy</a>.</p>
-    <p><strong>Retention:</strong> We keep enquiry data for [period to be set by compliance consultant].</p>
+    <p><strong>Retention:</strong> If you don't become a client, we delete your enquiry within 12 months of our last contact. If you do, your information is kept in line with our client privacy notice.</p>
     <p><strong>Your rights:</strong> You have the right to access, correct, or request erasure of your personal data, to object to processing, and to complain to the ICO (ico.org.uk). Contact us at hello@foursquarefm.com.</p>
     <p><strong>No selling or sharing</strong> of your data beyond what is needed to respond to your enquiry.</p>
-    <ul>
-      <li>⚠️ The claims "Chartered," "independent," and the specialism in care funding are FCA financial-promotion claims requiring compliance sign-off before public launch.</li>
-      <li>⚠️ Lawful basis (legitimate interests vs. consent) must be confirmed before launch.</li>
-      <li>⚠️ Retention period must be set.</li>
-    </ul>
   </div>
 
   <!-- ─── E. Footer — verified regulatory text ───────────────────── -->
@@ -759,7 +818,7 @@
     <p>Authorised and regulated by the Financial Conduct Authority. Foursquare Financial Management Limited is entered on the Financial Services Register (<a href="https://register.fca.org.uk/" target="_blank" rel="noopener">register.fca.org.uk</a>) under reference 952580. If you wish to register a complaint, please write to us at the address above or email <a href="mailto:hello@foursquarefm.com">hello@foursquarefm.com</a>.</p>
     <p>A summary of our internal procedures for the reasonable and prompt handling of complaints is available on request. If you cannot settle your complaint with us, you may be entitled to refer it to the Financial Ombudsman Service (<a href="https://www.financial-ombudsman.org.uk" target="_blank" rel="noopener">www.financial-ombudsman.org.uk</a>) or by contacting them on 0800 0234 567.</p>
     <p>This tool does not constitute financial advice.</p>
-    <p style="margin-top:0.75rem;"><a href="#privacy-draft">Privacy Notice (draft — for review)</a> &middot; <a href="mailto:hello@foursquarefm.com">hello@foursquarefm.com</a></p>
+    <p style="margin-top:0.75rem;"><a href="#privacy-draft">Privacy notice</a> &middot; <a href="mailto:hello@foursquarefm.com">hello@foursquarefm.com</a></p>
   </footer>
 
 </div><!-- /page-wrap -->
@@ -775,7 +834,7 @@ const state = {
   step: 'welcome',
   situation: null,      // 'planning' | 'now' | 'other'
   ni: null,             // 'yes' | 'no'
-  assets: null,         // 'under250' | '250to500' | 'over500' | 'prefer'
+  assets: null,         // 'under23' | 'under250' | '250to500' | 'over500' | 'prefer'
   property: null,       // 'own' | 'none' | 'selling'
   complexity: [],       // array of selected flags
   pathway: null,        // 'early_planning' | 'point_of_need' | 'referral' | 'soft'
@@ -791,7 +850,7 @@ function resolvePathway() {
   if (state.situation === 'other') return 'referral';
   if (state.ni === 'no')          return 'referral';
   if (state.assets === 'prefer')  return 'soft';
-  if (state.assets === 'under250' && state.property === 'none') return 'referral';
+  if (state.assets === 'under23' && state.property === 'none') return 'referral';
   if (state.situation === 'planning') return 'early_planning';
   return 'point_of_need';
 }
@@ -803,6 +862,7 @@ const ICONS = {
   other:     '🤝',
   yes:       '✅',
   no:        '❌',
+  under23:   '💰',
   under250:  '💰',
   '250to500':'💰',
   over500:   '💰',
@@ -849,6 +909,18 @@ function renderCredentialsStrip() {
     </div>`;
 }
 
+/* ── Person block (brief bio, the only place the adviser is named) ── */
+function renderPersonBlock() {
+  return `
+    <div class="person-block">
+      <img src="images/barra-gorman.jpg" alt="Barra Gorman" onerror="this.style.display='none'" />
+      <div>
+        <p class="person-name">Barra Gorman, Chartered Financial Planner</p>
+        <p class="person-bio">Barra has advised families in Northern Ireland on later-life planning and care funding for over two decades.</p>
+      </div>
+    </div>`;
+}
+
 /* ── Welcome ──────────────────────────────────────────────────── */
 function renderWelcome() {
   return `
@@ -859,12 +931,12 @@ function renderWelcome() {
     </div>
 
     <div class="reassurance-block">
-      <p><span class="re-name">Foursquare Financial Management</span> offers Chartered financial planning and independent financial advice, based in Belfast, specialising in care funding and later-life planning for people across Northern Ireland. Led by Barra Gorman, with over two decades of experience, Foursquare exists to lift the burden from families navigating one of life's most stressful moments — giving them the clarity, confidence, and expert guidance to make the right decisions.</p>
+      <p><span class="re-name">Foursquare Financial Management</span> offers Chartered financial planning and independent financial advice, based in Belfast, specialising in care funding and later-life planning for people across Northern Ireland. Led by Barra Gorman, with over two decades of experience, Foursquare exists to lift the burden from families navigating one of life's most stressful moments, giving them the clarity, confidence, and expert guidance to make the right decisions.</p>
     </div>
 
-    <div class="compliance-flag">
-      <strong>⚠️ Compliance note (for owner's review before public launch):</strong>
-      The claims "Chartered," "independent," and the specialism in care funding and later-life planning are FCA financial-promotion claims. Under FCA financial-promotion rules, these must be fair, clear, not misleading, and substantiable. These claims must be reviewed and approved by your compliance consultant before this page goes public.
+    <div class="duty-block">
+      <h3>Planning before circumstances change</h3>
+      <p>Care decisions are easier to make with time, information and a clear head. We'd rather help you plan now, while you have choices, than meet you for the first time in a crisis. That's how we approach our duty to avoid foreseeable harm, and to give extra care to anyone whose circumstances make decisions harder.</p>
     </div>
 
     <div class="contact-block">
@@ -888,11 +960,11 @@ function renderSituation() {
   return `
     ${progressBar(1)}
     <h2 class="step-title">What best describes your situation?</h2>
-    <p class="step-subtitle">Choose whichever feels closest — there are no wrong answers.</p>
+    <p class="step-subtitle">Choose whichever feels closest. There are no wrong answers.</p>
     <div class="choices">
       ${choiceBtn('planning', '🗓️', 'I\'m planning ahead for the future', 'Thinking about future care costs, enduring power of attorney, or long-term planning', state.situation)}
       ${choiceBtn('now', '🏥', 'Care is needed now or very soon', 'A loved one is moving into care, or a decision needs to be made in the near term', state.situation)}
-      ${choiceBtn('other', '🤝', 'I need help with something else', 'Care placement, dealing with the local authority, navigating the system, or another question', state.situation)}
+      ${choiceBtn('other', '🤝', 'I need help with something else', 'Care placement, dealing with the Trust, finding your way around the system, or another question', state.situation)}
     </div>
     <div class="nav-row">
       ${backBtn()}
@@ -904,7 +976,7 @@ function renderSituation() {
 function renderNI() {
   return `
     ${progressBar(2)}
-    <h2 class="step-title">Are you — or is the person who needs care — based in Northern Ireland?</h2>
+    <h2 class="step-title">Are you, or is the person who needs care, based in Northern Ireland?</h2>
     <p class="step-subtitle">Foursquare specialises in Northern Ireland's care funding rules, which differ significantly from England, Scotland, and Wales.</p>
     <div class="choices">
       ${choiceBtn('yes', '✅', 'Yes, Northern Ireland', '', state.ni)}
@@ -921,15 +993,16 @@ function renderAssets() {
   return `
     ${progressBar(3)}
     <h2 class="step-title">Roughly what is the total value of savings and investments?</h2>
-    <p class="step-subtitle">This helps us point you to the right level of support. Your answer is completely confidential.</p>
+    <p class="step-subtitle">This helps us point you to the right level of support. We use your answers only to respond to you.</p>
     <div class="asset-note">
-      <strong>Important:</strong> Please <strong>do not include the value of your home</strong> in this figure — we'll ask about property separately. This is about savings, pensions, investments, and other liquid assets only.
+      <strong>Important:</strong> Please <strong>do not include the value of your home</strong> in this figure. We'll ask about property separately. This is about savings, pensions, investments, and other liquid assets only.
     </div>
     <div class="choices">
-      ${choiceBtn('under250', '💰', 'Under £250,000', '', state.assets)}
-      ${choiceBtn('250to500', '💰', '£250,000 – £500,000', '', state.assets)}
+      ${choiceBtn('under23', '💰', 'Under £23,250', '', state.assets)}
+      ${choiceBtn('under250', '💰', '£23,250 to £250,000', '', state.assets)}
+      ${choiceBtn('250to500', '💰', '£250,000 to £500,000', '', state.assets)}
       ${choiceBtn('over500', '💰', '£500,000 or more', '', state.assets)}
-      ${choiceBtn('prefer', '🔒', 'Prefer not to say', 'That\'s fine — we\'ll still do our best to help', state.assets)}
+      ${choiceBtn('prefer', '🔒', 'Prefer not to say', 'That\'s fine, we\'ll still do our best to help', state.assets)}
     </div>
     <div class="nav-row">
       ${backBtn()}
@@ -942,9 +1015,9 @@ function renderProperty() {
   return `
     ${progressBar(4)}
     <h2 class="step-title">Is there a property that may be relevant to funding care?</h2>
-    <p class="step-subtitle">The family home can play a big role in care funding planning — this helps us understand your picture more fully.</p>
+    <p class="step-subtitle">The family home can play a big role in care funding planning, and this helps us understand your picture more fully.</p>
     <div class="choices">
-      ${choiceBtn('own', '🏠', 'Yes — there is a property that may be used', 'Own home, a second property, or an investment property', state.property)}
+      ${choiceBtn('own', '🏠', 'Yes, there is a property that may be used', 'Own home, a second property, or an investment property', state.property)}
       ${choiceBtn('none', '🚫', 'No property', '', state.property)}
       ${choiceBtn('selling', '🔑', 'Property already being sold or rented out', 'The property is in the process of being sold, or is currently rented', state.property)}
     </div>
@@ -957,7 +1030,7 @@ function renderProperty() {
 /* ── Q5 — Complexity ─────────────────────────────────────────── */
 const COMPLEXITY_FLAGS = [
   { id: 'spouse',   label: 'A spouse or partner is remaining in the family home' },
-  { id: 'chc',      label: 'An NHS Continuing Healthcare (CHC) check or appeal is ongoing' },
+  { id: 'chc',      label: 'A continuing healthcare check or appeal with the Trust is ongoing' },
   { id: 'family',   label: 'There is a family disagreement or conflict about care decisions' },
   { id: 'business', label: 'There is a business interest or business assets involved' },
   { id: 'none',     label: 'None of these apply' },
@@ -976,7 +1049,7 @@ function renderComplexity() {
   return `
     ${progressBar(5)}
     <h2 class="step-title">Does any of the following apply? <span style="font-size:1rem;font-weight:400;color:var(--text-light);">(optional)</span></h2>
-    <p class="step-subtitle">Select any that are relevant — or skip ahead if none apply. This helps us come prepared.</p>
+    <p class="step-subtitle">Select any that are relevant, or skip ahead if none apply. This helps us come prepared.</p>
     <div class="choices" style="gap:0.6rem;">${items}</div>
     <div class="nav-row">
       ${backBtn()}
@@ -990,9 +1063,9 @@ function renderComplexity() {
 function renderEarlyPlanning() {
   return `
     <div class="outcome-icon">🌱</div>
-    <h2 class="outcome-title">Planning ahead — you're in the right place</h2>
+    <h2 class="outcome-title">Planning ahead: you're in the right place</h2>
     <div class="outcome-body">
-      <p>Taking time to plan early is one of the most valuable things you can do. Care funding is complex, and the decisions you make now around enduring powers of attorney, investment structure, and estate planning can make an enormous difference later.</p>
+      <p>Taking time to plan early is one of the most valuable things you can do. Care funding is complex, and the decisions you make now around enduring powers of attorney, investment structure, and estate planning can make a real difference later. Planning while you're well, and before a health change or a hospital stay, means the choices stay yours.</p>
       <p>Foursquare Financial Management works with families across Northern Ireland on exactly this. Our job is to give you clarity and confidence before decisions become urgent.</p>
       <p>The best first step is a short conversation with us to understand your situation and explore what options are available.</p>
     </div>
@@ -1002,6 +1075,8 @@ function renderEarlyPlanning() {
       </a>
       <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll be in touch</button>
     </div>
+    <p class="fee-note">Your first conversation with us is free. If you go on to take advice, we'll explain our fees in writing before any chargeable work begins.</p>
+    ${renderPersonBlock()}
     ${renderCaptureForm('EARLY PLANNING')}
     <p style="font-style:italic;color:var(--teal);font-size:0.95rem;text-align:center;margin:1.5rem 0 0.5rem;">Firmly and resolutely in support of your future</p>
     ${renderCredentialsStrip()}
@@ -1011,17 +1086,17 @@ function renderEarlyPlanning() {
 function renderPointOfNeed() {
   return `
     <div class="outcome-icon">🤲</div>
-    <h2 class="outcome-title">We can help — and we'll move at your pace</h2>
+    <h2 class="outcome-title">We can help, and we'll move at your pace</h2>
     <div class="outcome-body">
-      <p>We understand this is likely a stressful and time-pressured moment. When care is needed now or very soon, it's easy to feel overwhelmed by the financial decisions that come alongside it — and to worry about making costly mistakes.</p>
-      <p>Foursquare offers a dedicated care funding assessment: a thorough, unhurried review of your situation, your options under Northern Ireland's rules, and a clear plan for what to do next. Details of our assessment service, including fees, are discussed on the call.</p>
-      <p>Book a call with Barra whenever suits you — including at short notice if the situation is urgent.</p>
+      <p>We understand this is likely a stressful and time-pressured moment. When care is needed now or very soon, it's easy to feel overwhelmed by the financial decisions that come with it, and to worry about making costly mistakes.</p>
+      <p>Foursquare offers a dedicated care funding assessment: a thorough, unhurried review of your situation, your options under Northern Ireland's rules, and a clear plan for what to do next. Your first conversation with us is free. If you go on to take advice, we'll explain our fees in writing before any chargeable work begins.</p>
+      <p>Leave your details below and we'll get back to you promptly, including at short notice if the situation is urgent.</p>
+    </div>
+    <div class="support-note">
+      <p>If anything would make this easier, such as a family member or someone you trust joining the conversation, more time, or information in a different format, just let us know in the form.</p>
     </div>
     <div class="cta-row">
-      <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
-        📅 Book a call with Barra
-      </a>
-      <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll call you</button>
+      <button class="btn-form-toggle btn-form-primary" onclick="toggleForm()" id="form-toggle-btn">Leave your details and we'll call you</button>
     </div>
     ${renderCaptureForm('POINT-OF-NEED')}
     ${renderCredentialsStrip()}
@@ -1031,16 +1106,13 @@ function renderPointOfNeed() {
 function renderSoftOutcome() {
   return `
     <div class="outcome-icon">💬</div>
-    <h2 class="outcome-title">Happy to talk — no numbers needed</h2>
+    <h2 class="outcome-title">Happy to talk: no numbers needed</h2>
     <div class="outcome-body">
-      <p>That's completely understandable. Asset questions can feel personal, especially at a stressful time. You don't need to share any figures to start a conversation with Foursquare.</p>
-      <p>A short call with Barra costs nothing and commits you to nothing. It's simply a chance to get a clearer picture of your options.</p>
+      <p>That's completely understandable. Asset questions can feel personal, especially at a stressful time. You don't need to share any figures to start a conversation with us.</p>
+      <p>Leave your details below and we'll get back to you. Your first conversation with us is free and commits you to nothing. It's simply a chance to get a clearer picture of your options.</p>
     </div>
     <div class="cta-row">
-      <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
-        📅 Book a free introductory call
-      </a>
-      <button class="btn-form-toggle" onclick="toggleForm()" id="form-toggle-btn">Or leave your details and we'll be in touch</button>
+      <button class="btn-form-toggle btn-form-primary" onclick="toggleForm()" id="form-toggle-btn">Leave your details and we'll be in touch</button>
     </div>
     ${renderCaptureForm('ENQUIRY (PREFER NOT TO SAY)')}
     ${renderCredentialsStrip()}
@@ -1051,7 +1123,7 @@ function renderSoftOutcome() {
 function renderReferral() {
   const isOther  = state.situation === 'other';
   const isNotNI  = state.ni === 'no';
-  const isLowAssets = state.assets === 'under250' && state.property === 'none';
+  const isLowAssets = state.assets === 'under23' && state.property === 'none';
 
   /* ── Case A: "something else", in Northern Ireland ── */
   if (isOther) {
@@ -1059,7 +1131,7 @@ function renderReferral() {
       <div class="outcome-icon referral">🧭</div>
       <h2 class="outcome-title referral">Some genuinely useful places to start</h2>
       <div class="outcome-body">
-        <p>It sounds like you need help navigating the care system itself — placement support, dealing with the Trust, or finding your footing in a complex situation. The resources below are the best starting points for that kind of support in Northern Ireland.</p>
+        <p>It sounds like you need help navigating the care system itself: placement support, dealing with the Trust, or finding your footing in a complex situation. The resources below are the best starting points for that kind of support in Northern Ireland.</p>
       </div>
 
       <div class="referral-resources">
@@ -1068,7 +1140,7 @@ function renderReferral() {
         <div class="resource-item">
           <span class="ri-icon">🏛️</span>
           <div>
-            <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" rel="noopener">NI Direct — Paying for residential care or nursing home fees</a>
+            <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" rel="noopener">NI Direct: Paying for residential care or nursing home fees</a>
             <p>Northern Ireland's official guidance on care home funding assessments, the capital threshold, and what the Health and Social Care Trust covers.</p>
           </div>
         </div>
@@ -1077,14 +1149,14 @@ function renderReferral() {
           <span class="ri-icon">⚖️</span>
           <div>
             <a href="https://www.citizensadvice.org.uk/nireland/" target="_blank" rel="noopener">Citizens Advice NI</a>
-            <p>Free, impartial advice on benefits, social care, and your rights when dealing with the local authority or Trust.</p>
+            <p>Free, impartial advice on benefits, social care, and your rights when dealing with the Health and Social Care Trust.</p>
           </div>
         </div>
 
         <div class="resource-item">
           <span class="ri-icon">💙</span>
           <div>
-            <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK — Finding and arranging care</a>
+            <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK: Finding and arranging care</a>
             <p>Practical information and guidance on finding and arranging care, including what to expect and how to plan.</p>
           </div>
         </div>
@@ -1101,13 +1173,13 @@ function renderReferral() {
           <span class="ri-icon">📖</span>
           <div>
             <a href="/ni-care-funding-complete.html">Foursquare's Free NI Care Funding Guide</a>
-            <p>Our comprehensive, free guide to how care is funded in Northern Ireland — no details required to access it.</p>
+            <p>Our comprehensive, free guide to how care is funded in Northern Ireland. No details required to access it.</p>
           </div>
         </div>
       </div>
 
       <p style="margin-top:1.5rem;font-size:0.875rem;color:var(--text-light);text-align:center;">
-        If your situation changes, or if you'd just like to talk it through, <a href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener" style="color:var(--teal);">our door is always open</a>.
+        If your situation changes, or if you'd just like to talk it through, <a href="mailto:hello@foursquarefm.com" style="color:var(--teal);">our door is always open</a>.
       </p>`;
   }
 
@@ -1117,7 +1189,7 @@ function renderReferral() {
       <div class="outcome-icon referral">🧭</div>
       <h2 class="outcome-title referral">Some genuinely useful places to start</h2>
       <div class="outcome-body">
-        <p>We're not the best fit for your location — but the resources below should point you in the right direction.</p>
+        <p>We're not the best fit for your location, but the resources below should point you in the right direction.</p>
       </div>
 
       <div class="referral-resources">
@@ -1126,7 +1198,7 @@ function renderReferral() {
         <div class="resource-item">
           <span class="ri-icon">🔍</span>
           <div>
-            <a href="https://societyoflaterlifeadvisers.co.uk/find-an-adviser" target="_blank" rel="noopener">SOLLA — Find an Adviser</a>
+            <a href="https://societyoflaterlifeadvisers.co.uk/find-an-adviser" target="_blank" rel="noopener">SOLLA: Find an Adviser</a>
             <p>The Society of Later Life Advisers can help you find a specialist financial adviser in your area who understands care funding.</p>
           </div>
         </div>
@@ -1142,7 +1214,7 @@ function renderReferral() {
         <div class="resource-item">
           <span class="ri-icon">💙</span>
           <div>
-            <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK — Finding and arranging care</a>
+            <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK: Finding and arranging care</a>
             <p>Practical information and guidance on finding and arranging care, including what to expect and how to plan.</p>
           </div>
         </div>
@@ -1154,8 +1226,8 @@ function renderReferral() {
     <div class="outcome-icon referral">🧭</div>
     <h2 class="outcome-title referral">Some genuinely useful places to start</h2>
     <div class="outcome-body">
-      <p>Based on what you've shared, it's possible that the local authority may meet a significant part of your care costs through a financial assessment. This means the focus right now may be less on private funding and more on understanding your entitlements.</p>
-      <p>The resources below are genuinely useful in this situation — and if circumstances change, Foursquare is here.</p>
+      <p>Based on what you've shared, the Health and Social Care Trust may meet some or all of the cost of a care home place after its financial assessment. In Northern Ireland, capital under £14,250 isn't counted, and between £14,250 and £23,250 a small weekly contribution applies. So the focus right now is likely to be understanding your entitlements rather than private funding.</p>
+      <p>The resources below are useful in this situation, and if circumstances change, we're here.</p>
     </div>
 
     <div class="referral-resources">
@@ -1164,7 +1236,7 @@ function renderReferral() {
       <div class="resource-item">
         <span class="ri-icon">🏛️</span>
         <div>
-          <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" rel="noopener">NI Direct — Paying for residential care or nursing home fees</a>
+          <a href="https://www.nidirect.gov.uk/articles/paying-your-residential-care-or-nursing-home-fees" target="_blank" rel="noopener">NI Direct: Paying for residential care or nursing home fees</a>
           <p>Northern Ireland's official guidance on care home funding assessments, the capital threshold, and what the Health and Social Care Trust covers.</p>
         </div>
       </div>
@@ -1173,14 +1245,14 @@ function renderReferral() {
         <span class="ri-icon">⚖️</span>
         <div>
           <a href="https://www.citizensadvice.org.uk/nireland/" target="_blank" rel="noopener">Citizens Advice NI</a>
-          <p>Free, impartial advice on benefits, social care, and your rights when dealing with the local authority or Trust.</p>
+          <p>Free, impartial advice on benefits, social care, and your rights when dealing with the Health and Social Care Trust.</p>
         </div>
       </div>
 
       <div class="resource-item">
         <span class="ri-icon">💙</span>
         <div>
-          <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK — Finding and arranging care</a>
+          <a href="https://www.ageuk.org.uk/information-advice/care/arranging-care/" target="_blank" rel="noopener">Age UK: Finding and arranging care</a>
           <p>Information, advice, and practical support for older people and carers.</p>
         </div>
       </div>
@@ -1189,13 +1261,13 @@ function renderReferral() {
         <span class="ri-icon">📖</span>
         <div>
           <a href="/ni-care-funding-complete.html">Foursquare's Free NI Care Funding Guide</a>
-          <p>Our comprehensive, free guide to how care is funded in Northern Ireland — no details required to access it.</p>
+          <p>Our comprehensive, free guide to how care is funded in Northern Ireland. No details required to access it.</p>
         </div>
       </div>
     </div>
 
     <p style="margin-top:1.5rem;font-size:0.875rem;color:var(--text-light);text-align:center;">
-      If your situation changes, or if you'd just like to talk it through, <a href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener" style="color:var(--teal);">our door is always open</a>.
+      If your situation changes, or if you'd just like to talk it through, <a href="mailto:hello@foursquarefm.com" style="color:var(--teal);">our door is always open</a>.
     </p>`;
 }
 
@@ -1205,20 +1277,20 @@ function renderCaptureForm(pathway) {
     ? state.complexity.map(c => COMPLEXITY_FLAGS.find(f=>f.id===c)?.label || c).join('; ')
     : 'None selected';
 
-  const niStr = state.ni === 'yes' ? 'Yes — Northern Ireland' : state.ni === 'no' ? 'No' : 'Not asked';
-  const assetsStr = { under250: 'Under £250,000', '250to500': '£250,000–£500,000', over500: '£500,000+', prefer: 'Prefer not to say' }[state.assets] || 'Not asked';
-  const propStr = { own: 'Yes — own home / property', none: 'No property', selling: 'Being sold or rented' }[state.property] || 'Not asked';
+  const niStr = state.ni === 'yes' ? 'Yes, Northern Ireland' : state.ni === 'no' ? 'No' : 'Not asked';
+  const assetsStr = { under23: 'Under £23,250', under250: '£23,250 to £250,000', '250to500': '£250,000 to £500,000', over500: '£500,000+', prefer: 'Prefer not to say' }[state.assets] || 'Not asked';
+  const propStr = { own: 'Yes, own home / property', none: 'No property', selling: 'Being sold or rented' }[state.property] || 'Not asked';
   const situationStr = { planning: 'Planning ahead', now: 'Care needed now / soon', other: 'Something else' }[state.situation] || '';
 
   return `
     <div class="form-section" id="capture-form-section">
       <h3>Leave your details</h3>
-      <p class="form-desc">We'll only use these to get back to you about your enquiry. No spam, no hard sell.</p>
+      <p class="form-desc">We'll only use these to get back to you about your enquiry.</p>
 
       <form id="lead-form" onsubmit="submitForm(event)">
         <!-- Web3Forms config -->
         <input type="hidden" name="access_key" value="c2745b8d-933d-4fa6-8146-1f5d9785811d" />
-        <input type="hidden" name="subject" value="Foursquare Funnel — ${pathway} lead" />
+        <input type="hidden" name="subject" value="Foursquare Funnel: ${pathway} lead" />
         <input type="hidden" name="from_name" value="Foursquare Care Funding Funnel" />
         <input type="hidden" name="redirect" value="false" />
         <!-- Context fields -->
@@ -1245,10 +1317,14 @@ function renderCaptureForm(pathway) {
         </div>
         <div class="form-field">
           <label for="f-message">Anything else you'd like us to know <span class="optional">(optional)</span></label>
-          <textarea id="f-message" name="message" placeholder="e.g. best time to call, specific questions…"></textarea>
+          <textarea id="f-message" name="message" placeholder="e.g. best time to call, specific questions, or if you'd like a family member to join"></textarea>
         </div>
 
-        <p class="privacy-note">We'll use these details only to respond to your enquiry. See our <a href="#privacy-draft">Privacy Notice (draft — pending compliance review)</a> for how we handle your information.</p>
+        <label class="consent-row">
+          <input type="checkbox" name="Consent" value="Yes" required />
+          <span>I agree to Foursquare using the information I've shared, including anything about health or care needs, to respond to my enquiry.</span>
+        </label>
+        <p class="privacy-note">See our <a href="#privacy-draft">privacy notice</a> for how we handle your information.</p>
 
         <!-- ── Kit newsletter placeholder — SWITCHED OFF / reserved for future activation ──
         <div style="border-top:1px solid var(--border);padding-top:1rem;margin-top:0.5rem;">
@@ -1289,14 +1365,17 @@ function renderKitPlaceholder() {
 
 /* ── I. Thank-you screen (post-form submission) ──────────────── */
 function renderThankYou() {
-  return `
-    <div class="thankyou-icon">✉️</div>
-    <h2 class="thankyou-title">Thank you — we'll be in touch</h2>
-    <p class="thankyou-body">Your details have been received. We will be in touch shortly — usually within two working days.</p>
+  const isEarlyPlanning = state.pathway === 'early_planning';
+  const calendlyBlock = isEarlyPlanning ? `
     <p style="font-size:0.95rem;color:var(--text-mid);margin-bottom:1.5rem;">If you'd prefer to speak sooner, or at a time that suits you, you're welcome to book a call directly:</p>
     <a class="btn-calendly" href="https://calendly.com/barra-1/barragorman-meeting" target="_blank" rel="noopener">
-      📅 Book a call with Barra
-    </a>
+      📅 Book a call
+    </a>` : '';
+  return `
+    <div class="thankyou-icon">✉️</div>
+    <h2 class="thankyou-title">Thank you, we'll be in touch</h2>
+    <p class="thankyou-body">Your details have been received. We will be in touch shortly, usually within two working days.</p>
+    ${calendlyBlock}
     ${renderKitPlaceholder()}`;
 }
 
@@ -1443,12 +1522,13 @@ function toggleForm() {
   const section = document.getElementById('capture-form-section');
   const btn = document.getElementById('form-toggle-btn');
   if (!section) return;
+  if (!btn.dataset.originalLabel) btn.dataset.originalLabel = btn.textContent;
   section.classList.toggle('open');
   if (section.classList.contains('open')) {
     btn.textContent = 'Hide form';
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
-    btn.textContent = 'Or leave your details and we\'ll be in touch';
+    btn.textContent = btn.dataset.originalLabel;
   }
 }
 
@@ -1476,14 +1556,14 @@ async function submitForm(e) {
     } else {
       msg.style.display = 'block';
       msg.style.color = '#dc2626';
-      msg.textContent = 'Something went wrong — please try again or email hello@foursquarefm.com directly.';
+      msg.textContent = 'Something went wrong. Please try again or email hello@foursquarefm.com directly.';
       btn.disabled = false;
       btn.textContent = 'Send my details →';
     }
   } catch (err) {
     msg.style.display = 'block';
     msg.style.color = '#dc2626';
-    msg.textContent = 'Network error — please check your connection and try again.';
+    msg.textContent = 'Network error. Please check your connection and try again.';
     btn.disabled = false;
     btn.textContent = 'Send my details →';
   }
